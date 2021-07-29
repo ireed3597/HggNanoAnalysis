@@ -2,17 +2,19 @@
 Area for all code used in studying & developing SNT Hgg analyses, starting from nanoAOD.
 
 ## Installation and setup
-**1. Clone repository **
+**1. Clone repository**
 ```
 git clone https://github.com/cmstas/HggNanoAnalysis
 cd HggNanoAnalysis
 ```
 
-**2. Set-up **
+**2. Set-up**
+
 TODO
 
 ## Development guidelines
 **1. How to contribute**
+
 Create a new branch with 
 ```
 git checkout -b <my_new_branch>
