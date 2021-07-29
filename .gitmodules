@@ -1,0 +1,3 @@
+[submodule "NanoTools"]
+	path = NanoTools
+	url = https://github.com/cmstas/NanoTools
