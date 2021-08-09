@@ -8,7 +8,7 @@ git clone https://github.com/cmstas/HggNanoAnalysis
 cd HggNanoAnalysis
 ```
 
-**2. Set-up**
+**2. Set-up**  
 These tools include a C++ looper (test.C) that is compiled with ```compile_scripts.C```. The main code is executed in ```runAll.py```.
 To run the looper:  
 i) Set the NanoTools [environment](https://github.com/cmstas/NanoTools) for both python & CMSSW, in that order  
