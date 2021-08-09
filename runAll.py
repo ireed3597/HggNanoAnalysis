@@ -6,7 +6,7 @@ import ROOT as r
 from tqdm import tqdm
 from ROOT import gROOT
 
-r.gSystem.Load('../NanoCORE/NANO_CORE.so')
+r.gSystem.Load('NanoCORE/NANO_CORE.so')
 r.gSystem.Load('test_C.so')
 
 lumi = { "2016" : 35.9, "2017" : 41.5, "2018" : 59.8 }
