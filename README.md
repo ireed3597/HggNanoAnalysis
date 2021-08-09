@@ -1,5 +1,6 @@
 # HggNanoAnalysis
-Area for all code used in studying & developing SNT Hgg analyses, starting from nanoAOD.
+Area for all code used in studying & developing SNT Hgg analyses, starting from nanoAOD.  
+These tools are based on the C++ looper from [NanoTools](https://github.com/cmstas/NanoTools).  
 
 ## Installation and setup
 **1. Clone repository**
