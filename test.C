@@ -13,10 +13,10 @@
 #include "TTreeCacheUnzip.h"
 #include "TTreePerfStats.h"
 
-#include "../NanoCORE/Nano.h"
-#include "../NanoCORE/Base.h"
-#include "../NanoCORE/tqdm.h"
-#include "../NanoCORE/utils.cc"
+#include "NanoCORE/Nano.h"
+#include "NanoCORE/Base.h"
+#include "NanoCORE/tqdm.h"
+#include "NanoCORE/utils.cc"
 #include "parameters.h"
 
 #include <iostream>
