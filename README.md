@@ -9,21 +9,9 @@ cd HggNanoAnalysis
 ```
 
 **2. Set-up**
-
-TODO
-
-## Development guidelines
-**1. How to contribute**
-
-Create a new branch with 
-```
-git checkout -b <my_new_branch>
-```
-add commits to your branch, and create a pull request when the changes are ready to be merged into the `main` branch.
-The pull request should be reviewed by at least 1 person who did not author it.
-
-**2. What to contribute**
-Any code that is intended to become part of an analysis should be committed to the `main` branch through a PR.
-Code that has been used to help inform decisions about analysis strategy should also be included.
-
-When presenting studies using code from `HggNanoAnalysis`, include the git commit hash of your working branch in your slides.
+These tools include a C++ looper (test.C) that is compiled with ```compile_scripts.C```. The main code is executed in ```runAll.py```.
+To run the looper:
+i) Set the NanoTools [environment](https://github.com/cmstas/NanoTools) for both python & CMSSW, in that order
+ii) Load the ad-hoc library from this NanoCORE repository (it contains a few additions to the official NanoTools one)
+iii) compile the scripts
+iv) run the compiled scripts with ```python runAll.py```
