@@ -17,6 +17,5 @@ i) Set the NanoTools [environment](https://github.com/cmstas/NanoTools) for both
 ./py_setup.sh
 ./setup.sh
 ```  
-ii) Load the ad-hoc library from this NanoCORE repository (it contains a few additions to the official NanoTools one)  
-iii) compile the scripts  
+iii) compile the scripts  with  ```root -l -b -q compile_scripts.C```  
 iv) run the compiled scripts with ```python runAll.py```  
