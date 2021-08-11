@@ -57,6 +57,49 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	H1(lead_pho_pt_1t1l, 60, 0 , 70 );
 	H1(lead_pho_pt_2t0l, 60, 0 , 70 );
 	H1(lead_pho_pt_0t2l, 60, 0 , 70 );
+
+	TTree *out_tree	=	new TTree("Events","output tree");
+	out_tree->Branch("year",&year,"year/I");
+	out_tree->Branch("run",&t_run,"run/I");
+	out_tree->Branch("lumiBlock",&t_lumiBlock,"lumiBlock/I");
+	out_tree->Branch("event",&t_event,"event/I");
+	out_tree->Branch("MET_pt",&t_MET_pt,"MET_pt/F");
+	out_tree->Branch("MET_phi",&t_MET_phi,"MET_phi/F");
+	out_tree->Branch("weight",&t_weight,"weight/F");
+
+	out_tree->Branch("mgg",&mgg,"mgg/F");
+	out_tree->Branch("n_electrons",&n_electrons,"n_electrons/I");
+	out_tree->Branch("n_muons",&n_muons,"n_muons/I");
+	out_tree->Branch("n_taus",&n_taus,"n_taus/I");
+	out_tree->Branch("n_isoTrks",&n_isoTrks,"n_isoTrks/I");
+
+	out_tree->Branch("g1_ptmgg"		,	&g1_ptmgg	,	"g1_ptmgg/F"		);
+	out_tree->Branch("g1_pt"		,	&g1_pt		, 	"g1_pt/F"			);
+	out_tree->Branch("g1_eta"		,	&g1_eta		, 	"g1_eta/F"			);	  
+	out_tree->Branch("g1_phi"		,	&g1_phi		,  	"g1_phi/F"			);
+	out_tree->Branch("g1_idmva"		,	&g1_idmva	,	"g1_idmva/F"		);
+	out_tree->Branch("g1_pixVeto"	,	&g1_pixVeto	,	"g1_pixVeto/F"		);
+
+	out_tree->Branch("g2_ptmgg"		,	&g2_ptmgg	,	"g2_ptmgg/F"		);
+	out_tree->Branch("g2_pt"		,	&g2_pt		, 	"g2_pt/F"			);
+	out_tree->Branch("g2_eta"		,	&g2_eta		, 	"g2_eta/F"			);	  
+	out_tree->Branch("g2_phi"		,	&g2_phi		,  	"g2_phi/F"			);
+	out_tree->Branch("g2_idmva"		,	&g2_idmva	,	"g2_idmva/F"		);
+	out_tree->Branch("g2_pixVeto"	,	&g2_pixVeto	,	"g2_pixVeto/F"		);
+
+	out_tree->Branch("gg_pt"		,	&gg_pt		, 	"gg_pt/F"			);
+	out_tree->Branch("gg_eta"		,	&gg_eta		, 	"gg_eta/F"			);	  
+	out_tree->Branch("gg_phi"		,	&gg_phi		,  	"gg_phi/F"			);
+	out_tree->Branch("gg_dR"		,	&gg_dR		,	"gg_dR/F"			);
+
+	int n_mt		= 0;
+	int n_et		= 0;
+	int n_tt		= 0;
+	int n_mm		= 0;
+	int n_ee		= 0;
+	int n_me		= 0;
+	int n_t			= 0;
+
     int nEventsTotal = 0;
     int nEventsChain = ch->GetEntries();
     TFile *currentFile = 0;
@@ -84,7 +127,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
             bar.progress(nEventsTotal, nEventsChain);
 
 			//di-photon selection
-			double mgg = (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]) ).M();
+			mgg = (float)(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]) ).M();
 			if ( mgg < mgg_lower || mgg > mgg_upper ) continue;
 			if ( (proc == "Data" || !resonant) && mgg > mgg_sideband_lower && mgg < mgg_sideband_upper ) continue;
 
@@ -140,18 +183,44 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 					if ( !overlap ) sel_taus.push_back(i);
 				}
 			}
+
+			//Isolated Tracks selection
+            vector<unsigned int> vec_isoTracks;
+			if ( sel_taus.size() == 1 && sel_eles.size() && sel_muons.size() == 0 ){
+	            for (unsigned int i=0; i<nIsoTrack(); i++){
+	                if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) ){
+	                    LorentzVector *iso_track = new LorentzVector;
+	                    iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
+	                    if ( deltaR_v1( iso_track , Tau_p4().at(sel_taus.at(0)) ) > 0.2 && deltaR_v1( iso_track , Photon_p4().at(gHidx()[0]) ) > 0.2  && deltaR_v1( iso_track , Photon_p4().at(gHidx()[1]) ) > 0.2 ){
+	                        vec_isoTracks.push_back( i );
+	                    }
+	                }
+	            }
+			}
+
 			//require opposite sign leptons
 			bool os_cut = true;
 			//1tau1lep
-			if ( sel_taus.size() == 1 && (sel_eles.size() + sel_muons.size() == 1) && sel_eles.size() == 1 && Tau_charge().at(sel_taus.at(0))*Electron_charge().at(sel_eles.at(0)) > 0 ) 	os_cut = false;
-			if ( sel_taus.size() == 1 && (sel_eles.size() + sel_muons.size() == 1) && sel_muons.size() == 1 && Tau_charge().at(sel_taus.at(0))*Muon_charge().at(sel_muons.at(0)) > 0 ) 		os_cut = false;
+			if ( n_taus == 1 && (n_electrons + n_muons == 1) && n_electrons == 1 && Tau_charge().at(sel_taus.at(0))*Electron_charge().at(sel_eles.at(0)) > 0 ) 	os_cut = false;
+			if ( n_taus == 1 && (n_electrons + n_muons == 1) && n_muons == 1 && Tau_charge().at(sel_taus.at(0))*Muon_charge().at(sel_muons.at(0)) > 0 ) 		os_cut = false;
 			//2tau0lep
-			if ( sel_taus.size() == 2 && (sel_eles.size() + sel_muons.size() == 0) && Tau_charge().at(sel_taus.at(0))*Tau_charge().at(sel_taus.at(1)) > 0 ) os_cut = false;
+			if ( n_taus == 2 && (n_electrons + n_muons == 0) && Tau_charge().at(sel_taus.at(0))*Tau_charge().at(sel_taus.at(1)) > 0 ) os_cut = false;
 			//0tau2lep
-			if ( sel_taus.size() == 0 && (sel_eles.size() + sel_muons.size() == 2) && sel_eles.size() == 2 && Electron_charge().at(sel_eles.at(0))*Electron_charge().at(sel_eles.at(1)) > 0 ) os_cut = false;
-			if ( sel_taus.size() == 0 && (sel_eles.size() + sel_muons.size() == 2) && sel_muons.size() == 2 && Muon_charge().at(sel_muons.at(0))*Muon_charge().at(sel_muons.at(1)) > 0 ) 	os_cut = false;
-			if ( sel_taus.size() == 0 && (sel_eles.size() + sel_muons.size() == 2) && sel_eles.size() == sel_muons.size() && Electron_charge().at(sel_eles.at(0))*Muon_charge().at(sel_muons.at(0)) > 0 ) os_cut = false;
+			if ( n_taus == 0 && (n_electrons + n_muons == 2) && n_electrons == 2 && Electron_charge().at(sel_eles.at(0))*Electron_charge().at(sel_eles.at(1)) > 0 ) os_cut = false;
+			if ( n_taus == 0 && (n_electrons + n_muons == 2) && n_muons == 2 && Muon_charge().at(sel_muons.at(0))*Muon_charge().at(sel_muons.at(1)) > 0 ) 	os_cut = false;
+			if ( n_taus == 0 && (n_electrons + n_muons == 2) && n_electrons == n_muons && Electron_charge().at(sel_eles.at(0))*Muon_charge().at(sel_muons.at(0)) > 0 ) os_cut = false;
 			if ( !os_cut ) continue;
+
+			//Z veto cut
+			bool mZ_veto = false;
+			if ( 
+				( n_electrons == 2 && (Electron_p4().at(sel_eles[0]) + Electron_p4().at(sel_eles[1])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[0]) + Electron_p4().at(sel_eles[1])).M() < mZ_veto_up )
+			|| 	( n_muons == 2 && (Muon_p4().at(sel_muons[0]) + Muon_p4().at(sel_muons[1])).M() > mZ_veto_low  && (Muon_p4().at(sel_muons[0]) + Muon_p4().at(sel_muons[1])).M() < mZ_veto_up )
+			||  ( n_electrons == 1 && n_muons == 1 && (Electron_p4().at(sel_eles[0]) + Muon_p4().at(sel_muons[0])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[0]) + Muon_p4().at(sel_muons[0])).M() < mZ_veto_up )
+				){
+				mZ_veto = true;
+			}
+			if ( mZ_veto ) continue;
 
 			float weight = 1.;
 			if ( proc != "Data" ) weight = genWeight() * scale_factor;
@@ -159,26 +228,72 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			h_mgg->Fill( mgg, weight );
 			h_lead_pho_pt->Fill( Photon_pt().at(gHidx().at(0)), weight );
 
-			if ( sel_taus.size() == 1 && (sel_eles.size() + sel_muons.size() == 0 ) ){ 
+			if ( n_taus == 1 && (n_electrons + n_muons == 0 ) ){ 
 				h_mgg_1t0l->Fill( mgg, weight );
 				h_lead_pho_pt_1t0l->Fill( Photon_pt().at(gHidx().at(0)), weight );
 			}
-			if ( sel_taus.size() == 1 && (sel_eles.size() + sel_muons.size() == 1 ) ){
+			if ( n_taus == 1 && (n_electrons + n_muons == 1 ) ){
 				h_mgg_1t1l->Fill( mgg, weight );
 				h_lead_pho_pt_1t1l->Fill( Photon_pt().at(gHidx().at(0)), weight );
 			}
-			if ( sel_taus.size() == 2 && (sel_eles.size() + sel_muons.size() == 0 ) ){
+			if ( n_taus == 2 && (n_electrons + n_muons == 0 ) ){
 				h_mgg_2t0l->Fill( mgg, weight );
 				h_lead_pho_pt_2t0l->Fill( Photon_pt().at(gHidx().at(0)), weight );
 			}
-			if ( sel_taus.size() == 0 && (sel_eles.size() + sel_muons.size() == 2 ) ){
+			if ( n_taus == 0 && (n_electrons + n_muons == 2 ) ){
 				h_mgg_0t2l->Fill( mgg, weight );
 				h_lead_pho_pt_0t2l->Fill( Photon_pt().at(gHidx().at(0)), weight );
 			}
+
+
+			t_run			= run();
+			t_lumiBlock		= luminosityBlock();
+			t_event			= event;
+
+			n_electrons		= sel_eles.size();
+			n_muons			= sel_muons.size();
+			n_taus			= sel_taus.size();
+			n_isoTrks		= vec_isoTracks.size();
+
+			g1_ptmgg		=	Photon_pt().at(gHidx()[0]) / mgg;
+			g1_pt			=	Photon_pt().at(gHidx()[0]) ;
+			g1_eta			=	Photon_eta().at(gHidx()[0]) ;
+			g1_phi			=	Photon_phi().at(gHidx()[0]) ;
+			g1_idmva		=	Photon_mvaID().at(gHidx()[0]) ;
+
+			g2_ptmgg		=	Photon_pt().at(gHidx()[1]) / mgg;
+			g2_pt			=	Photon_pt().at(gHidx()[1]) ;
+			g2_eta			=	Photon_eta().at(gHidx()[1]) ;
+			g2_phi			=	Photon_phi().at(gHidx()[1]) ;
+			g2_idmva		=	Photon_mvaID().at(gHidx()[1]) ;
+
+			gg_pt			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).pt() ;
+			gg_eta			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).eta() ;
+			gg_phi			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).phi() ;
+			gg_dR			=	deltaR(Photon_p4().at(gHidx()[0]) , Photon_p4().at(gHidx()[1])) ;
+
+			out_tree->Fill();
+
+			//if ( n_taus == 1 & n_electrons == 0 && n_muons == 1 ) n_mt++;
+			//if ( n_taus == 1 & n_electrons == 1 && n_muons == 0 ) n_et++;
+			//if ( n_taus == 2 & n_electrons == 0 && n_muons == 0 ) n_tt++;
+			//if ( n_taus == 0 & n_electrons == 0 && n_muons == 2 ) n_mm++;
+			//if ( n_taus == 0 & n_electrons == 2 && n_muons == 0 ) n_ee++;
+			//if ( n_taus == 0 & n_electrons == 1 && n_muons == 1 ) n_me++;
+			//if ( n_taus == 1 & n_electrons == 0 && n_muons == 0 ) n_t++;
+
         } // Event loop
         delete file;
     } // File loop
     bar.finish();
+
+	//cout << "category mu-tau: " << n_mt << endl;
+	//cout << "category ele-tau: " << n_et << endl;
+	//cout << "category tau-tau: " << n_tt << endl;
+	//cout << "category mu-mu: " << n_mm << endl;
+	//cout << "category ele-ele: " << n_ee << endl;
+	//cout << "category mu-ele: " << n_me << endl;
+	//cout << "category tau-0lep: " << n_t << endl;
 
 	f1->Write();
 	f1->Close();

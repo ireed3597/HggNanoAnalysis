@@ -4,6 +4,8 @@ using namespace std;
 
 const float trans_eta_low 			= 1.4442;
 const float trans_eta_high 			= 1.566;
+const float mZ_veto_low				= 70;
+const float mZ_veto_up				= 110;
 
 //di-photon selection
 const float mgg_lower 				= 100;
@@ -43,3 +45,79 @@ const int 	tau_deepID_j			= 7;
 const float tau_dR_pho				= 0.2;
 const float tau_dR_lep				= 0.2;
 
+//Tree branches
+unsigned int 	t_run;
+unsigned int	t_lumiBlock;
+unsigned int	t_event;
+float 			t_MET_pt;
+float 			t_MET_phi;
+float 			t_weight;
+
+float 			mgg;
+int				n_electrons;
+int				n_muons;
+int				n_taus;
+int				n_jets;
+int 			n_isoTrks;
+
+float 		g1_ptmgg;
+float 		g1_pt;
+float 		g1_eta;
+float 		g1_phi;
+float 		g1_idmva;
+float 		g1_pixVeto;
+
+float 		g2_ptmgg;
+float 		g2_pt;
+float 		g2_eta;
+float 		g2_phi;
+float 		g2_idmva;
+float 		g2_pixVeto;
+
+float 		gg_pt;
+float 		gg_eta;
+float 		gg_phi;
+float 		gg_dR;
+
+float 		lep1_pt;
+float 		lep1_eta;
+float 		lep1_phi;
+float 		lep1_charge;
+float 		lep1_pdgID;
+float 		lep1_tightID;
+float 		lep1_id_vs_e;
+float 		lep1_id_vs_m;
+float 		lep1_id_vs_jet;
+
+float 		lep2_pt;
+float 		lep2_eta;
+float 		lep2_phi;
+float 		lep2_charge;
+float 		lep2_pdgID;
+float 		lep2_tightID;
+float 		lep2_id_vs_e;
+float 		lep2_id_vs_m;
+float 		lep2_id_vs_jet;
+
+float 		jet1_pt;
+float 		jet1_eta;
+float 		jet1_bTag;
+float 		jet1_id;
+
+float 		jet2_pt;
+float 		jet2_eta;
+float 		jet2_bTag;
+float 		jet2_id;
+
+float 		pt_tautauSVFitLoose;
+float 		eta_tautauSVFitLoose;
+float 		phi_tautauSVFitLoose;
+float 		m_tautauSVFitLoose;
+float 		dR_tautauSVFitLoose;
+float 		dR_ggtautauSVFitLoose;
+float 		dPhi_MET_tau1;
+
+float		m_tautau_vis;
+float		pt_tautau_vis;
+float		eta_tautau_vis;
+float		phi_tautau_vis;
