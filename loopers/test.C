@@ -17,7 +17,6 @@
 #include "../NanoCORE/Base.h"
 #include "../NanoCORE/tqdm.h"
 #include "../NanoCORE/utils.cc"
-#include "parameters.h"
 
 #include <iostream>
 #include <iomanip>
@@ -79,26 +78,60 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("g1_phi"		,	&g1_phi		,  	"g1_phi/F"			);
 	out_tree->Branch("g1_idmva"		,	&g1_idmva	,	"g1_idmva/F"		);
 	out_tree->Branch("g1_pixVeto"	,	&g1_pixVeto	,	"g1_pixVeto/F"		);
-
 	out_tree->Branch("g2_ptmgg"		,	&g2_ptmgg	,	"g2_ptmgg/F"		);
 	out_tree->Branch("g2_pt"		,	&g2_pt		, 	"g2_pt/F"			);
 	out_tree->Branch("g2_eta"		,	&g2_eta		, 	"g2_eta/F"			);	  
 	out_tree->Branch("g2_phi"		,	&g2_phi		,  	"g2_phi/F"			);
 	out_tree->Branch("g2_idmva"		,	&g2_idmva	,	"g2_idmva/F"		);
 	out_tree->Branch("g2_pixVeto"	,	&g2_pixVeto	,	"g2_pixVeto/F"		);
-
 	out_tree->Branch("gg_pt"		,	&gg_pt		, 	"gg_pt/F"			);
 	out_tree->Branch("gg_eta"		,	&gg_eta		, 	"gg_eta/F"			);	  
 	out_tree->Branch("gg_phi"		,	&gg_phi		,  	"gg_phi/F"			);
 	out_tree->Branch("gg_dR"		,	&gg_dR		,	"gg_dR/F"			);
 
-	int n_mt		= 0;
-	int n_et		= 0;
-	int n_tt		= 0;
-	int n_mm		= 0;
-	int n_ee		= 0;
-	int n_me		= 0;
-	int n_t			= 0;
+	out_tree->Branch("lep1_pt"			,	&lep1_pt				, 	"lep1_pt/F"					);	  
+	out_tree->Branch("lep1_eta"			,	&lep1_eta				,  	"lep1_eta/F"				);
+	out_tree->Branch("lep1_phi"			,	&lep1_phi				,	"lep1_phi/F"				);
+	out_tree->Branch("lep1_charge"		,	&lep1_charge			, 	"lep1_charge/F"				);	  
+	out_tree->Branch("lep1_pdgID"		,	&lep1_pdgID				,  	"lep1_pdgID/F"				);
+	out_tree->Branch("lep1_tightID"		,	&lep1_tightID			,	"lep1_tightID/F"			);
+	out_tree->Branch("lep1_id_vs_e"		,	&lep1_id_vs_e			, 	"lep1_id_vs_e/F"			);	  
+	out_tree->Branch("lep1_id_vs_m"		,	&lep1_id_vs_m			,  	"lep1_id_vs_m/F"			);
+	out_tree->Branch("lep1_id_vs_jet"	,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/F"			);
+	out_tree->Branch("lep2_pt"			,	&lep2_pt				, 	"lep2_pt/F"					);	  
+	out_tree->Branch("lep2_eta"			,	&lep2_eta				,  	"lep2_eta/F"				);
+	out_tree->Branch("lep2_phi"			,	&lep2_phi				,	"lep2_phi/F"				);
+	out_tree->Branch("lep2_charge"		,	&lep2_charge			, 	"lep2_charge/F"				);	  
+	out_tree->Branch("lep2_pdgID"		,	&lep2_pdgID				,  	"lep2_pdgID/F"				);
+	out_tree->Branch("lep2_tightID"		,	&lep2_tightID			,	"lep2_tightID/F"			);
+	out_tree->Branch("lep2_id_vs_e"		,	&lep2_id_vs_e			, 	"lep2_id_vs_e/F"			);	  
+	out_tree->Branch("lep2_id_vs_m"		,	&lep2_id_vs_m			,  	"lep2_id_vs_m/F"			);
+	out_tree->Branch("lep2_id_vs_jet"	,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/F"			);
+
+	out_tree->Branch("jet1_pt"					,	&jet1_pt		, 	"jet1_pt/F"					);	  
+	out_tree->Branch("jet1_eta"					,	&jet1_eta		, 	"jet1_eta/F"				);	  
+	out_tree->Branch("jet1_bTag"				,	&jet1_bTag		, 	"jet1_bTag/F"				);	  
+	out_tree->Branch("jet1_id"					,	&jet1_id		, 	"jet1_id/F"					);	  
+	out_tree->Branch("jet2_pt"					,	&jet2_pt		, 	"jet2_pt/F"					);	  
+	out_tree->Branch("jet2_eta"					,	&jet2_eta		, 	"jet2_eta/F"				);	  
+	out_tree->Branch("jet2_bTag"				,	&jet2_bTag		, 	"jet2_bTag/F"				);	  
+	out_tree->Branch("jet2_id"					,	&jet2_id		, 	"jet2_id/F"					);	  
+
+	out_tree->Branch("pt_tautauSVFitLoose"		,	&pt_tautauSVFitLoose	,	"pt_tautauSVFitLoose/F"			);	  
+	out_tree->Branch("eta_tautauSVFitLoose"		,	&eta_tautauSVFitLoose	, 	"eta_tautauSVFitLoose/F"		);	  
+	out_tree->Branch("phi_tautauSVFitLoose"		,	&phi_tautauSVFitLoose	, 	"phi_tautauSVFitLoose/F"		);	  
+	out_tree->Branch("m_tautauSVFitLoose"		,	&m_tautauSVFitLoose		, 	"m_tautauSVFitLoose/F"			);	  
+	out_tree->Branch("dR_tautauSVFitLoose"		,	&dR_tautauSVFitLoose	, 	"dR_tautauSVFitLoose/F"			);	  
+	out_tree->Branch("dR_ggtautauSVFitLoose"	,	&dR_ggtautauSVFitLoose	, 	"dR_ggtautauSVFitLoose/F"		);	  
+	out_tree->Branch("dPhi_MET_tau1"			,	&dPhi_MET_tau1			, 	"dPhi_MET_tau1/F"				);	  
+
+	out_tree->Branch("m_tautau_vis"				,	&m_tautau_vis  			, 	"m_tautau_vis/F"				);	  
+	out_tree->Branch("pt_tautau_vis"			,	&pt_tautau_vis 			, 	"pt_tautau_vis/F"				);	  
+	out_tree->Branch("eta_tautau_vis"			,	&eta_tautau_vis			, 	"eta_tautau_vis/F"				);	  
+	out_tree->Branch("phi_tautau_vis"			,	&phi_tautau_vis			, 	"phi_tautau_vis/F"				);	  
+
+	int n_ele		= 0;
+	int n_mu		= 0;
 
     int nEventsTotal = 0;
     int nEventsChain = ch->GetEntries();
@@ -198,6 +231,14 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	            }
 			}
 
+			n_electrons		= sel_eles.size();
+			n_muons			= sel_muons.size();
+			n_taus			= sel_taus.size();
+			n_isoTrks		= vec_isoTracks.size();
+
+			n_ele 	+= n_electrons;
+			n_mu	+= n_muons;
+
 			//require opposite sign leptons
 			bool os_cut = true;
 			//1tau1lep
@@ -250,11 +291,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			t_lumiBlock		= luminosityBlock();
 			t_event			= event;
 
-			n_electrons		= sel_eles.size();
-			n_muons			= sel_muons.size();
-			n_taus			= sel_taus.size();
-			n_isoTrks		= vec_isoTracks.size();
-
 			g1_ptmgg		=	Photon_pt().at(gHidx()[0]) / mgg;
 			g1_pt			=	Photon_pt().at(gHidx()[0]) ;
 			g1_eta			=	Photon_eta().at(gHidx()[0]) ;
@@ -274,26 +310,13 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 			out_tree->Fill();
 
-			//if ( n_taus == 1 & n_electrons == 0 && n_muons == 1 ) n_mt++;
-			//if ( n_taus == 1 & n_electrons == 1 && n_muons == 0 ) n_et++;
-			//if ( n_taus == 2 & n_electrons == 0 && n_muons == 0 ) n_tt++;
-			//if ( n_taus == 0 & n_electrons == 0 && n_muons == 2 ) n_mm++;
-			//if ( n_taus == 0 & n_electrons == 2 && n_muons == 0 ) n_ee++;
-			//if ( n_taus == 0 & n_electrons == 1 && n_muons == 1 ) n_me++;
-			//if ( n_taus == 1 & n_electrons == 0 && n_muons == 0 ) n_t++;
-
         } // Event loop
         delete file;
     } // File loop
     bar.finish();
 
-	//cout << "category mu-tau: " << n_mt << endl;
-	//cout << "category ele-tau: " << n_et << endl;
-	//cout << "category tau-tau: " << n_tt << endl;
-	//cout << "category mu-mu: " << n_mm << endl;
-	//cout << "category ele-ele: " << n_ee << endl;
-	//cout << "category mu-ele: " << n_me << endl;
-	//cout << "category tau-0lep: " << n_t << endl;
+	cout << "tot number of electrons: " << n_ele << endl;
+	cout << "tot number of muons: " << n_mu << endl;
 
 	f1->Write();
 	f1->Close();

@@ -46,9 +46,9 @@ const float tau_dR_pho				= 0.2;
 const float tau_dR_lep				= 0.2;
 
 //Tree branches
-unsigned int 	t_run;
-unsigned int	t_lumiBlock;
-unsigned int	t_event;
+int 			t_run;
+int				t_lumiBlock;
+int				t_event;
 float 			t_MET_pt;
 float 			t_MET_phi;
 float 			t_weight;
@@ -79,15 +79,15 @@ float 		gg_eta;
 float 		gg_phi;
 float 		gg_dR;
 
-float 		lep1_pt;
-float 		lep1_eta;
-float 		lep1_phi;
-float 		lep1_charge;
-float 		lep1_pdgID;
-float 		lep1_tightID;
-float 		lep1_id_vs_e;
-float 		lep1_id_vs_m;
-float 		lep1_id_vs_jet;
+float 		lep1_pt				;
+float 		lep1_eta			;
+float 		lep1_phi			;
+float 		lep1_charge			;
+float 		lep1_pdgID			;
+float 		lep1_tightID		;
+float 		lep1_id_vs_e		;
+float 		lep1_id_vs_m		;
+float 		lep1_id_vs_jet		;
 
 float 		lep2_pt;
 float 		lep2_eta;
@@ -99,25 +99,25 @@ float 		lep2_id_vs_e;
 float 		lep2_id_vs_m;
 float 		lep2_id_vs_jet;
 
-float 		jet1_pt;
-float 		jet1_eta;
-float 		jet1_bTag;
-float 		jet1_id;
+float 		jet1_pt			;
+float 		jet1_eta		;
+float 		jet1_bTag		;
+float 		jet1_id			;
 
-float 		jet2_pt;
-float 		jet2_eta;
-float 		jet2_bTag;
-float 		jet2_id;
+float 		jet2_pt			;
+float 		jet2_eta		;
+float 		jet2_bTag		;
+float 		jet2_id			;
 
-float 		pt_tautauSVFitLoose;
-float 		eta_tautauSVFitLoose;
-float 		phi_tautauSVFitLoose;
-float 		m_tautauSVFitLoose;
-float 		dR_tautauSVFitLoose;
-float 		dR_ggtautauSVFitLoose;
-float 		dPhi_MET_tau1;
+float 		pt_tautauSVFitLoose		;
+float 		eta_tautauSVFitLoose	;
+float 		phi_tautauSVFitLoose	;
+float 		m_tautauSVFitLoose		;
+float 		dR_tautauSVFitLoose		;
+float 		dR_ggtautauSVFitLoose	;
+float 		dPhi_MET_tau1			;
 
-float		m_tautau_vis;
-float		pt_tautau_vis;
-float		eta_tautau_vis;
-float		phi_tautau_vis;
+float		m_tautau_vis			;
+float		pt_tautau_vis			;
+float		eta_tautau_vis			;
+float		phi_tautau_vis			;
