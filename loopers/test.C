@@ -40,11 +40,13 @@ struct debugger { template<typename T> debugger& operator , (const T& v) { cerr<
 using namespace std;
 using namespace tas;
 
-vector<unsigned int> event_vec;
-
 int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool resonant = false ) {
 
 	TString file_name = proc + "_" +  std::to_string(year);
+
+	fstream syncOut;
+	syncOut.open("sync_"+file_name+".txt", ios::out);
+
 	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
 	H1(mgg_1t0l, 60, 100 , 180 );
@@ -130,8 +132,15 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("eta_tautau_vis"			,	&eta_tautau_vis			, 	"eta_tautau_vis/F"				);	  
 	out_tree->Branch("phi_tautau_vis"			,	&phi_tautau_vis			, 	"phi_tautau_vis/F"				);	  
 
-	int n_ele		= 0;
-	int n_mu		= 0;
+	int n_mt		= 0;
+	int n_et		= 0;
+	int n_tt		= 0;
+	int n_mm		= 0;
+	int n_em		= 0;
+	int n_ee		= 0;
+	int n_t			= 0;
+	int n_it		= 0;
+	int n_iso		= 0;
 
     int nEventsTotal = 0;
     int nEventsChain = ch->GetEntries();
@@ -151,10 +160,10 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 		nt.SetYear(year);
         nt.Init(tree);
 
-        for( unsigned int event = 0; event < tree->GetEntriesFast(); ++event) {
+        for( unsigned int loop_event = 0; loop_event < tree->GetEntriesFast(); ++loop_event) {
 
-            nt.GetEntry(event);
-            tree->LoadTree(event);
+            nt.GetEntry(loop_event);
+            tree->LoadTree(loop_event);
 
             nEventsTotal++;
             bar.progress(nEventsTotal, nEventsChain);
@@ -177,7 +186,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			//if ( year == 2016 && !HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90() ) continue;
 			//if ( (year == 2017 || year == 2018 ) && !HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90() ) continue;
 
-			vector<unsigned int> sel_eles;
+			vector<int> sel_eles;
 			for(unsigned int i=0; i<nElectron(); i++){
 				if (Electron_pt().at(i) > ele_pt && fabs(Electron_eta().at(i)) < ele_eta && ( fabs(Electron_eta().at(i)) < trans_eta_low || fabs(Electron_eta().at(i)) > trans_eta_high ) && fabs(Electron_dxy().at(i)) < ele_dxy && fabs(Electron_dz().at(i)) < ele_dz 
 				&& ( (Electron_pfRelIso03_all().at(i) < ele_pfRelIso && Electron_mvaFall17V2noIso_WP90().at(i)) || (Electron_mvaFall17V2Iso_WP90().at(i) ) ) 
@@ -187,7 +196,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				}
 			}
 			
-			vector<unsigned int> sel_muons;
+			vector<int> sel_muons;
 			for(unsigned int i=0; i<nMuon(); i++){
 				if (Muon_pt().at(i) > muon_pt && fabs(Muon_eta().at(i)) < muon_eta && fabs(Muon_dxy().at(i)) < muon_dxy && fabs(Muon_dz().at(i)) < muon_dz 
 				&& Muon_pfRelIso03_all().at(i) < muon_pfRelIso 
@@ -198,7 +207,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				}
 			}
 			
-			vector<unsigned int> sel_taus;
+			vector<int> sel_taus;
 			for(unsigned int i=0; i<nTau(); i++){
 				if (Tau_pt().at(i) > tau_pt && fabs(Tau_eta().at(i)) < tau_eta && Tau_idDecayModeNewDMs().at(i) && fabs(Tau_dz().at(i)) < tau_dz 
 				&& Tau_idDeepTau2017v2p1VSe().at(i) >= tau_deepID_e && Tau_idDeepTau2017v2p1VSmu().at(i) >= tau_deepID_m && Tau_idDeepTau2017v2p1VSjet().at(i) >= tau_deepID_j 
@@ -218,50 +227,64 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			}
 
 			//Isolated Tracks selection
-            vector<unsigned int> vec_isoTracks;
-			if ( sel_taus.size() == 1 && sel_eles.size() && sel_muons.size() == 0 ){
+            vector<int> sel_isoTracks;
+			if ( sel_taus.size() == 1 && sel_eles.size() + sel_muons.size() == 0 ){
 	            for (unsigned int i=0; i<nIsoTrack(); i++){
-	                if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) ){
+	                if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) && IsoTrack_pdgId().at(i)*Tau_charge().at(sel_taus.at(0)) < 0 ){
 	                    LorentzVector *iso_track = new LorentzVector;
 	                    iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
-	                    if ( deltaR_v1( iso_track , Tau_p4().at(sel_taus.at(0)) ) > 0.2 && deltaR_v1( iso_track , Photon_p4().at(gHidx()[0]) ) > 0.2  && deltaR_v1( iso_track , Photon_p4().at(gHidx()[1]) ) > 0.2 ){
-	                        vec_isoTracks.push_back( i );
+	                    if ( deltaR_v1( iso_track , Tau_p4().at(sel_taus.at(0)) ) > isoTrk_dR && deltaR_v1( iso_track , Photon_p4().at(gHidx()[0]) ) > isoTrk_dR  && deltaR_v1( iso_track , Photon_p4().at(gHidx()[1]) ) > isoTrk_dR  ){
+	                        sel_isoTracks.push_back( i );
 	                    }
 	                }
 	            }
 			}
 
+			//Z veto cut
+			bool Z_cand = false;
+			if ( sel_eles.size() >= 2 )
+				for (unsigned int i=0; i<sel_eles.size(); i++){
+					for (unsigned int j=i+1; j<sel_eles.size(); j++){
+						if ( (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() < mZ_veto_up ){
+							Z_cand = true;
+							break;
+					}
+				}
+			if ( sel_muons.size() >= 2 )
+				for (unsigned int i=0; i<sel_muons.size(); i++){
+					for (unsigned int j=i+1; j<sel_muons.size(); j++){
+						if ( (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() > mZ_veto_low  && (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() < mZ_veto_up ){
+							Z_cand = true;
+							break;
+					}
+				}
+			}
+			if ( Z_cand ) continue;
+
 			n_electrons		= sel_eles.size();
 			n_muons			= sel_muons.size();
 			n_taus			= sel_taus.size();
-			n_isoTrks		= vec_isoTracks.size();
+			n_isoTrks		= sel_isoTracks.size();
 
-			n_ele 	+= n_electrons;
-			n_mu	+= n_muons;
+			vector<int> h_cand1, h_cand2;
+			vector<vector<int>> raw_results = categorise( sel_eles, sel_muons, sel_taus, sel_isoTracks );
+			sel_eles		= raw_results[0];
+			sel_muons		= raw_results[1];
+			sel_taus		= raw_results[2];
+			sel_isoTracks	= raw_results[3];
+			h_cand1			= raw_results[4];
+			h_cand2			= raw_results[5];
 
-			//require opposite sign leptons
-			bool os_cut = true;
-			//1tau1lep
-			if ( n_taus == 1 && (n_electrons + n_muons == 1) && n_electrons == 1 && Tau_charge().at(sel_taus.at(0))*Electron_charge().at(sel_eles.at(0)) > 0 ) 	os_cut = false;
-			if ( n_taus == 1 && (n_electrons + n_muons == 1) && n_muons == 1 && Tau_charge().at(sel_taus.at(0))*Muon_charge().at(sel_muons.at(0)) > 0 ) 		os_cut = false;
-			//2tau0lep
-			if ( n_taus == 2 && (n_electrons + n_muons == 0) && Tau_charge().at(sel_taus.at(0))*Tau_charge().at(sel_taus.at(1)) > 0 ) os_cut = false;
-			//0tau2lep
-			if ( n_taus == 0 && (n_electrons + n_muons == 2) && n_electrons == 2 && Electron_charge().at(sel_eles.at(0))*Electron_charge().at(sel_eles.at(1)) > 0 ) os_cut = false;
-			if ( n_taus == 0 && (n_electrons + n_muons == 2) && n_muons == 2 && Muon_charge().at(sel_muons.at(0))*Muon_charge().at(sel_muons.at(1)) > 0 ) 	os_cut = false;
-			if ( n_taus == 0 && (n_electrons + n_muons == 2) && n_electrons == n_muons && Electron_charge().at(sel_eles.at(0))*Muon_charge().at(sel_muons.at(0)) > 0 ) os_cut = false;
-			if ( !os_cut ) continue;
+			if ( h_cand1[1] == 2 && h_cand2[1] == 1  ) cat1 = true;
+			if ( h_cand1[1] == 2 && h_cand2[1] == 0  ) cat2 = true;
+			if ( h_cand1[1] == 2 && h_cand2[1] == 2  ) cat3 = true;
+			if ( h_cand1[1] == 1 && h_cand2[1] == 1  ) cat4 = true;
+			if ( h_cand1[1] == 0 && h_cand2[1] == 0  ) cat5 = true;
+			if ( h_cand1[1] == 1 && h_cand2[1] == 0  ) cat6 = true;
+			if ( h_cand1[1] == 2 && h_cand2[1] == 3  ) cat7 = true;
+			if ( h_cand1[1] == 2 && h_cand2[1] == -1 ) cat8 = true;
 
-			//Z veto cut
-			bool mZ_veto = false;
-			if ( 
-				( n_electrons == 2 && (Electron_p4().at(sel_eles[0]) + Electron_p4().at(sel_eles[1])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[0]) + Electron_p4().at(sel_eles[1])).M() < mZ_veto_up )
-			|| 	( n_muons == 2 && (Muon_p4().at(sel_muons[0]) + Muon_p4().at(sel_muons[1])).M() > mZ_veto_low  && (Muon_p4().at(sel_muons[0]) + Muon_p4().at(sel_muons[1])).M() < mZ_veto_up )
-			||  ( n_electrons == 1 && n_muons == 1 && (Electron_p4().at(sel_eles[0]) + Muon_p4().at(sel_muons[0])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[0]) + Muon_p4().at(sel_muons[0])).M() < mZ_veto_up )
-				){
-				mZ_veto = true;
-			}
-			if ( mZ_veto ) continue;
+			
 
 			float weight = 1.;
 			if ( proc != "Data" ) weight = genWeight() * scale_factor;
@@ -269,27 +292,9 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			h_mgg->Fill( mgg, weight );
 			h_lead_pho_pt->Fill( Photon_pt().at(gHidx().at(0)), weight );
 
-			if ( n_taus == 1 && (n_electrons + n_muons == 0 ) ){ 
-				h_mgg_1t0l->Fill( mgg, weight );
-				h_lead_pho_pt_1t0l->Fill( Photon_pt().at(gHidx().at(0)), weight );
-			}
-			if ( n_taus == 1 && (n_electrons + n_muons == 1 ) ){
-				h_mgg_1t1l->Fill( mgg, weight );
-				h_lead_pho_pt_1t1l->Fill( Photon_pt().at(gHidx().at(0)), weight );
-			}
-			if ( n_taus == 2 && (n_electrons + n_muons == 0 ) ){
-				h_mgg_2t0l->Fill( mgg, weight );
-				h_lead_pho_pt_2t0l->Fill( Photon_pt().at(gHidx().at(0)), weight );
-			}
-			if ( n_taus == 0 && (n_electrons + n_muons == 2 ) ){
-				h_mgg_0t2l->Fill( mgg, weight );
-				h_lead_pho_pt_0t2l->Fill( Photon_pt().at(gHidx().at(0)), weight );
-			}
-
-
 			t_run			= run();
 			t_lumiBlock		= luminosityBlock();
-			t_event			= event;
+			t_event			= event();
 
 			g1_ptmgg		=	Photon_pt().at(gHidx()[0]) / mgg;
 			g1_pt			=	Photon_pt().at(gHidx()[0]) ;
@@ -310,13 +315,34 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 			out_tree->Fill();
 
+			//debugging
+			int category;
+			if ( cat1 ) category = 1;
+			if ( cat2 ) category = 2;
+			if ( cat3 ) category = 3;
+			if ( cat4 ) category = 4;
+			if ( cat5 ) category = 5;
+			if ( cat6 ) category = 6;
+			if ( cat7 ) category = 7;
+			if ( cat8 ) category = 8;
+			syncOut<<run()<<","<<luminosityBlock()<<","<<event()<<","<<","<<n_electrons<<","<<n_muons<<","<<n_taus<<","<<category<<std::endl;
+
+			clear_branches();
+
         } // Event loop
         delete file;
     } // File loop
     bar.finish();
 
-	cout << "tot number of electrons: " << n_ele << endl;
-	cout << "tot number of muons: " << n_mu << endl;
+	cout << "category 1 mu-tau: " << n_mt << endl;
+	cout << "category 2 ele-tau: " << n_et << endl;
+	cout << "category 3 tau-tau: " << n_tt << endl;
+	cout << "category 4 mu-mu: " << n_mm << endl;
+	cout << "category 5 ele-ele: " << n_ee << endl;
+	cout << "category 6 mu-ele: " << n_em << endl;
+	cout << "category -1 tau: " << n_t << endl;
+	cout << "category 1tau+Iso: " << n_it << endl;
+	cout << "number of Iso: " << n_iso << endl;
 
 	f1->Write();
 	f1->Close();
