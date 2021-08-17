@@ -218,16 +218,20 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 			//Isolated Tracks selection
             vector<int> sel_isoTracks;
-			if ( sel_taus.size() == 1 && sel_eles.size() + sel_muons.size() == 0 ){
-	            for (unsigned int i=0; i<nIsoTrack(); i++){
-	                if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) && IsoTrack_pdgId().at(i)*Tau_charge().at(sel_taus.at(0)) < 0 ){
-	                    LorentzVector *iso_track = new LorentzVector;
-	                    iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
-	                    if ( deltaR_v1( iso_track , Tau_p4().at(sel_taus.at(0)) ) > isoTrk_dR && deltaR_v1( iso_track , Photon_p4().at(gHidx()[0]) ) > isoTrk_dR  && deltaR_v1( iso_track , Photon_p4().at(gHidx()[1]) ) > isoTrk_dR  ){
-	                        sel_isoTracks.push_back( i );
-	                    }
-	                }
-	            }
+            for (unsigned int i=0; i<nIsoTrack(); i++){
+                if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) ){
+                    LorentzVector *iso_track = new LorentzVector;
+                    iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
+                    if ( deltaR_v1( iso_track , Photon_p4().at(gHidx()[0]) ) > isoTrk_dR  && deltaR_v1( iso_track , Photon_p4().at(gHidx()[1]) ) > isoTrk_dR  ){
+						bool iso = true;
+						for (unsigned int j=0; j<sel_taus.size(); j++){
+                    		if ( deltaR_v1( iso_track , Tau_p4().at(sel_taus.at(j)) ) < isoTrk_dR ){
+								iso = false;
+                    		}
+                		}
+						if ( iso ) sel_isoTracks.push_back( i );
+					}
+				}
 			}
 
 			//Z veto cut

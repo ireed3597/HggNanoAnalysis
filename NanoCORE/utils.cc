@@ -223,7 +223,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 				LorentzVector iso_track(IsoTrack_pt()[i], IsoTrack_eta()[i], IsoTrack_phi()[i], 0);
 				//iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
 				double mH = (Tau_p4().at(taus.at(k)) + iso_track).M();
-				if ( fabs( mH - mHiggs ) < fabs( mH_best - mHiggs ) ){
+				if ( fabs( mH - mHiggs ) < fabs( mH_best - mHiggs ) && Tau_charge().at(taus.at(k)) * IsoTrack_pdgId().at(i) < 0 ){
 					idx_tmp.at(0) = taus.at(k);
 					idx_tmp.at(1) = i ;
 					pos[0] = k;
@@ -246,7 +246,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
-	if ( taus.size() >= 1 && isoTracks.size() == 0 ){
+	if ( taus.size() >= 1 ){
 		output.push_back( electrons );	
 		output.push_back( muons );	
 		output.push_back( taus );	
@@ -258,7 +258,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		return output;
 	}
 
-	else{	
+	else{
 		output.push_back( electrons );	
 		output.push_back( muons );	
 		output.push_back( taus );	
