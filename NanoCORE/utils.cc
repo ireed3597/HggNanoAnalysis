@@ -37,7 +37,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 
 	if ( taus.size() >= 2 ){
 		vector<int> pos(2,-1);
-		float mH_best	= -1;
+		float mH_best	= -999;
 		for (unsigned int i=0; i<taus.size(); i++){
 			for (unsigned int j=i+1; j<taus.size(); j++){
 				double mH = (Tau_p4().at(taus.at(i)) + Tau_p4().at(taus.at(j))).M();
@@ -67,7 +67,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 
 	if ( taus.size() >= 1 && muons.size() >= 1 ){
 		vector<int> pos(2,-1);
-		float mH_best	= -1;
+		float mH_best	= -999;
 		for (unsigned int i=0; i<taus.size(); i++){
 			for (unsigned int j=0; j<muons.size(); j++){
 				double mH = (Tau_p4().at(taus.at(i)) + Muon_p4().at(muons.at(j))).M();
@@ -97,7 +97,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 
 	if ( taus.size() >= 1 && electrons.size() >= 1 ){
 		vector<int> pos(2,-1);
-		float mH_best	= -1;
+		float mH_best	= -999;
 		for (unsigned int i=0; i<taus.size(); i++){
 			for (unsigned int j=0; j<electrons.size(); j++){
 				double mH = (Tau_p4().at(taus.at(i)) + Electron_p4().at(electrons.at(j))).M();
@@ -126,7 +126,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 
 	if ( muons.size() >= 1 && electrons.size() >= 1 ){
 		vector<int> pos(2,-1);
-		float mH_best	= -1;
+		float mH_best	= -999;
 		for (unsigned int i=0; i<muons.size(); i++){
 			for (unsigned int j=0; j<electrons.size(); j++){
 				double mH = (Muon_p4().at(muons.at(i)) + Electron_p4().at(electrons.at(j))).M();
@@ -155,7 +155,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 
 	if ( muons.size() >= 2 ){
 		vector<int> pos(2,-1);
-		float mH_best	= -1;
+		float mH_best	= -999;
 		for (unsigned int i=0; i<muons.size(); i++){
 			for (unsigned int j=i+1; j<muons.size(); j++){
 				double mH = (Muon_p4().at(muons.at(i)) + Muon_p4().at(muons.at(j))).M();
@@ -186,7 +186,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 
 	if ( electrons.size() >= 2 ){
 		vector<int> pos(2,-1);
-		float mH_best	= -1;
+		float mH_best	= -999;
 		for (unsigned int i=0; i<electrons.size(); i++){
 			for (unsigned int j=i+1; j<electrons.size(); j++){
 				double mH = (Electron_p4().at(electrons.at(i)) + Electron_p4().at(electrons.at(j))).M();
@@ -216,7 +216,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 
 	if ( taus.size() >= 1 && isoTracks.size() >= 1 ){
 		vector<int> pos(2,-1);
-		float mH_best	= -1;
+		float mH_best	= -999;
 		for (unsigned int k=0; k<taus.size(); k++){
 			for (unsigned int j=0; j<isoTracks.size(); j++){
 				unsigned int i = isoTracks[j];
