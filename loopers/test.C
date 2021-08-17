@@ -45,7 +45,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	TString file_name = proc + "_" +  std::to_string(year);
 
 	fstream syncOut;
-	syncOut.open("sync_"+file_name+".txt", ios::out);
+	syncOut.open("txt/sync_"+file_name+".txt", ios::out);
 
 	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
@@ -131,16 +131,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("pt_tautau_vis"			,	&pt_tautau_vis 			, 	"pt_tautau_vis/F"				);	  
 	out_tree->Branch("eta_tautau_vis"			,	&eta_tautau_vis			, 	"eta_tautau_vis/F"				);	  
 	out_tree->Branch("phi_tautau_vis"			,	&phi_tautau_vis			, 	"phi_tautau_vis/F"				);	  
-
-	int n_mt		= 0;
-	int n_et		= 0;
-	int n_tt		= 0;
-	int n_mm		= 0;
-	int n_em		= 0;
-	int n_ee		= 0;
-	int n_t			= 0;
-	int n_it		= 0;
-	int n_iso		= 0;
 
     int nEventsTotal = 0;
     int nEventsChain = ch->GetEntries();
@@ -242,20 +232,23 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 			//Z veto cut
 			bool Z_cand = false;
-			if ( sel_eles.size() >= 2 )
+			if ( sel_eles.size() >= 2 ){
 				for (unsigned int i=0; i<sel_eles.size(); i++){
 					for (unsigned int j=i+1; j<sel_eles.size(); j++){
 						if ( (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() < mZ_veto_up ){
 							Z_cand = true;
 							break;
+						}
 					}
 				}
-			if ( sel_muons.size() >= 2 )
+			}
+			if ( sel_muons.size() >= 2 ){
 				for (unsigned int i=0; i<sel_muons.size(); i++){
 					for (unsigned int j=i+1; j<sel_muons.size(); j++){
 						if ( (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() > mZ_veto_low  && (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() < mZ_veto_up ){
 							Z_cand = true;
 							break;
+						}
 					}
 				}
 			}

@@ -33,9 +33,9 @@ for name, sample in samples.items():
 			list_of_files = [ x for x in list_of_files if 'tree' in x and x not in corrupted_files ]
 		for file_ in list_of_files:
 			ch.Add(file_);
-		if str(name) != 'Data':
+		if str(name) != 'Data' and ch.GetEntries() != 0 :
 			scale_factor = sample[year]['metadata']['scale1fb'] * lumi[year]
 			r.ScanChain(ch, str(name) , int(year) , scale_factor, bool(sample['resonant']) )
-		else:
+		elif ch.GetEntries() != 0 :
 			scale_factor = 1
 			r.ScanChain(ch, str(name) , int(year) , scale_factor )
