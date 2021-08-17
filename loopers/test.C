@@ -235,7 +235,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( sel_eles.size() >= 2 ){
 				for (unsigned int i=0; i<sel_eles.size(); i++){
 					for (unsigned int j=i+1; j<sel_eles.size(); j++){
-						if ( (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() < mZ_veto_up ){
+						if ( (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() > mZ_veto_low  && (Electron_p4().at(sel_eles[i]) + Electron_p4().at(sel_eles[j])).M() < mZ_veto_up 
+							&& Electron_charge().at(sel_eles[i]) * Electron_charge().at(sel_eles[j]) < 0 ){
 							Z_cand = true;
 							break;
 						}
@@ -245,7 +246,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( sel_muons.size() >= 2 ){
 				for (unsigned int i=0; i<sel_muons.size(); i++){
 					for (unsigned int j=i+1; j<sel_muons.size(); j++){
-						if ( (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() > mZ_veto_low  && (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() < mZ_veto_up ){
+						if ( (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() > mZ_veto_low  && (Muon_p4().at(sel_muons[i]) + Muon_p4().at(sel_muons[j])).M() < mZ_veto_up 
+							&& Muon_charge().at(sel_muons[i]) * Muon_charge().at(sel_muons[j]) < 0 ){
 							Z_cand = true;
 							break;
 						}
@@ -267,6 +269,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			sel_isoTracks	= raw_results[3];
 			h_cand1			= raw_results[4];
 			h_cand2			= raw_results[5];
+
+			if ( h_cand1[1] == -1 && h_cand2[1] == -1  ) continue;
 
 			if ( h_cand1[1] == 2 && h_cand2[1] == 1  ) cat1 = true;
 			if ( h_cand1[1] == 2 && h_cand2[1] == 0  ) cat2 = true;
@@ -309,7 +313,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			out_tree->Fill();
 
 			//debugging
-			int category;
+			int category = -1;
 			if ( cat1 ) category = 1;
 			if ( cat2 ) category = 2;
 			if ( cat3 ) category = 3;
@@ -318,7 +322,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( cat6 ) category = 6;
 			if ( cat7 ) category = 7;
 			if ( cat8 ) category = 8;
-			syncOut<<run()<<","<<luminosityBlock()<<","<<event()<<","<<","<<n_electrons<<","<<n_muons<<","<<n_taus<<","<<category<<std::endl;
+			syncOut<<run()<<","<<luminosityBlock()<<","<<event()<<","<<n_electrons<<","<<n_muons<<","<<n_taus<<","<<category<<endl;
 
 			clear_branches();
 
@@ -326,16 +330,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
         delete file;
     } // File loop
     bar.finish();
-
-	cout << "category 1 mu-tau: " << n_mt << endl;
-	cout << "category 2 ele-tau: " << n_et << endl;
-	cout << "category 3 tau-tau: " << n_tt << endl;
-	cout << "category 4 mu-mu: " << n_mm << endl;
-	cout << "category 5 ele-ele: " << n_ee << endl;
-	cout << "category 6 mu-ele: " << n_em << endl;
-	cout << "category -1 tau: " << n_t << endl;
-	cout << "category 1tau+Iso: " << n_it << endl;
-	cout << "number of Iso: " << n_iso << endl;
 
 	f1->Write();
 	f1->Close();
