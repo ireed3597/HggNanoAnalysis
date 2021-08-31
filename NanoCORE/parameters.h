@@ -76,6 +76,7 @@ bool			cat8;
 float 			g1_ptmgg;
 float 			g1_pt;
 float 			g1_eta;
+float 			g1_eta_bdt;
 float 			g1_phi;
 float 			g1_idmva;
 float 			g1_pixVeto;
@@ -83,17 +84,21 @@ float 			g1_pixVeto;
 float 			g2_ptmgg;
 float 			g2_pt;
 float 			g2_eta;
+float 			g2_eta_bdt;
 float 			g2_phi;
 float 			g2_idmva;
 float 			g2_pixVeto;
 
 float 			gg_pt;
 float 			gg_eta;
+float 			gg_eta_bdt;
 float 			gg_phi;
 float 			gg_dR;
+float 			gg_dPhi;
 
 float 			lep1_pt				;
 float 			lep1_eta			;
+float 			lep1_eta_bdt		;
 float 			lep1_phi			;
 float 			lep1_charge			;
 float 			lep1_pdgID			;
@@ -104,6 +109,7 @@ float 			lep1_id_vs_jet		;
 
 float 			lep2_pt;
 float 			lep2_eta;
+float 			lep2_eta_bdt		;
 float 			lep2_phi;
 float 			lep2_charge;
 float 			lep2_pdgID;
@@ -114,16 +120,19 @@ float 			lep2_id_vs_jet;
 
 float 			jet1_pt			;
 float 			jet1_eta		;
+float 			jet1_eta_bdt	;
 float 			jet1_bTag		;
 float 			jet1_id			;
 
 float 			jet2_pt			;
 float 			jet2_eta		;
+float 			jet2_eta_bdt	;
 float 			jet2_bTag		;
 float 			jet2_id			;
 
 float 			pt_tautauSVFitLoose		;
 float 			eta_tautauSVFitLoose	;
+float 			eta_tautauSVFitLoose_bdt;
 float 			phi_tautauSVFitLoose	;
 float 			m_tautauSVFitLoose		;
 float 			dR_tautauSVFitLoose		;
@@ -133,4 +142,5 @@ float 			dPhi_MET_tau1			;
 float			m_tautau_vis			;
 float			pt_tautau_vis			;
 float			eta_tautau_vis			;
+float			eta_tautau_vis_bdt		;
 float			phi_tautau_vis			;

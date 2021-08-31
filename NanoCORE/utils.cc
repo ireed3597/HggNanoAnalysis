@@ -3,6 +3,14 @@
 
 using namespace tas;
 
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
+
+double deltaPhi( LorentzVector v1 , LorentzVector v2){
+	return ROOT::Math::VectorUtil::DeltaPhi( v1 , v2);
+}
+
 double deltaR( LorentzVector v1 , LorentzVector v2){
 	return ROOT::Math::VectorUtil::DeltaR( v1 , v2);
 }
@@ -35,6 +43,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 	vector<vector<int>> output;
 	vector<int> idx_tmp(2,0);
 
+	//2tau0lep 
 	if ( taus.size() >= 2 ){
 		vector<int> pos(2,-1);
 		float mH_best	= -999;
@@ -65,6 +74,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
+	//1tau1muon
 	if ( taus.size() >= 1 && muons.size() >= 1 ){
 		vector<int> pos(2,-1);
 		float mH_best	= -999;
@@ -95,6 +105,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
+	//1tau1electron
 	if ( taus.size() >= 1 && electrons.size() >= 1 ){
 		vector<int> pos(2,-1);
 		float mH_best	= -999;
@@ -124,6 +135,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
+	//1muon1electron
 	if ( muons.size() >= 1 && electrons.size() >= 1 ){
 		vector<int> pos(2,-1);
 		float mH_best	= -999;
@@ -153,6 +165,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
+	//2muons
 	if ( muons.size() >= 2 ){
 		vector<int> pos(2,-1);
 		float mH_best	= -999;
@@ -184,6 +197,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
+	//2electrons
 	if ( electrons.size() >= 2 ){
 		vector<int> pos(2,-1);
 		float mH_best	= -999;
@@ -214,6 +228,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
+	//1tau1isoTrack
 	if ( taus.size() >= 1 && isoTracks.size() >= 1 ){
 		vector<int> pos(2,-1);
 		float mH_best	= -999;
@@ -246,6 +261,7 @@ vector<vector<int>> categorise( vector<int> electrons, vector<int> muons, vector
 		}
 	}
 
+	//1tau-noIsoTrack
 	if ( taus.size() >= 1 ){
 		output.push_back( electrons );	
 		output.push_back( muons );	
@@ -298,6 +314,7 @@ void clear_branches(){
 	g1_ptmgg				= -9;
 	g1_pt					= -9;
 	g1_eta					= -9;
+	g1_eta_bdt				= -9;
 	g1_phi					= -9;
 	g1_idmva				= -9;
 	g1_pixVeto				= -9;
@@ -305,17 +322,21 @@ void clear_branches(){
 	g2_ptmgg				= -9;
 	g2_pt					= -9;
 	g2_eta					= -9;
+	g2_eta_bdt				= -9;
 	g2_phi					= -9;
 	g2_idmva				= -9;
 	g2_pixVeto				= -9;
 
 	gg_pt					= -9;
 	gg_eta					= -9;
+	gg_eta_bdt				= -9;
 	gg_phi					= -9;
 	gg_dR					= -9;
+	gg_dPhi					= -9;
 
 	lep1_pt					= -9;
 	lep1_eta				= -9;
+	lep1_eta_bdt			= -9;
 	lep1_phi				= -9;
 	lep1_charge				= -9;
 	lep1_pdgID				= -9;
@@ -326,6 +347,7 @@ void clear_branches(){
 
 	lep2_pt        			= -9;
 	lep2_eta       			= -9;
+	lep2_eta_bdt			= -9;
 	lep2_phi       			= -9;
 	lep2_charge    			= -9;
 	lep2_pdgID     			= -9;
@@ -336,16 +358,19 @@ void clear_branches(){
 
 	jet1_pt					= -9;
 	jet1_eta				= -9;
+	jet1_eta_bdt			= -9;
 	jet1_bTag				= -9;
 	jet1_id					= -9;
 
 	jet2_pt					= -9;
 	jet2_eta				= -9;
+	jet2_eta_bdt			= -9;
 	jet2_bTag				= -9;
 	jet2_id					= -9;
 
 	pt_tautauSVFitLoose		= -9;
 	eta_tautauSVFitLoose	= -9;
+	eta_tautauSVFitLoose_bdt= -9;
 	phi_tautauSVFitLoose	= -9;
 	m_tautauSVFitLoose		= -9;
 	dR_tautauSVFitLoose		= -9;
@@ -355,5 +380,6 @@ void clear_branches(){
 	m_tautau_vis			= -9;
 	pt_tautau_vis			= -9;
 	eta_tautau_vis			= -9;
+	eta_tautau_vis_bdt		= -9;
 	phi_tautau_vis			= -9;
 }
