@@ -7,15 +7,81 @@ template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
 }
 
+float getCosThetaStar_CS_old( LorentzVector gg_p4, svfit_LorentzVector tt_p4, float ebeam=6500 ){
+    // cos theta star angle in the Collins Soper frame
+    // Copied directly from here: https://github.com/ResonantHbbHgg/Selection/blob/master/selection.h#L3367-L3385
+    TLorentzVector p1, p2;
+    p1.SetPxPyPzE(0, 0,  ebeam, ebeam);
+    p2.SetPxPyPzE(0, 0, -ebeam, ebeam);
+
+    LorentzVector hh_lor = gg_p4 + tt_p4;
+    TLorentzVector hh;
+    hh.SetPxPyPzE(hh_lor.Px(),hh_lor.Py(),hh_lor.Pz(),hh_lor.E()) ;
+
+    TVector3 boost = - hh.BoostVector();
+    p1.Boost(boost);
+    p2.Boost(boost);
+    LorentzVector h1_lor = gg_p4;
+    TLorentzVector h_1;
+    h_1.SetPxPyPzE(h1_lor.Px(),h1_lor.Py(),h1_lor.Pz(),h1_lor.E()) ; 
+    h_1.Boost(boost);
+
+    TVector3 CSaxis = p1.Vect().Unit() - p2.Vect().Unit();
+    CSaxis.Unit();
+    
+    return TMath::Cos(   CSaxis.Angle( h_1.Vect().Unit() )    );
+}
+
+float helicityCosTheta( LorentzVector booster, LorentzVector boosted){
+
+    TLorentzVector Booster;
+    Booster.SetPxPyPzE(booster.Px(),booster.Py(),booster.Pz(),booster.E()) ; 
+    TLorentzVector Boosted;
+    Boosted.SetPxPyPzE(boosted.Px(),boosted.Py(),boosted.Pz(),boosted.E()) ; 
+
+    TVector3 BoostVector = Booster.BoostVector();
+    Boosted.Boost( -BoostVector.x(), -BoostVector.y(), -BoostVector.z() );
+    return Boosted.CosTheta();
+}
+
+
+double deltaPhi( float phi1 , float phi2){
+	float dphi = phi1 - phi2;
+	if ( dphi > TMath::Pi() ) {
+	    dphi -= 2.0*TMath::Pi();
+	} else if ( dphi <= -TMath::Pi() ) {
+	    dphi += 2.0*TMath::Pi();
+	}
+	return dphi;
+}
 double deltaPhi( LorentzVector v1 , LorentzVector v2){
 	return ROOT::Math::VectorUtil::DeltaPhi( v1 , v2);
 }
+double deltaPhi( svfit_LorentzVector v1 , LorentzVector v2){
+	return ROOT::Math::VectorUtil::DeltaPhi( v1 , v2);
+}
+double deltaPhi( LorentzVector v1 , svfit_LorentzVector v2){
+	return ROOT::Math::VectorUtil::DeltaPhi( v1 , v2);
+}
+double deltaPhi( svfit_LorentzVector v1 , svfit_LorentzVector v2){
+	return ROOT::Math::VectorUtil::DeltaPhi( v1 , v2);
+}
 
+double deltaR( svfit_LorentzVector v1 , LorentzVector v2){
+	return ROOT::Math::VectorUtil::DeltaR( v1 , v2);
+}
+
+double deltaR( svfit_LorentzVector v1 , svfit_LorentzVector v2){
+	return ROOT::Math::VectorUtil::DeltaR( v1 , v2);
+}
+double deltaR( LorentzVector v1 , svfit_LorentzVector v2){
+	return ROOT::Math::VectorUtil::DeltaR( v1 , v2);
+}
 double deltaR( LorentzVector v1 , LorentzVector v2){
 	return ROOT::Math::VectorUtil::DeltaR( v1 , v2);
 }
 
-double deltaR_v1( LorentzVector * v1 , LorentzVector v2){
+double deltaR( LorentzVector * v1 , LorentzVector v2){
 	LorentzVector v1_1;
 	v1_1.SetPt( v1->pt() );
 	v1_1.SetEta( v1->eta());
@@ -24,7 +90,7 @@ double deltaR_v1( LorentzVector * v1 , LorentzVector v2){
 	return ROOT::Math::VectorUtil::DeltaR( v1_1 , v2);
 }
 
-double deltaR_v2( LorentzVector * v1 , LorentzVector * v2){
+double deltaR( LorentzVector * v1 , LorentzVector * v2){
 	LorentzVector v1_1;
 	v1_1.SetPt( v1->pt() );
 	v1_1.SetEta( v1->eta());
@@ -295,6 +361,10 @@ void clear_branches(){
 	t_MET_phi				= -9;
 	t_weight				= -9;
 
+	lep12_dphi				= -9;
+	lep12_deta				= -9;
+	lep12_dr				= -9;
+
 	cat1					= false;
 	cat2					= false;
 	cat3					= false;
@@ -309,6 +379,7 @@ void clear_branches(){
 	n_muons					= -9;
 	n_taus 					= -9;
 	n_jets 					= -9;
+	n_bjets					= -9;
 	n_isoTrks				= -9;
 
 	g1_ptmgg				= -9;
@@ -317,7 +388,7 @@ void clear_branches(){
 	g1_eta_bdt				= -9;
 	g1_phi					= -9;
 	g1_idmva				= -9;
-	g1_pixVeto				= -9;
+	g1_pixVeto				= false;
 
 	g2_ptmgg				= -9;
 	g2_pt					= -9;
@@ -325,7 +396,7 @@ void clear_branches(){
 	g2_eta_bdt				= -9;
 	g2_phi					= -9;
 	g2_idmva				= -9;
-	g2_pixVeto				= -9;
+	g2_pixVeto				= false;
 
 	gg_pt					= -9;
 	gg_eta					= -9;
@@ -333,6 +404,8 @@ void clear_branches(){
 	gg_phi					= -9;
 	gg_dR					= -9;
 	gg_dPhi					= -9;
+	gg_hel					= -9;
+	gg_tt_CS				= -9;
 
 	lep1_pt					= -9;
 	lep1_eta				= -9;
@@ -375,11 +448,16 @@ void clear_branches(){
 	m_tautauSVFitLoose		= -9;
 	dR_tautauSVFitLoose		= -9;
 	dR_ggtautauSVFitLoose	= -9;
-	dPhi_MET_tau1			= -9;
 
 	m_tautau_vis			= -9;
 	pt_tautau_vis			= -9;
 	eta_tautau_vis			= -9;
 	eta_tautau_vis_bdt		= -9;
 	phi_tautau_vis			= -9;
+
+	MET_gg_dPhi				= -9;
+	MET_ll_dPhi				= -9;
+	ll_dPhi					= -9;
+	ll_dEta					= -9;
+	ll_dR					= -9;
 }

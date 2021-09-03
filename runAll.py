@@ -21,7 +21,7 @@ list_of_files_tmp = [ '/hadoop/cms/store/user/legianni/skimNano-Hggselection/HHg
 with open('samples_and_scale1fb.json', "r") as f_in:
 	samples = json.load(f_in)
 
-for name, sample in samples.items():
+for name, sample in samples.items()[9:10]:
 	for year in years:
 		print 'Start processing ', year, ' ' , str(name)
 		ch = r.TChain("Events")

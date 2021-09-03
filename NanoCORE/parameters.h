@@ -46,6 +46,21 @@ const int 	tau_deepID_j			= 7;
 const float tau_dR_pho				= 0.2;
 const float tau_dR_lep				= 0.2;
 
+//jet selection
+const float jet_pt					= 25;
+const float jet_eta					= 2.4;
+const float jet_neEmEF				= 0.99;
+const float jet_neHEF				= 0.99;
+const float jet_chHEF				= 0;
+const float jet_chEmEF				= 0.99;
+const int 	jet_nConstituents		= 1;
+const float jet_dR_pho				= 0.4;
+const float jet_dR_lep				= 0.4;
+const float jet_dR_tau				= 0.4;
+
+//bJet MediumWorkingPoint
+const float bTag_medium_WP[3] = { 0.3093 , 0.3033, 0.2770 };
+
 //IsoTracks
 const float isoTrk_dR				= 0.2;
 
@@ -62,7 +77,12 @@ int				n_electrons;
 int				n_muons;
 int				n_taus;
 int				n_jets;
+int				n_bjets;
 int 			n_isoTrks;
+
+float			lep12_dphi;
+float			lep12_deta;
+float			lep12_dr;
 
 bool			cat1;
 bool			cat2;
@@ -79,7 +99,7 @@ float 			g1_eta;
 float 			g1_eta_bdt;
 float 			g1_phi;
 float 			g1_idmva;
-float 			g1_pixVeto;
+bool 			g1_pixVeto;
 
 float 			g2_ptmgg;
 float 			g2_pt;
@@ -87,7 +107,7 @@ float 			g2_eta;
 float 			g2_eta_bdt;
 float 			g2_phi;
 float 			g2_idmva;
-float 			g2_pixVeto;
+bool 			g2_pixVeto;
 
 float 			gg_pt;
 float 			gg_eta;
@@ -95,6 +115,8 @@ float 			gg_eta_bdt;
 float 			gg_phi;
 float 			gg_dR;
 float 			gg_dPhi;
+float 			gg_hel;
+float 			gg_tt_CS;
 
 float 			lep1_pt				;
 float 			lep1_eta			;
@@ -122,13 +144,13 @@ float 			jet1_pt			;
 float 			jet1_eta		;
 float 			jet1_eta_bdt	;
 float 			jet1_bTag		;
-float 			jet1_id			;
+int 			jet1_id			;
 
 float 			jet2_pt			;
 float 			jet2_eta		;
 float 			jet2_eta_bdt	;
 float 			jet2_bTag		;
-float 			jet2_id			;
+int 			jet2_id			;
 
 float 			pt_tautauSVFitLoose		;
 float 			eta_tautauSVFitLoose	;
@@ -137,10 +159,15 @@ float 			phi_tautauSVFitLoose	;
 float 			m_tautauSVFitLoose		;
 float 			dR_tautauSVFitLoose		;
 float 			dR_ggtautauSVFitLoose	;
-float 			dPhi_MET_tau1			;
 
 float			m_tautau_vis			;
 float			pt_tautau_vis			;
 float			eta_tautau_vis			;
 float			eta_tautau_vis_bdt		;
 float			phi_tautau_vis			;
+
+float			MET_gg_dPhi				;
+float			MET_ll_dPhi				;
+float			ll_dPhi					;
+float			ll_dEta					;
+float			ll_dR					;
