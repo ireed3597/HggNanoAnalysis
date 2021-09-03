@@ -5,7 +5,7 @@ These tools are based on the C++ looper from [NanoTools](https://github.com/cmst
 ## Installation and setup
 **1. Clone repository**
 ```
-git clone https://github.com/cmstas/HggNanoAnalysis
+git clone https://github.com/cmstas/HggNanoAnalysis -b c++_looper
 cd HggNanoAnalysis
 ```
 
