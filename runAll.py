@@ -6,7 +6,8 @@ import ROOT as r
 from tqdm import tqdm
 from ROOT import gROOT
 
-r.gSystem.Load('/home/users/fsetti/NanoTools/HggNanoAnalysis/TauAnalysis/ClassicSVfit/lib/libTauAnalysis_ClassicSVfit.so')
+#r.gSystem.Load('/home/users/fsetti/NanoTools/HggNanoAnalysis/TauAnalysis/ClassicSVfit/lib/libTauAnalysis_ClassicSVfit.so')
+r.gSystem.Load('NanoCORE/libTauAnalysis_ClassicSVfit.so')
 r.gSystem.Load('loopers/test_C.so')
 
 lumi = { "2016" : 35.9, "2017" : 41.5, "2018" : 59.8 }
