@@ -18,6 +18,7 @@
 #include "../NanoCORE/utils.cc"
 #include "SVfit_utils.cc"
 
+#include <string>
 #include <iostream>
 #include <iomanip>
 
@@ -47,14 +48,19 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	//fstream syncOut;
 	//syncOut.open("txt/sync_"+file_name+".txt", ios::out);
 
-	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
-	H1(var, 60, 0 , 1 );
+	TFile* f1 = new TFile("synch/" + file_name + ".root", "RECREATE");
+	H1(mgg, 60, 100 , 180 );
+	H1(mgg_1t0l, 60, 100 , 180 );
+	H1(mgg_1t1l, 60, 100 , 180 );
+	H1(mgg_2t0l, 60, 100 , 180 );
+	H1(mgg_0t2l, 60, 100 , 180 );
 
 	TTree *out_tree	=	new TTree("Events","output tree");
 	out_tree->Branch("year",&year,"year/I");
 	out_tree->Branch("run",&t_run,"run/I");
 	out_tree->Branch("lumiBlock",&t_lumiBlock,"lumiBlock/I");
 	out_tree->Branch("event",&t_event,"event/I");
+	out_tree->Branch("process_id",&process_id,"process_id/I");
 	out_tree->Branch("MET_pt",&t_MET_pt,"MET_pt/F");
 	out_tree->Branch("MET_phi",&t_MET_phi,"MET_phi/F");
 	out_tree->Branch("weight",&t_weight,"weight/F");
@@ -126,19 +132,37 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("jet2_bTag"				,	&jet2_bTag		, 	"jet2_bTag/F"				);	  
 	out_tree->Branch("jet2_id"					,	&jet2_id		, 	"jet2_id/I"					);	  
 
-	out_tree->Branch("pt_tautauSVFitLoose"		,	&pt_tautauSVFitLoose		,	"pt_tautauSVFitLoose/F"			);	  
-	out_tree->Branch("eta_tautauSVFitLoose"		,	&eta_tautauSVFitLoose		, 	"eta_tautauSVFitLoose/F"		);	  
-	out_tree->Branch("eta_tautauSVFitLoose_bdt"	,	&eta_tautauSVFitLoose_bdt	, 	"eta_tautauSVFitLoose_bdt/F"		);	  
-	out_tree->Branch("phi_tautauSVFitLoose"		,	&phi_tautauSVFitLoose		, 	"phi_tautauSVFitLoose/F"		);	  
-	out_tree->Branch("m_tautauSVFitLoose"		,	&m_tautauSVFitLoose			, 	"m_tautauSVFitLoose/F"			);	  
-	out_tree->Branch("dR_tautauSVFitLoose"		,	&dR_tautauSVFitLoose		, 	"dR_tautauSVFitLoose/F"			);	  
-	out_tree->Branch("dR_ggtautauSVFitLoose"	,	&dR_ggtautauSVFitLoose		, 	"dR_ggtautauSVFitLoose/F"		);	  
+	out_tree->Branch("pt_tautau_SVFit"		,	&pt_tautauSVFitLoose		,	"pt_tautau_SVFit/F"			);	  
+	out_tree->Branch("eta_tautau_SVFit"		,	&eta_tautauSVFitLoose		, 	"eta_tautau_SVFit/F"		);	  
+	out_tree->Branch("eta_tautau_SVFit_bdt"	,	&eta_tautauSVFitLoose_bdt	, 	"eta_tautau_SVFit_bdt/F"		);	  
+	out_tree->Branch("phi_tautau_SVFit"		,	&phi_tautauSVFitLoose		, 	"phi_tautau_SVFit/F"		);	  
+	out_tree->Branch("m_tautau_SVFit"		,	&m_tautauSVFitLoose			, 	"m_tautau_SVFit/F"			);	  
+	out_tree->Branch("dR_tautau_SVFit"		,	&dR_tautauSVFitLoose		, 	"dR_tautau_SVFit/F"			);	  
+	out_tree->Branch("dR_ggtautau_SVFit"	,	&dR_ggtautauSVFitLoose		, 	"dR_ggtautau_SVFit/F"		);	  
 
 	out_tree->Branch("m_tautau_vis"				,	&m_tautau_vis  				, 	"m_tautau_vis/F"				);	  
 	out_tree->Branch("pt_tautau_vis"			,	&pt_tautau_vis 				, 	"pt_tautau_vis/F"				);	  
 	out_tree->Branch("eta_tautau_vis"			,	&eta_tautau_vis				, 	"eta_tautau_vis/F"				);	  
 	out_tree->Branch("eta_tautau_vis_bdt"		,	&eta_tautau_vis_bdt			, 	"eta_tautau_vis_bdt/F"			);	  
 	out_tree->Branch("phi_tautau_vis"			,	&phi_tautau_vis				, 	"phi_tautau_vis/F"				);	  
+
+	//define process ids
+	if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)	process_id = -4;
+	if (proc.find(std::string("HH_ggWW_dileptonic")) != std::string::npos) 	process_id = -3;
+	if (proc.find(std::string("HH_ggZZ")) != std::string::npos) 				process_id = -2;
+	if (proc.find(std::string("HH_ggTauTau")) != std::string::npos) 			process_id = -1;
+	if (proc.find(std::string("Data")) != std::string::npos) 				process_id = 0;
+	if (proc.find(std::string("ZGamma")) != std::string::npos) 				process_id = 2;
+	if (proc.find(std::string("DiPhoton")) != std::string::npos) 			process_id = 3;
+	if (proc.find(std::string("WGamma")) != std::string::npos) 				process_id = 4;
+	if (proc.find(std::string("TTbar")) != std::string::npos) 				process_id = 5;
+	if (proc.find(std::string("TTGamma")) != std::string::npos) 				process_id = 6;
+	if (proc.find(std::string("TTGG")) != std::string::npos) 				process_id = 7;
+	if (proc.find(std::string("GJets")) != std::string::npos)				process_id = 8;
+	if (proc.find(std::string("VH")) != std::string::npos) 					process_id = 9;
+	if (proc.find(std::string("ttH")) != std::string::npos) 					process_id = 10;
+	if (proc.find(std::string("ggH")) != std::string::npos) 					process_id = 11;
+	if (proc.find(std::string("VBFH")) != std::string::npos) 				process_id = 12;
 
     int nEventsTotal = 0;
     int nEventsChain = ch->GetEntries();
@@ -248,13 +272,22 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 					bool overlap = false;
 					for (unsigned int j=0; j<sel_eles.size(); j++){
-						if ( deltaR( Jet_p4().at(i) , Electron_p4().at(sel_eles.at(j)) ) < jet_dR_lep ) overlap = true;
+						if ( !overlap && deltaR( Jet_p4().at(i) , Electron_p4().at(sel_eles.at(j)) ) < jet_dR_lep ){
+							overlap = true;
+							break;
+						}
 					}
 					for (unsigned int j=0; j<sel_muons.size(); j++){
-						if ( deltaR( Jet_p4().at(i) , Muon_p4().at(sel_muons.at(j)) ) < jet_dR_lep ) overlap = true;
+						if ( !overlap && deltaR( Jet_p4().at(i) , Muon_p4().at(sel_muons.at(j)) ) < jet_dR_lep ){
+							overlap = true;
+							break;
+						}
 					}
 					for (unsigned int j=0; j<sel_taus.size(); j++){
-						if ( deltaR( Jet_p4().at(i) , Tau_p4().at(sel_taus.at(j)) ) < jet_dR_tau ) overlap = true;
+						if ( !overlap && deltaR( Jet_p4().at(i) , Tau_p4().at(sel_taus.at(j)) ) < jet_dR_tau ){
+							overlap = true;
+							break;
+						}
 					}
 
 					if ( !overlap ) sel_jets.push_back(i);
@@ -365,10 +398,10 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 
 			if ( category < 8 ){
-
-			diTau_p4	= svFit_res[0];
-			tau1_p4		= svFit_res[1];
-			tau2_p4		= svFit_res[2];
+				diTau_p4	= svFit_res[0];
+				tau1_p4		= svFit_res[1];
+				tau2_p4		= svFit_res[2];
+			}
 
 			float weight = 1.;
 			if ( proc != "Data" ) weight = genWeight() * scale_factor;
@@ -409,13 +442,15 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			g2_idmva		=	Photon_mvaID().at(gHidx()[1]) ;
 			g2_pixVeto		=   Photon_pixelSeed().at(gHidx()[1]) ;
 
-			pt_tautauSVFitLoose			= diTau_p4.pt();
-			eta_tautauSVFitLoose		= diTau_p4.eta();
-			eta_tautauSVFitLoose_bdt	= diTau_p4.eta() * sgn( gg_eta ) ;
-			phi_tautauSVFitLoose		= diTau_p4.phi();
-			m_tautauSVFitLoose			= diTau_p4.M();
-			dR_tautauSVFitLoose			= deltaR( tau1_p4 , tau2_p4 );
-			dR_ggtautauSVFitLoose		= deltaR( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+			if ( category < 8 ){
+				pt_tautauSVFitLoose			= diTau_p4.pt();
+				eta_tautauSVFitLoose		= diTau_p4.eta();
+				eta_tautauSVFitLoose_bdt	= diTau_p4.eta() * sgn( gg_eta ) ;
+				phi_tautauSVFitLoose		= diTau_p4.phi();
+				m_tautauSVFitLoose			= diTau_p4.M();
+				dR_tautauSVFitLoose			= deltaR( tau1_p4 , tau2_p4 );
+				dR_ggtautauSVFitLoose		= deltaR( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+			}
 
 			LorentzVector lep1_p4, lep2_p4;
 
@@ -573,15 +608,16 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep12_dr		= deltaR( iso_track, Tau_p4()[h_cand1[0]] );
 			}
 
-			lep12_dphi		= deltaPhi( lep2_phi , lep1_phi );
-			lep12_deta		= lep2_eta - lep1_eta ;
+			if ( category < 8 ){
+				lep12_dphi		= deltaPhi( lep2_phi , lep1_phi );
+				lep12_deta		= lep2_eta - lep1_eta ;
 
-			m_tautau_vis		= (lep1_p4 + lep2_p4).M()	;
-			pt_tautau_vis		= (lep1_p4 + lep2_p4).pt()	;
-			eta_tautau_vis		= (lep1_p4 + lep2_p4).eta()	;
-			eta_tautau_vis_bdt	= eta_tautau_vis * sgn( gg_eta );
-			phi_tautau_vis		= (lep1_p4 + lep2_p4).phi()	;
-
+				m_tautau_vis		= (lep1_p4 + lep2_p4).M()	;
+				pt_tautau_vis		= (lep1_p4 + lep2_p4).pt()	;
+				eta_tautau_vis		= (lep1_p4 + lep2_p4).eta()	;
+				eta_tautau_vis_bdt	= eta_tautau_vis * sgn( gg_eta );
+				phi_tautau_vis		= (lep1_p4 + lep2_p4).phi()	;
+			}
 
 			if ( cat8 ){
 				lep1_pt			=	Tau_pt()[h_cand1[0]];
@@ -612,14 +648,19 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 			out_tree->Fill();
 
-			}
 			//debugging
 			/*
 			syncOut<<run()<<","<<luminosityBlock()<<","<<event()<<","<<n_electrons<<","<<n_muons<<","<<n_taus<<","<<category<<endl;
 			*/
 
-			clear_branches();
+			//make histograms for yields
+			h_mgg->Fill( mgg, weight );
+			if ( cat1 || cat2 ) h_mgg_1t1l->Fill( mgg, weight );
+			if ( cat3 ) h_mgg_2t0l->Fill( mgg, weight );
+			if ( cat4 || cat5 || cat6 ) h_mgg_0t2l->Fill( mgg, weight );
+			if ( cat7 || cat8 ) h_mgg_1t0l->Fill( mgg, weight );
 
+			clear_branches();
         } // Event loop
         delete file;
     } // File loop
