@@ -33,7 +33,7 @@ conda install --name base conda-pack -y
 conda create --name pyrootenv uproot pandas root matplotlib jupyter
 
 # and then any install residual packages with pip
-conda run --name pyrootenv pip install yahist
+conda run --name pyrootenv pip install yahist mplhep
 ```  
   
 Then, run 
