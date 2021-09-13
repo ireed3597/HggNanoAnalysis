@@ -64,8 +64,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("MET_pt",&t_MET_pt,"MET_pt/F");
 	out_tree->Branch("MET_phi",&t_MET_phi,"MET_phi/F");
 	out_tree->Branch("weight",&t_weight,"weight/F");
+	out_tree->Branch("Category",&category,"Category/I");
 
-	out_tree->Branch("mgg",&mgg,"mgg/F");
 	out_tree->Branch("n_electrons",&n_electrons,"n_electrons/I");
 	out_tree->Branch("n_muons",&n_muons,"n_muons/I");
 	out_tree->Branch("n_taus",&n_taus,"n_taus/I");
@@ -98,7 +98,10 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("gg_dR"		,	&gg_dR		,	"gg_dR/F"			);
 	out_tree->Branch("gg_dPhi"		,	&gg_dPhi	,	"gg_dPhi/F"			);
 	out_tree->Branch("gg_hel"		,	&gg_hel		,	"gg_hel/F"			);
+	out_tree->Branch("gg_hel_phys"	,	&gg_hel_phys,	"gg_hel_phys/F"		);
 	out_tree->Branch("gg_tt_CS"		,	&gg_tt_CS	,	"gg_tt_CS/F"		);
+	out_tree->Branch("gg_tt_hel"	,	&gg_tt_hel	,	"gg_tt_hel/F"		);
+	out_tree->Branch("mgg"			,	&mgg		,	"mgg/F"				);
 
 	out_tree->Branch("lep1_pt"			,	&lep1_pt				, 	"lep1_pt/F"					);	  
 	out_tree->Branch("lep1_eta"			,	&lep1_eta				,  	"lep1_eta/F"				);
@@ -140,11 +143,13 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("dR_tautau_SVFit"		,	&dR_tautauSVFitLoose		, 	"dR_tautau_SVFit/F"			);	  
 	out_tree->Branch("dR_ggtautau_SVFit"	,	&dR_ggtautauSVFitLoose		, 	"dR_ggtautau_SVFit/F"		);	  
 
-	out_tree->Branch("m_tautau_vis"				,	&m_tautau_vis  				, 	"m_tautau_vis/F"				);	  
-	out_tree->Branch("pt_tautau_vis"			,	&pt_tautau_vis 				, 	"pt_tautau_vis/F"				);	  
-	out_tree->Branch("eta_tautau_vis"			,	&eta_tautau_vis				, 	"eta_tautau_vis/F"				);	  
-	out_tree->Branch("eta_tautau_vis_bdt"		,	&eta_tautau_vis_bdt			, 	"eta_tautau_vis_bdt/F"			);	  
-	out_tree->Branch("phi_tautau_vis"			,	&phi_tautau_vis				, 	"phi_tautau_vis/F"				);	  
+	out_tree->Branch("tt_hel"				,	&tt_hel  					, 	"tt_hel/F"					);	  
+	out_tree->Branch("tt_hel_phys"			,	&tt_hel_phys				, 	"tt_hel_phys/F"				);	  
+	out_tree->Branch("m_tautau_vis"			,	&m_tautau_vis  				, 	"m_tautau_vis/F"			);	  
+	out_tree->Branch("pt_tautau_vis"		,	&pt_tautau_vis 				, 	"pt_tautau_vis/F"			);	  
+	out_tree->Branch("eta_tautau_vis"		,	&eta_tautau_vis				, 	"eta_tautau_vis/F"			);	  
+	out_tree->Branch("eta_tautau_vis_bdt"	,	&eta_tautau_vis_bdt			, 	"eta_tautau_vis_bdt/F"		);	  
+	out_tree->Branch("phi_tautau_vis"		,	&phi_tautau_vis				, 	"phi_tautau_vis/F"			);	  
 
 	//define process ids
 	if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)	process_id = -4;
@@ -354,7 +359,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( h_cand1[1] == 2 && h_cand2[1] == 3  ) cat7 = true;
 			if ( h_cand1[1] == 2 && h_cand2[1] == -1 ) cat8 = true;
 
-			int category = -1;
+			category = 99;
 			if ( cat1 ) category = 1;
 			if ( cat2 ) category = 2;
 			if ( cat3 ) category = 3;
@@ -421,10 +426,15 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			gg_phi			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).phi() ;
 			gg_dR			=	deltaR(Photon_p4().at(gHidx()[0]) , Photon_p4().at(gHidx()[1])) ;
 			gg_dPhi			=	deltaPhi(Photon_p4().at(gHidx()[0]) , Photon_p4().at(gHidx()[1])) ;
-			gg_tt_CS		=	getCosThetaStar_CS_old( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+			gg_hel_phys		= 	helicityCosTheta_phys( Photon_p4().at(gHidx()[0]), Photon_p4().at(gHidx()[1]) ) ; 
 			bool roll		= 	rand() % 2 == 0;
-			if (roll ) 		gg_hel			= 	helicityCosTheta( Photon_p4().at(gHidx()[0]), Photon_p4().at(gHidx()[1]) ) ;
-			else	{		gg_hel			= 	helicityCosTheta( Photon_p4().at(gHidx()[1]), Photon_p4().at(gHidx()[0]) ) ; }
+			if (roll ) 		gg_hel			= 	helicityCosTheta( Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]), Photon_p4().at(gHidx()[0]) ) ;
+			else	{		gg_hel			= 	helicityCosTheta( Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]), Photon_p4().at(gHidx()[1]) ) ; }
+
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////
+			//////////////// 		To implement also helicity between taus!!!!!!!!!!!!!
+			/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			g1_ptmgg		=	Photon_pt().at(gHidx()[0]) / mgg;
 			g1_pt			=	Photon_pt().at(gHidx()[0]) ;
@@ -443,6 +453,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			g2_pixVeto		=   Photon_pixelSeed().at(gHidx()[1]) ;
 
 			if ( category < 8 ){
+				gg_tt_CS					= getCosThetaStar_CS_old( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
 				pt_tautauSVFitLoose			= diTau_p4.pt();
 				eta_tautauSVFitLoose		= diTau_p4.eta();
 				eta_tautauSVFitLoose_bdt	= diTau_p4.eta() * sgn( gg_eta ) ;
@@ -450,6 +461,9 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				m_tautauSVFitLoose			= diTau_p4.M();
 				dR_tautauSVFitLoose			= deltaR( tau1_p4 , tau2_p4 );
 				dR_ggtautauSVFitLoose		= deltaR( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+				tt_hel_phys					= 	helicityCosTheta_phys( tau1_p4, tau2_p4 ) ;
+				if (roll ) 		tt_hel		= 	helicityCosTheta( diTau_p4 , tau1_p4 ) ;
+				else	{		tt_hel		= 	helicityCosTheta( diTau_p4 , tau2_p4 ) ; }
 			}
 
 			LorentzVector lep1_p4, lep2_p4;
@@ -631,14 +645,14 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep1_id_vs_jet	=	Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
 			}
 
-			if ( sel_jets.size() > 1 ){
+			if ( sel_jets.size() > 0 ){
 				jet1_pt		=	Jet_pt()[sel_jets[0]];
 				jet1_eta	=	Jet_eta()[sel_jets[0]];
 				jet1_eta_bdt=	jet1_eta* sgn( gg_eta );
 				jet1_bTag	=	Jet_btagDeepFlavB()[sel_jets[0]];
 				jet1_id		=	Jet_jetId()[sel_jets[0]];
 			}
-			if ( sel_jets.size() > 2 ){
+			if ( sel_jets.size() > 1 ){
 				jet2_pt		=	Jet_pt()[sel_jets[1]];
 				jet2_eta	=	Jet_eta()[sel_jets[1]];
 				jet2_eta_bdt=	jet1_eta* sgn( gg_eta );

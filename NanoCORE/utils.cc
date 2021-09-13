@@ -44,6 +44,62 @@ float helicityCosTheta( LorentzVector booster, LorentzVector boosted){
     return Boosted.CosTheta();
 }
 
+float helicityCosTheta( svfit_LorentzVector booster, svfit_LorentzVector boosted){
+
+    TLorentzVector Booster;
+    Booster.SetPxPyPzE(booster.Px(),booster.Py(),booster.Pz(),booster.E()) ; 
+    TLorentzVector Boosted;
+    Boosted.SetPxPyPzE(boosted.Px(),boosted.Py(),boosted.Pz(),boosted.E()) ; 
+
+    TVector3 BoostVector = Booster.BoostVector();
+    Boosted.Boost( -BoostVector.x(), -BoostVector.y(), -BoostVector.z() );
+    return Boosted.CosTheta();
+}
+
+float helicityCosTheta_phys( LorentzVector particle1, LorentzVector particle2 ){
+
+	TLorentzVector particle_1;
+	particle_1.SetPxPyPzE(particle1.Px(),particle1.Py(),particle1.Pz(),particle1.E()) ; 
+	
+	TLorentzVector particle_2;
+	particle_2.SetPxPyPzE(particle2.Px(),particle2.Py(),particle2.Pz(),particle2.E()) ; 
+
+	TLorentzVector p1 = particle_1;
+	TLorentzVector parent = particle_1 + particle_2;
+	
+	TVector3 boost_to_parent = -(parent.BoostVector());
+	p1.Boost(boost_to_parent);
+	
+	TVector3 v1 = p1.Vect();
+	TVector3 vParent = parent.Vect();
+	
+	double cos_theta_1 = (v1.Dot(vParent)) / (v1.Mag() * vParent.Mag());
+	
+	return abs(cos_theta_1);  
+}
+
+float helicityCosTheta_phys( svfit_LorentzVector particle1, svfit_LorentzVector particle2 ){
+
+	TLorentzVector particle_1;
+	particle_1.SetPxPyPzE(particle1.Px(),particle1.Py(),particle1.Pz(),particle1.E()) ; 
+	
+	TLorentzVector particle_2;
+	particle_2.SetPxPyPzE(particle2.Px(),particle2.Py(),particle2.Pz(),particle2.E()) ; 
+
+	TLorentzVector p1 = particle_1;
+	TLorentzVector parent = particle_1 + particle_2;
+	
+	TVector3 boost_to_parent = -(parent.BoostVector());
+	p1.Boost(boost_to_parent);
+	
+	TVector3 v1 = p1.Vect();
+	TVector3 vParent = parent.Vect();
+	
+	double cos_theta_1 = (v1.Dot(vParent)) / (v1.Mag() * vParent.Mag());
+	
+	return abs(cos_theta_1);  
+}
+
 
 double deltaPhi( float phi1 , float phi2){
 	float dphi = phi1 - phi2;
@@ -360,6 +416,7 @@ void clear_branches(){
 	t_MET_pt				= -9;
 	t_MET_phi				= -9;
 	t_weight				= -9;
+	category				= -9;
 
 	lep12_dphi				= -9;
 	lep12_deta				= -9;
@@ -405,7 +462,9 @@ void clear_branches(){
 	gg_dR					= -9;
 	gg_dPhi					= -9;
 	gg_hel					= -9;
+	gg_hel_phys				= -9;
 	gg_tt_CS				= -9;
+	gg_tt_hel				= -9;
 
 	lep1_pt					= -9;
 	lep1_eta				= -9;
@@ -448,6 +507,8 @@ void clear_branches(){
 	m_tautauSVFitLoose		= -9;
 	dR_tautauSVFitLoose		= -9;
 	dR_ggtautauSVFitLoose	= -9;
+	tt_hel					= -9;
+	tt_hel_phys				= -9;
 
 	m_tautau_vis			= -9;
 	pt_tautau_vis			= -9;

@@ -71,6 +71,8 @@ int				t_event;
 float 			t_MET_pt;
 float 			t_MET_phi;
 float 			t_weight;
+int 			process_id;
+int 			category;
 
 float 			mgg;
 int				n_electrons;
@@ -116,7 +118,9 @@ float 			gg_phi;
 float 			gg_dR;
 float 			gg_dPhi;
 float 			gg_hel;
+float 			gg_hel_phys;
 float 			gg_tt_CS;
+float 			gg_tt_hel;
 
 float 			lep1_pt				;
 float 			lep1_eta			;
@@ -159,6 +163,8 @@ float 			phi_tautauSVFitLoose	;
 float 			m_tautauSVFitLoose		;
 float 			dR_tautauSVFitLoose		;
 float 			dR_ggtautauSVFitLoose	;
+float			tt_hel					;
+float			tt_hel_phys				;
 
 float			m_tautau_vis			;
 float			pt_tautau_vis			;
