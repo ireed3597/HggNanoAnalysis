@@ -384,42 +384,36 @@
         "process_id": -4,
         "resonant": true
     },
-    "HH_ggZZ": {
-        "2016": {
-            "metadata": {
-                "n_events": 993871,
-                "scale1fb": 3.7171652915604347e-09,
-                "sumWeights": 993499,
-                "xs": 3.693e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-Hggselection/HHggZZ_Era2016_private_mc16/"
-            ]
-        },
-        "2017": {
-            "metadata": {
-                "n_events": 901884,
-                "scale1fb": 4.095974232961446e-09,
-                "sumWeights": 901617,
-                "xs": 3.693e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-Hggselection/HHggZZ_Era2017_private_mc17/"
-            ]
-        },
+    "HH_ggZZ_2l2q": {
         "2018": {
             "metadata": {
-                "n_events": 989862,
-                "scale1fb": 3.731965451276781e-09,
-                "sumWeights": 989559,
-                "xs": 3.693e-06
+                "n_events": 995997,
+                "scale1fb": 6.166948270569143e-09,
+                "sumWeights": 28182.496816040282,
+                "xs": 1.738e-07
             },
             "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-Hggselection/HHggZZ_Era2018_private_mc18/"
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/"
             ]
         },
         "fpo": 10,
-        "process_id": -2,
+        "process_id": -6,
+        "resonant": true
+    },
+    "HH_ggZZ_4l": {
+        "2018": {
+            "metadata": {
+                "n_events": 903998,
+                "scale1fb": 1.0858661560968384e-10,
+                "sumWeights": 346727.8152892569,
+                "xs": 3.765e-08
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ4L_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -5,
         "resonant": true
     },
     "TTGG": {
