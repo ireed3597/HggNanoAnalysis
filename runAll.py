@@ -8,7 +8,7 @@ from ROOT import gROOT
 
 #r.gSystem.Load('/home/users/fsetti/NanoTools/HggNanoAnalysis/TauAnalysis/ClassicSVfit/lib/libTauAnalysis_ClassicSVfit.so')
 r.gSystem.Load('NanoCORE/libTauAnalysis_ClassicSVfit.so')
-r.gSystem.Load('loopers/test_C.so')
+r.gSystem.Load('loopers/loop_C.so')
 
 lumi = { "2016" : 35.9, "2017" : 41.5, "2018" : 59.8 }
 years = ['2016', '2017', '2018']
@@ -27,15 +27,18 @@ for name, sample in samples.items():
 		print 'Start processing ', year, ' ' , str(name)
 		ch = r.TChain("Events")
 		list_of_files = []
-		for path in sample[year]['paths']:
-			list_of_files += glob.glob(path+'/*/*/*/*.root')
-		list_of_files = [ x for x in list_of_files if 'tree' in x and x in list_of_files_tmp ]
-		#list_of_files = [ x for x in list_of_files if 'tree' in x and x not in corrupted_files ]
-		for file_ in list_of_files[:3]:
-			ch.Add(file_);
-		if str(name) != 'Data' and ch.GetEntries() != 0 :
-			scale_factor = sample[year]['metadata']['scale1fb'] * lumi[year]
-			r.ScanChain(ch, str(name) , int(year) , scale_factor, bool(sample['resonant']) )
-		elif ch.GetEntries() != 0 :
-			scale_factor = 1
-			r.ScanChain(ch, str(name) , int(year) , scale_factor )
+		try:
+			for path in sample[year]['paths']:
+				list_of_files += glob.glob(path+'/*/*/*/*.root')
+			#list_of_files = [ x for x in list_of_files if 'tree' in x and x in list_of_files_tmp ]
+			list_of_files = [ x for x in list_of_files if 'tree' in x and x not in corrupted_files ]
+			for file_ in list_of_files:
+				ch.Add(file_);
+			if str(name) != 'Data' and ch.GetEntries() != 0 :
+				scale_factor = sample[year]['metadata']['scale1fb'] * lumi[year]
+				r.ScanChain(ch, str(name) , int(year) , scale_factor, bool(sample['resonant']) )
+			elif ch.GetEntries() != 0 :
+				scale_factor = 1
+				r.ScanChain(ch, str(name) , int(year) , scale_factor )
+		except:
+			print name ,' ' , year , ' not available in the samples file. '
