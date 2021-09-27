@@ -5,10 +5,10 @@ from sys import exit
 
 r.ROOT.EnableImplicitMT()
 
-f = r.TFile.Open("synch/synch_out.root")
+f = r.TFile.Open("hadded/hadded_out.root")
 tree = f.Get("Events")
 
 data, columns = tree.AsMatrix(return_labels=True)
 df = pandas.DataFrame(data=data, columns=columns)
 #print("Tree converted to a pandas.DataFrame:\n{}".format(df))
-df.to_pickle('pickles/test_out.pkl')
+df.to_pickle('pickles/bdt.pkl')

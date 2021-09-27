@@ -5,8 +5,8 @@ using namespace std;
 const float mHiggs					= 125;
 const float trans_eta_low 			= 1.4442;
 const float trans_eta_high 			= 1.566;
-const float mZ_veto_low				= 70;
-const float mZ_veto_up				= 110;
+const float mZ_veto_low				= 80;
+const float mZ_veto_up				= 100;
 
 //di-photon selection
 const float mgg_lower 				= 100;
@@ -112,6 +112,7 @@ float 			g2_idmva;
 bool 			g2_pixVeto;
 
 float 			gg_pt;
+float 			gg_ptmgg;
 float 			gg_eta;
 float 			gg_eta_bdt;
 float 			gg_phi;
@@ -121,6 +122,7 @@ float 			gg_hel;
 float 			gg_hel_phys;
 float 			gg_tt_CS;
 float 			gg_tt_hel;
+float 			gg_tt_hel_phys;
 
 float 			lep1_pt				;
 float 			lep1_eta			;
@@ -147,14 +149,18 @@ float 			lep2_id_vs_jet;
 float 			jet1_pt			;
 float 			jet1_eta		;
 float 			jet1_eta_bdt	;
+float 			jet1_phi		;
 float 			jet1_bTag		;
 int 			jet1_id			;
 
 float 			jet2_pt			;
 float 			jet2_eta		;
 float 			jet2_eta_bdt	;
+float 			jet2_phi		;
 float 			jet2_bTag		;
 int 			jet2_id			;
+
+float			max_bTag		;
 
 float 			pt_tautauSVFitLoose		;
 float 			eta_tautauSVFitLoose	;
@@ -163,6 +169,8 @@ float 			phi_tautauSVFitLoose	;
 float 			m_tautauSVFitLoose		;
 float 			dR_tautauSVFitLoose		;
 float 			dR_ggtautauSVFitLoose	;
+float 			dPhi_tautauSVFitLoose	;
+float 			dPhi_ggtautauSVFitLoose	;
 float			tt_hel					;
 float			tt_hel_phys				;
 
@@ -174,6 +182,7 @@ float			phi_tautau_vis			;
 
 float			MET_gg_dPhi				;
 float			MET_ll_dPhi				;
+float			dPhi_MET_l				;
 float			ll_dPhi					;
 float			ll_dEta					;
 float			ll_dR					;

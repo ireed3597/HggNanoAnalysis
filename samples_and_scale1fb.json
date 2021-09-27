@@ -388,9 +388,9 @@
         "2018": {
             "metadata": {
                 "n_events": 995997,
-                "scale1fb": 6.166948270569143e-09,
+                "scale1fb": 1.8502264132368093e-08,
                 "sumWeights": 28182.496816040282,
-                "xs": 1.738e-07
+                "xs": 5.2144e-07
             },
             "paths": [
                 "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/"

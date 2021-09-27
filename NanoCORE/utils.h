@@ -9,6 +9,7 @@ typedef ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<double> > svfit_LorentzV
 
 float getCosThetaStar_CS_old( LorentzVector gg_p4, svfit_LorentzVector tt_p4, float ebeam );
 float helicityCosTheta( LorentzVector booster, LorentzVector boosted);
+float helicityCosTheta( LorentzVector booster, svfit_LorentzVector boosted);
 float helicityCosTheta( svfit_LorentzVector booster, svfit_LorentzVector boosted);
 float helicityCosTheta_phys( LorentzVector particle_1, LorentzVector particle_2);
 float helicityCosTheta_phys( svfit_LorentzVector particle_1, svfit_LorentzVector particle_2);

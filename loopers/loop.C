@@ -45,100 +45,112 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 	TString file_name = proc + "_" +  std::to_string(year);
 
-	//fstream syncOut;
-	//syncOut.open("txt/sync_"+file_name+".txt", ios::out);
-
 	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
 	H1(mgg_1t0l, 60, 100 , 180 );
 	H1(mgg_1t1l, 60, 100 , 180 );
 	H1(mgg_2t0l, 60, 100 , 180 );
 	H1(mgg_0t2l, 60, 100 , 180 );
+	H1(mgg_1t0l_iso, 60, 100 , 180 );
 
 	TTree *out_tree	=	new TTree("Events","output tree");
-	out_tree->Branch("year",&year,"year/I");
-	out_tree->Branch("run",&t_run,"run/I");
-	out_tree->Branch("lumiBlock",&t_lumiBlock,"lumiBlock/I");
-	out_tree->Branch("event",&t_event,"event/I");
-	out_tree->Branch("process_id",&process_id,"process_id/I");
-	out_tree->Branch("MET_pt",&t_MET_pt,"MET_pt/F");
-	out_tree->Branch("MET_phi",&t_MET_phi,"MET_phi/F");
-	out_tree->Branch("weight",&t_weight,"weight/F");
-	out_tree->Branch("Category",&category,"Category/I");
+	out_tree->Branch("year"					,	&year					,	"year/I"			);
+	out_tree->Branch("run"					,	&t_run					,	"run/I"				);
+	out_tree->Branch("lumiBlock"			,	&t_lumiBlock			,	"lumiBlock/I"		);
+	out_tree->Branch("event"				,	&t_event				,	"event/I"			);
+	out_tree->Branch("process_id"			,	&process_id				,	"process_id/I"		);
+	out_tree->Branch("MET_pt"				,	&t_MET_pt				,	"MET_pt/F"			);
+	out_tree->Branch("MET_phi"				,	&t_MET_phi				,	"MET_phi/F"			);
+	out_tree->Branch("weight"				,	&t_weight				,	"weight/F"			);
+	out_tree->Branch("Category"				,	&category				,	"Category/I"		);
 
-	out_tree->Branch("n_electrons",&n_electrons,"n_electrons/I");
-	out_tree->Branch("n_muons",&n_muons,"n_muons/I");
-	out_tree->Branch("n_taus",&n_taus,"n_taus/I");
-	out_tree->Branch("n_isoTrks",&n_isoTrks,"n_isoTrks/I");
-	out_tree->Branch("n_jets",&n_jets,"n_jets/I");
-	out_tree->Branch("n_bjets",&n_bjets,"n_bjets/I");
+	out_tree->Branch("cat1"					,	&cat1					,	"cat1/B"			);
+	out_tree->Branch("cat2"					,	&cat2					,	"cat2/B"			);
+	out_tree->Branch("cat3"					,	&cat3					,	"cat3/B"			);
+	out_tree->Branch("cat4"					,	&cat4					,	"cat4/B"			);
+	out_tree->Branch("cat5"					,	&cat5					,	"cat5/B"			);
+	out_tree->Branch("cat6"					,	&cat6					,	"cat6/B"			);
+	out_tree->Branch("cat7"					,	&cat7					,	"cat7/B"			);
+	out_tree->Branch("cat8"					,	&cat8					,	"cat8/B"			);
 
-	out_tree->Branch("MET_gg_dPhi"	,	&MET_gg_dPhi, 	"MET_gg_dPhi/F"		);	  
-	out_tree->Branch("MET_ll_dPhi"	,	&MET_ll_dPhi, 	"MET_ll_dPhi/F"		);	  
+	out_tree->Branch("n_electrons"			,	&n_electrons			,	"n_electrons/I"		);
+	out_tree->Branch("n_muons"				,	&n_muons				,	"n_muons/I"			);
+	out_tree->Branch("n_taus"				,	&n_taus					,	"n_taus/I"			);
+	out_tree->Branch("n_isoTrks"			,	&n_isoTrks				,	"n_isoTrks/I"		);
+	out_tree->Branch("n_jets"				,	&n_jets					,	"n_jets/I"			);
+	out_tree->Branch("n_bjets"				,	&n_bjets				,	"n_bjets/I"			);
 
-	out_tree->Branch("lep12_dphi"	,	&lep12_dphi	, 	"lep12_dphi/F"		);	  
-	out_tree->Branch("lep12_deta"	,	&lep12_deta	, 	"lep12_deta/F"		);	  
-	out_tree->Branch("lep12_dr"		,	&lep12_dr	, 	"lep12_dr/F"		);	  
+	out_tree->Branch("MET_gg_dPhi"			,	&MET_gg_dPhi			, 	"MET_gg_dPhi/F"		);	  
+	out_tree->Branch("MET_ll_dPhi"			,	&MET_ll_dPhi			, 	"MET_ll_dPhi/F"		);	  
+	out_tree->Branch("dPhi_MET_l"			,	&dPhi_MET_l				, 	"dPhi_MET_l/F"		);	  
 
-	out_tree->Branch("g1_ptmgg"		,	&g1_ptmgg	,	"g1_ptmgg/F"		);
-	out_tree->Branch("g1_pt"		,	&g1_pt		, 	"g1_pt/F"			);
-	out_tree->Branch("g1_eta"		,	&g1_eta		, 	"g1_eta/F"			);	  
-	out_tree->Branch("g1_eta_bdt"	,	&g1_eta_bdt	, 	"g1_eta_bdt/F"		);	  
-	out_tree->Branch("g1_phi"		,	&g1_phi		,  	"g1_phi/F"			);
-	out_tree->Branch("g1_idmva"		,	&g1_idmva	,	"g1_idmva/F"		);
-	out_tree->Branch("g1_pixVeto"	,	&g1_pixVeto	,	"g1_pixVeto/B"		);
-	out_tree->Branch("g2_ptmgg"		,	&g2_ptmgg	,	"g2_ptmgg/F"		);
-	out_tree->Branch("g2_pt"		,	&g2_pt		, 	"g2_pt/F"			);
-	out_tree->Branch("g2_eta"		,	&g2_eta		, 	"g2_eta/F"			);	  
-	out_tree->Branch("g2_eta_bdt"	,	&g2_eta_bdt	, 	"g2_eta_bdt/F"		);	  
-	out_tree->Branch("g2_phi"		,	&g2_phi		,  	"g2_phi/F"			);
-	out_tree->Branch("g2_idmva"		,	&g2_idmva	,	"g2_idmva/F"		);
-	out_tree->Branch("g2_pixVeto"	,	&g2_pixVeto	,	"g2_pixVeto/B"		);
-	out_tree->Branch("gg_pt"		,	&gg_pt		, 	"gg_pt/F"			);
-	out_tree->Branch("gg_eta"		,	&gg_eta		, 	"gg_eta/F"			);	  
-	out_tree->Branch("gg_eta_bdt"	,	&gg_eta_bdt	, 	"gg_eta_bdt/F"		);	  
-	out_tree->Branch("gg_phi"		,	&gg_phi		,  	"gg_phi/F"			);
-	out_tree->Branch("gg_dR"		,	&gg_dR		,	"gg_dR/F"			);
-	out_tree->Branch("gg_dPhi"		,	&gg_dPhi	,	"gg_dPhi/F"			);
-	out_tree->Branch("gg_hel"		,	&gg_hel		,	"gg_hel/F"			);
-	out_tree->Branch("gg_hel_phys"	,	&gg_hel_phys,	"gg_hel_phys/F"		);
-	out_tree->Branch("gg_tt_CS"		,	&gg_tt_CS	,	"gg_tt_CS/F"		);
-	out_tree->Branch("gg_tt_hel"	,	&gg_tt_hel	,	"gg_tt_hel/F"		);
-	out_tree->Branch("mgg"			,	&mgg		,	"mgg/F"				);
+	out_tree->Branch("lep12_dphi"			,	&lep12_dphi				, 	"lep12_dphi/F"		);	  
+	out_tree->Branch("lep12_deta"			,	&lep12_deta				, 	"lep12_deta/F"		);	  
+	out_tree->Branch("lep12_dr"				,	&lep12_dr				, 	"lep12_dr/F"		);	  
 
-	out_tree->Branch("lep1_pt"			,	&lep1_pt				, 	"lep1_pt/F"					);	  
-	out_tree->Branch("lep1_eta"			,	&lep1_eta				,  	"lep1_eta/F"				);
-	out_tree->Branch("lep1_eta_bdt"		,	&lep1_eta_bdt			,  	"lep1_eta_bdt/F"			);
-	out_tree->Branch("lep1_phi"			,	&lep1_phi				,	"lep1_phi/F"				);
-	out_tree->Branch("lep1_charge"		,	&lep1_charge			, 	"lep1_charge/F"				);	  
-	out_tree->Branch("lep1_pdgID"		,	&lep1_pdgID				,  	"lep1_pdgID/F"				);
-	out_tree->Branch("lep1_tightID"		,	&lep1_tightID			,	"lep1_tightID/F"			);
-	out_tree->Branch("lep1_id_vs_e"		,	&lep1_id_vs_e			, 	"lep1_id_vs_e/F"			);	  
-	out_tree->Branch("lep1_id_vs_m"		,	&lep1_id_vs_m			,  	"lep1_id_vs_m/F"			);
-	out_tree->Branch("lep1_id_vs_jet"	,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/F"			);
-	out_tree->Branch("lep2_pt"			,	&lep2_pt				, 	"lep2_pt/F"					);	  
-	out_tree->Branch("lep2_eta"			,	&lep2_eta				,  	"lep2_eta/F"				);
-	out_tree->Branch("lep2_eta_bdt"		,	&lep2_eta_bdt			,  	"lep2_eta_bdt/F"			);
-	out_tree->Branch("lep2_phi"			,	&lep2_phi				,	"lep2_phi/F"				);
-	out_tree->Branch("lep2_charge"		,	&lep2_charge			, 	"lep2_charge/F"				);	  
-	out_tree->Branch("lep2_pdgID"		,	&lep2_pdgID				,  	"lep2_pdgID/F"				);
-	out_tree->Branch("lep2_tightID"		,	&lep2_tightID			,	"lep2_tightID/F"			);
-	out_tree->Branch("lep2_id_vs_e"		,	&lep2_id_vs_e			, 	"lep2_id_vs_e/F"			);	  
-	out_tree->Branch("lep2_id_vs_m"		,	&lep2_id_vs_m			,  	"lep2_id_vs_m/F"			);
-	out_tree->Branch("lep2_id_vs_jet"	,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/F"			);
+	out_tree->Branch("g1_ptmgg"				,	&g1_ptmgg				,	"g1_ptmgg/F"		);
+	out_tree->Branch("g1_pt"				,	&g1_pt					, 	"g1_pt/F"			);
+	out_tree->Branch("g1_eta"				,	&g1_eta					, 	"g1_eta/F"			);	  
+	out_tree->Branch("g1_eta_bdt"			,	&g1_eta_bdt				, 	"g1_eta_bdt/F"		);	  
+	out_tree->Branch("g1_phi"				,	&g1_phi					,  	"g1_phi/F"			);
+	out_tree->Branch("g1_idmva"				,	&g1_idmva				,	"g1_idmva/F"		);
+	out_tree->Branch("g1_pixVeto"			,	&g1_pixVeto				,	"g1_pixVeto/B"		);
+	out_tree->Branch("g2_ptmgg"				,	&g2_ptmgg				,	"g2_ptmgg/F"		);
+	out_tree->Branch("g2_pt"				,	&g2_pt					, 	"g2_pt/F"			);
+	out_tree->Branch("g2_eta"				,	&g2_eta					, 	"g2_eta/F"			);	  
+	out_tree->Branch("g2_eta_bdt"			,	&g2_eta_bdt				, 	"g2_eta_bdt/F"		);	  
+	out_tree->Branch("g2_phi"				,	&g2_phi					,  	"g2_phi/F"			);
+	out_tree->Branch("g2_idmva"				,	&g2_idmva				,	"g2_idmva/F"		);
+	out_tree->Branch("g2_pixVeto"			,	&g2_pixVeto				,	"g2_pixVeto/B"		);
+	out_tree->Branch("gg_pt"				,	&gg_pt					, 	"gg_pt/F"			);
+	out_tree->Branch("gg_ptmgg"				,	&gg_ptmgg				, 	"gg_ptmgg/F"		);
+	out_tree->Branch("gg_eta"				,	&gg_eta					, 	"gg_eta/F"			);	  
+	out_tree->Branch("gg_eta_bdt"			,	&gg_eta_bdt				, 	"gg_eta_bdt/F"		);	  
+	out_tree->Branch("gg_phi"				,	&gg_phi					,  	"gg_phi/F"			);
+	out_tree->Branch("gg_dR"				,	&gg_dR					,	"gg_dR/F"			);
+	out_tree->Branch("gg_dPhi"				,	&gg_dPhi				,	"gg_dPhi/F"			);
+	out_tree->Branch("gg_hel"				,	&gg_hel					,	"gg_hel/F"			);
+	out_tree->Branch("gg_hel_phys"			,	&gg_hel_phys			,	"gg_hel_phys/F"		);
+	out_tree->Branch("gg_tt_CS"				,	&gg_tt_CS				,	"gg_tt_CS/F"		);
+	out_tree->Branch("gg_tt_hel"			,	&gg_tt_hel				,	"gg_tt_hel/F"		);
+	out_tree->Branch("gg_tt_hel_phys"		,	&gg_tt_hel_phys			,	"gg_tt_hel_phys/F"		);
+	out_tree->Branch("mgg"					,	&mgg					,	"mgg/F"				);
 
-	out_tree->Branch("jet1_pt"					,	&jet1_pt		, 	"jet1_pt/F"					);	  
-	out_tree->Branch("jet1_eta"					,	&jet1_eta		, 	"jet1_eta/F"				);	  
-	out_tree->Branch("jet1_eta_bdt"				,	&jet1_eta_bdt	,  	"jet1_eta_bdt/F"			);
-	out_tree->Branch("jet1_phi"					,	&jet1_phi		, 	"jet1_phi/F"				);	  
-	out_tree->Branch("jet1_bTag"				,	&jet1_bTag		, 	"jet1_bTag/F"				);	  
-	out_tree->Branch("jet1_id"					,	&jet1_id		, 	"jet1_id/I"					);	  
-	out_tree->Branch("jet2_pt"					,	&jet2_pt		, 	"jet2_pt/F"					);	  
-	out_tree->Branch("jet2_eta"					,	&jet2_eta		, 	"jet2_eta/F"				);	  
-	out_tree->Branch("jet2_eta_bdt"				,	&jet2_eta_bdt	,  	"jet2_eta_bdt/F"			);
-	out_tree->Branch("jet2_phi"					,	&jet2_phi		, 	"jet2_phi/F"				);	  
-	out_tree->Branch("jet2_bTag"				,	&jet2_bTag		, 	"jet2_bTag/F"				);	  
-	out_tree->Branch("jet2_id"					,	&jet2_id		, 	"jet2_id/I"					);	  
+	out_tree->Branch("lep1_pt"				,	&lep1_pt				, 	"lep1_pt/F"					);	  
+	out_tree->Branch("lep1_eta"				,	&lep1_eta				,  	"lep1_eta/F"				);
+	out_tree->Branch("lep1_eta_bdt"			,	&lep1_eta_bdt			,  	"lep1_eta_bdt/F"			);
+	out_tree->Branch("lep1_phi"				,	&lep1_phi				,	"lep1_phi/F"				);
+	out_tree->Branch("lep1_charge"			,	&lep1_charge			, 	"lep1_charge/F"				);	  
+	out_tree->Branch("lep1_pdgID"			,	&lep1_pdgID				,  	"lep1_pdgID/F"				);
+	out_tree->Branch("lep1_tightID"			,	&lep1_tightID			,	"lep1_tightID/F"			);
+	out_tree->Branch("lep1_id_vs_e"			,	&lep1_id_vs_e			, 	"lep1_id_vs_e/F"			);	  
+	out_tree->Branch("lep1_id_vs_m"			,	&lep1_id_vs_m			,  	"lep1_id_vs_m/F"			);
+	out_tree->Branch("lep1_id_vs_jet"		,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/F"			);
+	out_tree->Branch("lep2_pt"				,	&lep2_pt				, 	"lep2_pt/F"					);	  
+	out_tree->Branch("lep2_eta"				,	&lep2_eta				,  	"lep2_eta/F"				);
+	out_tree->Branch("lep2_eta_bdt"			,	&lep2_eta_bdt			,  	"lep2_eta_bdt/F"			);
+	out_tree->Branch("lep2_phi"				,	&lep2_phi				,	"lep2_phi/F"				);
+	out_tree->Branch("lep2_charge"			,	&lep2_charge			, 	"lep2_charge/F"				);	  
+	out_tree->Branch("lep2_pdgID"			,	&lep2_pdgID				,  	"lep2_pdgID/F"				);
+	out_tree->Branch("lep2_tightID"			,	&lep2_tightID			,	"lep2_tightID/F"			);
+	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/F"			);	  
+	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/F"			);
+	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/F"			);
+
+	out_tree->Branch("jet1_pt"				,	&jet1_pt				, 	"jet1_pt/F"					);	  
+	out_tree->Branch("jet1_eta"				,	&jet1_eta				, 	"jet1_eta/F"				);	  
+	out_tree->Branch("jet1_eta_bdt"			,	&jet1_eta_bdt			,  	"jet1_eta_bdt/F"			);
+	out_tree->Branch("jet1_phi"				,	&jet1_phi				, 	"jet1_phi/F"				);	  
+	out_tree->Branch("jet1_bTag"			,	&jet1_bTag				, 	"jet1_bTag/F"				);	  
+	out_tree->Branch("jet1_id"				,	&jet1_id				, 	"jet1_id/I"					);	  
+	out_tree->Branch("jet2_pt"				,	&jet2_pt				, 	"jet2_pt/F"					);	  
+	out_tree->Branch("jet2_eta"				,	&jet2_eta				, 	"jet2_eta/F"				);	  
+	out_tree->Branch("jet2_eta_bdt"			,	&jet2_eta_bdt			,  	"jet2_eta_bdt/F"			);
+	out_tree->Branch("jet2_phi"				,	&jet2_phi				, 	"jet2_phi/F"				);	  
+	out_tree->Branch("jet2_bTag"			,	&jet2_bTag				, 	"jet2_bTag/F"				);	  
+	out_tree->Branch("jet2_id"				,	&jet2_id				, 	"jet2_id/I"					);	  
+
+	out_tree->Branch("max_bTag"				,	&max_bTag				, 	"max_bTag/F"				);	  
 
 	out_tree->Branch("pt_tautau_SVFit"		,	&pt_tautauSVFitLoose		,	"pt_tautau_SVFit/F"			);	  
 	out_tree->Branch("eta_tautau_SVFit"		,	&eta_tautauSVFitLoose		, 	"eta_tautau_SVFit/F"		);	  
@@ -147,6 +159,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("m_tautau_SVFit"		,	&m_tautauSVFitLoose			, 	"m_tautau_SVFit/F"			);	  
 	out_tree->Branch("dR_tautau_SVFit"		,	&dR_tautauSVFitLoose		, 	"dR_tautau_SVFit/F"			);	  
 	out_tree->Branch("dR_ggtautau_SVFit"	,	&dR_ggtautauSVFitLoose		, 	"dR_ggtautau_SVFit/F"		);	  
+	out_tree->Branch("dPhi_tautau_SVFit"	,	&dPhi_tautauSVFitLoose		, 	"dPhi_tautau_SVFit/F"		);
+	out_tree->Branch("dPhi_ggtautau_SVFit"	,	&dPhi_ggtautauSVFitLoose	, 	"dPhi_ggtautau_SVFit/F"		);	  
 
 	out_tree->Branch("tt_hel"				,	&tt_hel  					, 	"tt_hel/F"					);	  
 	out_tree->Branch("tt_hel_phys"			,	&tt_hel_phys				, 	"tt_hel_phys/F"				);	  
@@ -157,6 +171,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("phi_tautau_vis"		,	&phi_tautau_vis				, 	"phi_tautau_vis/F"			);	  
 
 	//define process ids
+	if (proc.find(std::string("HH_ggZZ_2l2q")) != std::string::npos) 				process_id = -6;
+	if (proc.find(std::string("HH_ggZZ_4l")) != std::string::npos) 				process_id = -5;
 	if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)	process_id = -4;
 	if (proc.find(std::string("HH_ggWW_dileptonic")) != std::string::npos) 	process_id = -3;
 	if (proc.find(std::string("HH_ggZZ")) != std::string::npos) 				process_id = -2;
@@ -300,7 +316,10 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 						}
 					}
 
-					if ( !overlap ) sel_jets.push_back(i);
+					if ( !overlap ){
+						sel_jets.push_back(i);
+						if ( Jet_btagDeepFlavB().at(i) > max_bTag ) max_bTag = Jet_btagDeepFlavB().at(i);
+					}
 				}
 			}
 
@@ -423,11 +442,11 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			t_MET_phi		= MET_phi();
 			t_weight		= weight;
 			MET_gg_dPhi		= deltaPhi( MET_phi() , (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).phi() );
-			MET_ll_dPhi		= deltaPhi( diTau_p4 , (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) );
 
 			gg_pt			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).pt() ;
+			gg_ptmgg		=	gg_pt / mgg;
 			gg_eta			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).eta() ;
-			gg_eta_bdt		=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).eta() * sgn( gg_eta ) ;
+			//gg_eta_bdt		=	gg_eta * sgn( gg_eta ) ;
 			gg_phi			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).phi() ;
 			gg_dR			=	deltaR(Photon_p4().at(gHidx()[0]) , Photon_p4().at(gHidx()[1])) ;
 			gg_dPhi			=	deltaPhi(Photon_p4().at(gHidx()[0]) , Photon_p4().at(gHidx()[1])) ;
@@ -444,7 +463,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			g1_ptmgg		=	Photon_pt().at(gHidx()[0]) / mgg;
 			g1_pt			=	Photon_pt().at(gHidx()[0]) ;
 			g1_eta			=	Photon_eta().at(gHidx()[0]) ;
-			g1_eta_bdt		=	Photon_eta().at(gHidx()[0]) * sgn( gg_eta ) ;
+			g1_eta_bdt		=	g1_eta * sgn( gg_eta ) ;
 			g1_phi			=	Photon_phi().at(gHidx()[0]) ;
 			g1_idmva		=	Photon_mvaID().at(gHidx()[0]) ;
 			g1_pixVeto		=   Photon_pixelSeed().at(gHidx()[0]) ;
@@ -452,24 +471,10 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			g2_ptmgg		=	Photon_pt().at(gHidx()[1]) / mgg;
 			g2_pt			=	Photon_pt().at(gHidx()[1]) ;
 			g2_eta			=	Photon_eta().at(gHidx()[1]) ;
-			g2_eta_bdt		=	Photon_eta().at(gHidx()[1]) * sgn( gg_eta ) ;
+			g2_eta_bdt		=	g2_eta * sgn( gg_eta ) ;
 			g2_phi			=	Photon_phi().at(gHidx()[1]) ;
 			g2_idmva		=	Photon_mvaID().at(gHidx()[1]) ;
 			g2_pixVeto		=   Photon_pixelSeed().at(gHidx()[1]) ;
-
-			if ( category < 8 ){
-				gg_tt_CS					= fabs( getCosThetaStar_CS_old( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 ) );
-				pt_tautauSVFitLoose			= diTau_p4.pt();
-				eta_tautauSVFitLoose		= diTau_p4.eta();
-				eta_tautauSVFitLoose_bdt	= diTau_p4.eta() * sgn( gg_eta ) ;
-				phi_tautauSVFitLoose		= diTau_p4.phi();
-				m_tautauSVFitLoose			= diTau_p4.M();
-				dR_tautauSVFitLoose			= deltaR( tau1_p4 , tau2_p4 );
-				dR_ggtautauSVFitLoose		= deltaR( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
-				tt_hel_phys					= 	fabs( helicityCosTheta_phys( tau1_p4, tau2_p4 ) ) ;
-				if (roll ) 		tt_hel		= 	fabs( helicityCosTheta( diTau_p4 , tau1_p4 ) ) ;
-				else	{		tt_hel		= 	fabs( helicityCosTheta( diTau_p4 , tau2_p4 ) ) ; }
-			}
 
 			LorentzVector lep1_p4, lep2_p4;
 
@@ -503,6 +508,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep1_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
 				lep1_phi		=	Electron_phi()[h_cand2[0]];	
 				lep1_charge		=	Electron_charge()[h_cand2[0]];
+				lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
 				lep1_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
 				lep2_p4			=	Tau_p4()[h_cand1[0]];
@@ -525,7 +531,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
 				lep1_phi		=	Tau_phi()[h_cand1[0]];	
 				lep1_charge		=	Tau_charge()[h_cand1[0]];
-				lep1_pdgID		=	15 * sgn( lep2_charge );
+				lep1_pdgID		=	15 * sgn( lep1_charge );
 				lep1_id_vs_e	=	Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
 				lep1_id_vs_m	=	Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
 				lep1_id_vs_jet	=	Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
@@ -571,6 +577,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep1_eta_bdt	=	Electron_eta()[h_cand1[0]] * sgn( gg_eta );
 				lep1_phi		=	Electron_phi()[h_cand1[0]];	
 				lep1_charge		=	Electron_charge()[h_cand1[0]];
+				lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand1[0]];
 				lep1_pdgID		=	Electron_pdgId()[h_cand1[0]];
 
 				lep2_p4			=	Electron_p4()[h_cand2[0]];
@@ -579,6 +586,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
 				lep2_phi		=	Electron_phi()[h_cand2[0]];	
 				lep2_charge		=	Electron_charge()[h_cand2[0]];
+				lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
 				lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
 				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Electron_p4()[h_cand1[0]] );
@@ -599,6 +607,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
 				lep2_phi		=	Electron_phi()[h_cand2[0]];	
 				lep2_charge		=	Electron_charge()[h_cand2[0]];
+				lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
 				lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
 				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
@@ -627,50 +636,76 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep12_dr		= deltaR( iso_track, Tau_p4()[h_cand1[0]] );
 			}
 
-			if ( category < 8 ){
-				lep12_dphi		= deltaPhi( lep2_phi , lep1_phi );
-				lep12_deta		= lep2_eta - lep1_eta ;
-
-				m_tautau_vis		= (lep1_p4 + lep2_p4).M()	;
-				pt_tautau_vis		= (lep1_p4 + lep2_p4).pt()	;
-				eta_tautau_vis		= (lep1_p4 + lep2_p4).eta()	;
-				eta_tautau_vis_bdt	= eta_tautau_vis * sgn( gg_eta );
-				phi_tautau_vis		= (lep1_p4 + lep2_p4).phi()	;
-			}
-
 			if ( cat8 ){
 				lep1_pt			=	Tau_pt()[h_cand1[0]];
 				lep1_eta		=	Tau_eta()[h_cand1[0]];
 				lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
 				lep1_phi		=	Tau_phi()[h_cand1[0]];	
 				lep1_charge		=	Tau_charge()[h_cand1[0]];
-				lep1_pdgID		=	15 * sgn( lep2_charge );
+				lep1_pdgID		=	15 * sgn( lep1_charge );
 				lep1_id_vs_e	=	Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
 				lep1_id_vs_m	=	Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
 				lep1_id_vs_jet	=	Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+			}
+
+			if ( category < 8 ){
+
+				if ( lep1_pt > lep2_pt ) dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
+				else { 					 dPhi_MET_l	= deltaPhi( t_MET_phi, lep2_phi ); }
+
+				MET_ll_dPhi							= deltaPhi( MET_phi() , diTau_p4.phi() );
+
+				lep12_dphi							= deltaPhi( lep2_phi , lep1_phi );
+				lep12_deta							= lep2_eta - lep1_eta ;
+
+				m_tautau_vis						= (lep1_p4 + lep2_p4).M()	;
+				pt_tautau_vis						= (lep1_p4 + lep2_p4).pt()	;
+				eta_tautau_vis						= (lep1_p4 + lep2_p4).eta()	;
+				eta_tautau_vis_bdt					= eta_tautau_vis * sgn( gg_eta );
+				phi_tautau_vis						= (lep1_p4 + lep2_p4).phi()	;
+
+				gg_tt_CS							= fabs( getCosThetaStar_CS_old( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 ) );
+
+				pt_tautauSVFitLoose					= diTau_p4.pt();
+				eta_tautauSVFitLoose				= diTau_p4.eta();
+				eta_tautauSVFitLoose_bdt			= diTau_p4.eta() * sgn( gg_eta ) ;
+				phi_tautauSVFitLoose				= diTau_p4.phi();
+				m_tautauSVFitLoose					= diTau_p4.M();
+				dR_tautauSVFitLoose					= deltaR( tau1_p4 , tau2_p4 );
+				dR_ggtautauSVFitLoose				= deltaR( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+				dPhi_tautauSVFitLoose				= deltaPhi( tau1_p4 , tau2_p4 );
+				dPhi_ggtautauSVFitLoose				= deltaPhi( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+
+				tt_hel_phys							= 	fabs( helicityCosTheta_phys( tau1_p4, tau2_p4 ) ) ;
+				gg_tt_hel_phys						= 	fabs( helicityCosTheta_phys( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) + diTau_p4, (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]))  ) ) ;
+				if (roll ){
+					tt_hel							= 	fabs( helicityCosTheta( diTau_p4 , tau1_p4 ) ) ;
+					gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) + diTau_p4, (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]))  ) ) ;
+				}
+				else{
+					tt_hel							= 	fabs( helicityCosTheta( diTau_p4 , tau2_p4 ) ) ;
+					gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) + diTau_p4, diTau_p4  ) ) ;
+				}
 			}
 
 			if ( sel_jets.size() > 0 ){
 				jet1_pt		=	Jet_pt()[sel_jets[0]];
 				jet1_eta	=	Jet_eta()[sel_jets[0]];
 				jet1_eta_bdt=	jet1_eta* sgn( gg_eta );
+				jet1_phi	=	Jet_phi()[sel_jets[0]];
 				jet1_bTag	=	Jet_btagDeepFlavB()[sel_jets[0]];
 				jet1_id		=	Jet_jetId()[sel_jets[0]];
 			}
 			if ( sel_jets.size() > 1 ){
 				jet2_pt		=	Jet_pt()[sel_jets[1]];
 				jet2_eta	=	Jet_eta()[sel_jets[1]];
-				jet2_eta_bdt=	jet1_eta* sgn( gg_eta );
+				jet2_eta_bdt=	jet2_eta* sgn( gg_eta );
+				jet2_phi	=	Jet_phi()[sel_jets[1]];
 				jet2_bTag	=	Jet_btagDeepFlavB()[sel_jets[1]];
 				jet2_id		=	Jet_jetId()[sel_jets[1]];
 			}
 
 			out_tree->Fill();
-
-			//debugging
-			/*
-			syncOut<<run()<<","<<luminosityBlock()<<","<<event()<<","<<n_electrons<<","<<n_muons<<","<<n_taus<<","<<category<<endl;
-			*/
 
 			//make histograms for yields
 			h_mgg->Fill( mgg, weight );
@@ -678,6 +713,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( cat3 ) h_mgg_2t0l->Fill( mgg, weight );
 			if ( cat4 || cat5 || cat6 ) h_mgg_0t2l->Fill( mgg, weight );
 			if ( cat7 || cat8 ) h_mgg_1t0l->Fill( mgg, weight );
+			if ( cat7 ) h_mgg_1t0l_iso->Fill( mgg, weight );
 
 			clear_branches();
         } // Event loop

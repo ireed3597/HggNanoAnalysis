@@ -44,6 +44,18 @@ float helicityCosTheta( LorentzVector booster, LorentzVector boosted){
     return Boosted.CosTheta();
 }
 
+float helicityCosTheta( LorentzVector booster, svfit_LorentzVector boosted){
+
+    TLorentzVector Booster;
+    Booster.SetPxPyPzE(booster.Px(),booster.Py(),booster.Pz(),booster.E()) ; 
+    TLorentzVector Boosted;
+    Boosted.SetPxPyPzE(boosted.Px(),boosted.Py(),boosted.Pz(),boosted.E()) ; 
+
+    TVector3 BoostVector = Booster.BoostVector();
+    Boosted.Boost( -BoostVector.x(), -BoostVector.y(), -BoostVector.z() );
+    return Boosted.CosTheta();
+}
+
 float helicityCosTheta( svfit_LorentzVector booster, svfit_LorentzVector boosted){
 
     TLorentzVector Booster;
@@ -416,7 +428,7 @@ void clear_branches(){
 	t_MET_pt				= -9;
 	t_MET_phi				= -9;
 	t_weight				= -9;
-	category				= -9;
+	//category				= -9; 	//initialised in looper
 
 	lep12_dphi				= -9;
 	lep12_deta				= -9;
@@ -456,6 +468,7 @@ void clear_branches(){
 	g2_pixVeto				= false;
 
 	gg_pt					= -9;
+	gg_ptmgg				= -9;
 	gg_eta					= -9;
 	gg_eta_bdt				= -9;
 	gg_phi					= -9;
@@ -465,6 +478,7 @@ void clear_branches(){
 	gg_hel_phys				= -9;
 	gg_tt_CS				= -9;
 	gg_tt_hel				= -9;
+	gg_tt_hel_phys			= -9;
 
 	lep1_pt					= -9;
 	lep1_eta				= -9;
@@ -491,14 +505,18 @@ void clear_branches(){
 	jet1_pt					= -9;
 	jet1_eta				= -9;
 	jet1_eta_bdt			= -9;
+	jet1_phi				= -9;
 	jet1_bTag				= -9;
 	jet1_id					= -9;
 
 	jet2_pt					= -9;
 	jet2_eta				= -9;
 	jet2_eta_bdt			= -9;
+	jet2_phi				= -9;
 	jet2_bTag				= -9;
 	jet2_id					= -9;
+
+	max_bTag				= -9;
 
 	pt_tautauSVFitLoose		= -9;
 	eta_tautauSVFitLoose	= -9;
@@ -507,6 +525,8 @@ void clear_branches(){
 	m_tautauSVFitLoose		= -9;
 	dR_tautauSVFitLoose		= -9;
 	dR_ggtautauSVFitLoose	= -9;
+	dPhi_tautauSVFitLoose	= -9;
+	dPhi_ggtautauSVFitLoose	= -9;
 	tt_hel					= -9;
 	tt_hel_phys				= -9;
 
@@ -518,6 +538,7 @@ void clear_branches(){
 
 	MET_gg_dPhi				= -9;
 	MET_ll_dPhi				= -9;
+	dPhi_MET_l				= -9;
 	ll_dPhi					= -9;
 	ll_dEta					= -9;
 	ll_dR					= -9;
