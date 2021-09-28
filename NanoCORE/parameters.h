@@ -84,6 +84,7 @@ int 			n_isoTrks;
 
 float			lep12_dphi;
 float			lep12_deta;
+float			lep12_deta_bdt;
 float			lep12_dr;
 
 bool			cat1;
@@ -186,3 +187,4 @@ float			dPhi_MET_l				;
 float			ll_dPhi					;
 float			ll_dEta					;
 float			ll_dR					;
+float			m_Z						;

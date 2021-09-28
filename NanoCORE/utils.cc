@@ -432,6 +432,7 @@ void clear_branches(){
 
 	lep12_dphi				= -9;
 	lep12_deta				= -9;
+	lep12_deta_bdt			= -9;
 	lep12_dr				= -9;
 
 	cat1					= false;
@@ -542,4 +543,5 @@ void clear_branches(){
 	ll_dPhi					= -9;
 	ll_dEta					= -9;
 	ll_dR					= -9;
+	m_Z						= -9;
 }

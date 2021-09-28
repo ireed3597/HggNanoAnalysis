@@ -45,7 +45,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 	TString file_name = proc + "_" +  std::to_string(year);
 
-	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
+	TFile* f1 = new TFile("synch/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
 	H1(mgg_1t0l, 60, 100 , 180 );
 	H1(mgg_1t1l, 60, 100 , 180 );
@@ -80,12 +80,15 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("n_jets"				,	&n_jets					,	"n_jets/I"			);
 	out_tree->Branch("n_bjets"				,	&n_bjets				,	"n_bjets/I"			);
 
+	out_tree->Branch("m_Z"					,	&m_Z					, 	"m_Z/F"				);	  
+
 	out_tree->Branch("MET_gg_dPhi"			,	&MET_gg_dPhi			, 	"MET_gg_dPhi/F"		);	  
 	out_tree->Branch("MET_ll_dPhi"			,	&MET_ll_dPhi			, 	"MET_ll_dPhi/F"		);	  
 	out_tree->Branch("dPhi_MET_l"			,	&dPhi_MET_l				, 	"dPhi_MET_l/F"		);	  
 
 	out_tree->Branch("lep12_dphi"			,	&lep12_dphi				, 	"lep12_dphi/F"		);	  
 	out_tree->Branch("lep12_deta"			,	&lep12_deta				, 	"lep12_deta/F"		);	  
+	out_tree->Branch("lep12_deta_bdt"		,	&lep12_deta_bdt			, 	"lep12_deta_bdt/F"	);	  
 	out_tree->Branch("lep12_dr"				,	&lep12_dr				, 	"lep12_dr/F"		);	  
 
 	out_tree->Branch("g1_ptmgg"				,	&g1_ptmgg				,	"g1_ptmgg/F"		);
@@ -113,29 +116,29 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("gg_hel_phys"			,	&gg_hel_phys			,	"gg_hel_phys/F"		);
 	out_tree->Branch("gg_tt_CS"				,	&gg_tt_CS				,	"gg_tt_CS/F"		);
 	out_tree->Branch("gg_tt_hel"			,	&gg_tt_hel				,	"gg_tt_hel/F"		);
-	out_tree->Branch("gg_tt_hel_phys"		,	&gg_tt_hel_phys			,	"gg_tt_hel_phys/F"		);
+	out_tree->Branch("gg_tt_hel_phys"		,	&gg_tt_hel_phys			,	"gg_tt_hel_phys/F"	);
 	out_tree->Branch("mgg"					,	&mgg					,	"mgg/F"				);
 
 	out_tree->Branch("lep1_pt"				,	&lep1_pt				, 	"lep1_pt/F"					);	  
 	out_tree->Branch("lep1_eta"				,	&lep1_eta				,  	"lep1_eta/F"				);
 	out_tree->Branch("lep1_eta_bdt"			,	&lep1_eta_bdt			,  	"lep1_eta_bdt/F"			);
 	out_tree->Branch("lep1_phi"				,	&lep1_phi				,	"lep1_phi/F"				);
-	out_tree->Branch("lep1_charge"			,	&lep1_charge			, 	"lep1_charge/F"				);	  
+	out_tree->Branch("lep1_charge"			,	&lep1_charge			, 	"lep1_charge/I"				);	  
 	out_tree->Branch("lep1_pdgID"			,	&lep1_pdgID				,  	"lep1_pdgID/F"				);
 	out_tree->Branch("lep1_tightID"			,	&lep1_tightID			,	"lep1_tightID/F"			);
-	out_tree->Branch("lep1_id_vs_e"			,	&lep1_id_vs_e			, 	"lep1_id_vs_e/F"			);	  
-	out_tree->Branch("lep1_id_vs_m"			,	&lep1_id_vs_m			,  	"lep1_id_vs_m/F"			);
-	out_tree->Branch("lep1_id_vs_jet"		,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/F"			);
+	out_tree->Branch("lep1_id_vs_e"			,	&lep1_id_vs_e			, 	"lep1_id_vs_e/I"			);	  
+	out_tree->Branch("lep1_id_vs_m"			,	&lep1_id_vs_m			,  	"lep1_id_vs_m/I"			);
+	out_tree->Branch("lep1_id_vs_jet"		,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/I"			);
 	out_tree->Branch("lep2_pt"				,	&lep2_pt				, 	"lep2_pt/F"					);	  
 	out_tree->Branch("lep2_eta"				,	&lep2_eta				,  	"lep2_eta/F"				);
 	out_tree->Branch("lep2_eta_bdt"			,	&lep2_eta_bdt			,  	"lep2_eta_bdt/F"			);
 	out_tree->Branch("lep2_phi"				,	&lep2_phi				,	"lep2_phi/F"				);
-	out_tree->Branch("lep2_charge"			,	&lep2_charge			, 	"lep2_charge/F"				);	  
+	out_tree->Branch("lep2_charge"			,	&lep2_charge			, 	"lep2_charge/I"				);	  
 	out_tree->Branch("lep2_pdgID"			,	&lep2_pdgID				,  	"lep2_pdgID/F"				);
 	out_tree->Branch("lep2_tightID"			,	&lep2_tightID			,	"lep2_tightID/F"			);
-	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/F"			);	  
-	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/F"			);
-	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/F"			);
+	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/I"			);	  
+	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/I"			);
+	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/I"			);
 
 	out_tree->Branch("jet1_pt"				,	&jet1_pt				, 	"jet1_pt/F"					);	  
 	out_tree->Branch("jet1_eta"				,	&jet1_eta				, 	"jet1_eta/F"				);	  
@@ -171,11 +174,11 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("phi_tautau_vis"		,	&phi_tautau_vis				, 	"phi_tautau_vis/F"			);	  
 
 	//define process ids
-	if (proc.find(std::string("HH_ggZZ_2l2q")) != std::string::npos) 				process_id = -6;
-	if (proc.find(std::string("HH_ggZZ_4l")) != std::string::npos) 				process_id = -5;
 	if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)	process_id = -4;
 	if (proc.find(std::string("HH_ggWW_dileptonic")) != std::string::npos) 	process_id = -3;
-	if (proc.find(std::string("HH_ggZZ")) != std::string::npos) 				process_id = -2;
+	//if (proc.find(std::string("HH_ggZZ")) != std::string::npos) 				process_id = -2;
+	if (proc.find(std::string("HH_ggZZ_2l2q")) != std::string::npos) 				process_id = -6;
+	if (proc.find(std::string("HH_ggZZ_4l")) != std::string::npos) 				process_id = -5;
 	if (proc.find(std::string("HH_ggTauTau")) != std::string::npos) 			process_id = -1;
 	if (proc.find(std::string("Data")) != std::string::npos) 				process_id = 0;
 	if (proc.find(std::string("ZGamma")) != std::string::npos) 				process_id = 2;
@@ -569,6 +572,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep2_tightID	=	Muon_tightId()[h_cand2[0]];
 
 				lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
+				m_Z				= ( lep1_p4 + lep2_p4 ).M();
 			}
 			if ( cat5 ){
 				lep1_p4			=	Electron_p4()[h_cand1[0]];
@@ -590,6 +594,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
 				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Electron_p4()[h_cand1[0]] );
+				m_Z				= ( lep1_p4 + lep2_p4 ).M();
 			}
 			if ( cat6 ){
 				lep1_p4			=	Muon_p4()[h_cand1[0]];
@@ -648,6 +653,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep1_id_vs_jet	=	Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
 			}
 
+			dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
+
 			if ( category < 8 ){
 
 				if ( lep1_pt > lep2_pt ) dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
@@ -656,7 +663,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				MET_ll_dPhi							= deltaPhi( MET_phi() , diTau_p4.phi() );
 
 				lep12_dphi							= deltaPhi( lep2_phi , lep1_phi );
-				lep12_deta							= lep2_eta - lep1_eta ;
+				lep12_deta							= fabs(lep2_eta - lep1_eta) ;
+				lep12_deta_bdt						= fabs(lep2_eta - lep1_eta) * sgn( gg_eta ) ;
 
 				m_tautau_vis						= (lep1_p4 + lep2_p4).M()	;
 				pt_tautau_vis						= (lep1_p4 + lep2_p4).pt()	;
