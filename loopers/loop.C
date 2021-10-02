@@ -213,6 +213,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
         for( unsigned int loop_event = 0; loop_event < tree->GetEntriesFast(); ++loop_event) {
 
+			clear_branches();
+
             nt.GetEntry(loop_event);
             tree->LoadTree(loop_event);
 
@@ -723,7 +725,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( cat7 || cat8 ) h_mgg_1t0l->Fill( mgg, weight );
 			if ( cat7 ) h_mgg_1t0l_iso->Fill( mgg, weight );
 
-			clear_branches();
         } // Event loop
         delete file;
     } // File loop
