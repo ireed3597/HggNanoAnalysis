@@ -43,9 +43,9 @@ using namespace tas;
 
 int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool resonant = false ) {
 
-	TString file_name = proc + "_" +  std::to_string(year);
+	TString file_name = proc + "_06Oct2021_" +  std::to_string(year);
 
-	TFile* f1 = new TFile("synch/" + file_name + ".root", "RECREATE");
+	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
 	H1(mgg_1t0l, 60, 100 , 180 );
 	H1(mgg_1t1l, 60, 100 , 180 );
@@ -98,6 +98,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("g1_phi"				,	&g1_phi					,  	"g1_phi/F"			);
 	out_tree->Branch("g1_idmva"				,	&g1_idmva				,	"g1_idmva/F"		);
 	out_tree->Branch("g1_pixVeto"			,	&g1_pixVeto				,	"g1_pixVeto/B"		);
+	out_tree->Branch("g1_energyErr"			,	&g1_energyErr			,  	"g1_energyErr/F"	);
 	out_tree->Branch("g2_ptmgg"				,	&g2_ptmgg				,	"g2_ptmgg/F"		);
 	out_tree->Branch("g2_pt"				,	&g2_pt					, 	"g2_pt/F"			);
 	out_tree->Branch("g2_eta"				,	&g2_eta					, 	"g2_eta/F"			);	  
@@ -105,6 +106,13 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("g2_phi"				,	&g2_phi					,  	"g2_phi/F"			);
 	out_tree->Branch("g2_idmva"				,	&g2_idmva				,	"g2_idmva/F"		);
 	out_tree->Branch("g2_pixVeto"			,	&g2_pixVeto				,	"g2_pixVeto/B"		);
+	out_tree->Branch("g2_energyErr"			,	&g2_energyErr			,  	"g2_energyErr/F"	);
+
+	out_tree->Branch("max_g_ptmgg"			,	&max_g_ptmgg			,	"max_g_ptmgg/F"		);
+	out_tree->Branch("min_g_ptmgg"			,	&min_g_ptmgg			,	"min_g_ptmgg/F"		);
+	out_tree->Branch("max_g_idmva"			,	&max_g_idmva			,	"max_g_idmva/F"		);
+	out_tree->Branch("min_g_idmva"			,	&min_g_idmva			,	"min_g_idmva/F"		);
+
 	out_tree->Branch("gg_pt"				,	&gg_pt					, 	"gg_pt/F"			);
 	out_tree->Branch("gg_ptmgg"				,	&gg_ptmgg				, 	"gg_ptmgg/F"		);
 	out_tree->Branch("gg_eta"				,	&gg_eta					, 	"gg_eta/F"			);	  
@@ -139,6 +147,10 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/I"			);	  
 	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/I"			);
 	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/I"			);
+	out_tree->Branch("lep2_pfRelIso03_all"	,	&lep2_pfRelIso03_all	,	"lep2_pfRelIso03_all/F"		);
+	out_tree->Branch("lep2_pfRelIso03_chg"	,	&lep2_pfRelIso03_chg	,	"lep2_pfRelIso03_chg/F"		);
+	out_tree->Branch("max_lep_pt"			,	&max_lep_pt				, 	"max_lep_pt/F"				);	  
+	out_tree->Branch("min_lep_pt"			,	&min_lep_pt				, 	"min_lep_pt/F"				);	  
 
 	out_tree->Branch("jet1_pt"				,	&jet1_pt				, 	"jet1_pt/F"					);	  
 	out_tree->Branch("jet1_eta"				,	&jet1_eta				, 	"jet1_eta/F"				);	  
@@ -154,6 +166,15 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("jet2_id"				,	&jet2_id				, 	"jet2_id/I"					);	  
 
 	out_tree->Branch("max_bTag"				,	&max_bTag				, 	"max_bTag/F"				);	  
+
+	out_tree->Branch("tau1_pt_SVFit"		,	&tau1_pt_SVFit			,	"tau1_pt_SVFit/F"			);	  
+	out_tree->Branch("tau1_eta_SVFit"		,	&tau1_eta_SVFit			,	"tau1_eta_SVFit/F"			);	  
+	out_tree->Branch("tau1_phi_SVFit"		,	&tau1_phi_SVFit			,	"tau1_phi_SVFit/F"			);	  
+	out_tree->Branch("tau1_m_SVFit"			,	&tau1_m_SVFit			,	"tau1_m_SVFit/F"			);	  
+	out_tree->Branch("tau2_pt_SVFit"		,	&tau2_pt_SVFit			,	"tau2_pt_SVFit/F"			);	  
+	out_tree->Branch("tau2_eta_SVFit"		,	&tau2_eta_SVFit			,	"tau2_eta_SVFit/F"			);	  
+	out_tree->Branch("tau2_phi_SVFit"		,	&tau2_phi_SVFit			,	"tau2_phi_SVFit/F"			);	  
+	out_tree->Branch("tau2_m_SVFit"			,	&tau2_m_SVFit			,	"tau2_m_SVFit/F"			);	  
 
 	out_tree->Branch("pt_tautau_SVFit"		,	&pt_tautauSVFitLoose		,	"pt_tautau_SVFit/F"			);	  
 	out_tree->Branch("eta_tautau_SVFit"		,	&eta_tautauSVFitLoose		, 	"eta_tautau_SVFit/F"		);	  
@@ -213,13 +234,13 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
         for( unsigned int loop_event = 0; loop_event < tree->GetEntriesFast(); ++loop_event) {
 
-			clear_branches();
-
             nt.GetEntry(loop_event);
             tree->LoadTree(loop_event);
 
             nEventsTotal++;
             bar.progress(nEventsTotal, nEventsChain);
+
+			clear_branches();
 
 			//di-photon selection
 			mgg = (float)(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]) ).M();
@@ -287,6 +308,16 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
                     iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
                     if ( deltaR( iso_track , Photon_p4().at(gHidx()[0]) ) > isoTrk_dR  && deltaR( iso_track , Photon_p4().at(gHidx()[1]) ) > isoTrk_dR  ){
 						bool iso = true;
+						for (unsigned int j=0; j<sel_eles.size(); j++){
+                    		if ( deltaR( iso_track , Electron_p4().at(sel_eles.at(j)) ) < isoTrk_dR ){
+								iso = false;
+                    		}
+                		}
+						for (unsigned int j=0; j<sel_muons.size(); j++){
+                    		if ( deltaR( iso_track , Muon_p4().at(sel_muons.at(j)) ) < isoTrk_dR ){
+								iso = false;
+                    		}
+                		}
 						for (unsigned int j=0; j<sel_taus.size(); j++){
                     		if ( deltaR( iso_track , Tau_p4().at(sel_taus.at(j)) ) < isoTrk_dR ){
 								iso = false;
@@ -435,6 +466,15 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				diTau_p4	= svFit_res[0];
 				tau1_p4		= svFit_res[1];
 				tau2_p4		= svFit_res[2];
+
+				tau1_pt_SVFit	= tau1_p4.pt();
+				tau1_eta_SVFit	= tau1_p4.eta();
+				tau1_phi_SVFit	= tau1_p4.phi();
+				tau1_m_SVFit	= tau1_p4.M();
+				tau2_pt_SVFit	= tau2_p4.pt();
+				tau2_eta_SVFit	= tau2_p4.eta();
+				tau2_phi_SVFit	= tau2_p4.phi();
+				tau2_m_SVFit	= tau2_p4.M();
 			}
 
 			float weight = 1.;
@@ -460,11 +500,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if (roll ) 		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]), Photon_p4().at(gHidx()[0]) ) ) ;
 			else	{		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]), Photon_p4().at(gHidx()[1]) ) ) ; }
 
-
-			/////////////////////////////////////////////////////////////////////////////////////////////////////
-			//////////////// 		To implement also helicity between taus!!!!!!!!!!!!!
-			/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 			g1_ptmgg		=	Photon_pt().at(gHidx()[0]) / mgg;
 			g1_pt			=	Photon_pt().at(gHidx()[0]) ;
 			g1_eta			=	Photon_eta().at(gHidx()[0]) ;
@@ -472,6 +507,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			g1_phi			=	Photon_phi().at(gHidx()[0]) ;
 			g1_idmva		=	Photon_mvaID().at(gHidx()[0]) ;
 			g1_pixVeto		=   Photon_pixelSeed().at(gHidx()[0]) ;
+			g1_energyErr	=   Photon_energyErr().at(gHidx()[0]) ;
 
 			g2_ptmgg		=	Photon_pt().at(gHidx()[1]) / mgg;
 			g2_pt			=	Photon_pt().at(gHidx()[1]) ;
@@ -480,6 +516,24 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			g2_phi			=	Photon_phi().at(gHidx()[1]) ;
 			g2_idmva		=	Photon_mvaID().at(gHidx()[1]) ;
 			g2_pixVeto		=   Photon_pixelSeed().at(gHidx()[1]) ;
+			g2_energyErr	=   Photon_energyErr().at(gHidx()[1]) ;
+
+			if ( g1_pt > g2_pt ){
+				max_g_ptmgg = g1_pt / mgg;
+				min_g_ptmgg = g2_pt / mgg;
+			}
+			else{
+				max_g_ptmgg = g2_pt / mgg;
+				min_g_ptmgg = g1_pt / mgg;
+			}
+			if ( g1_idmva > g2_idmva ){
+				max_g_idmva = g1_idmva;
+				min_g_idmva = g2_idmva;
+			}
+			else{
+				max_g_idmva = g2_idmva;
+				min_g_idmva = g1_idmva;
+			}
 
 			LorentzVector lep1_p4, lep2_p4;
 
@@ -575,6 +629,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 				lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
 				m_Z				= ( lep1_p4 + lep2_p4 ).M();
+				var1			= max_bTag * m_Z;
 			}
 			if ( cat5 ){
 				lep1_p4			=	Electron_p4()[h_cand1[0]];
@@ -597,6 +652,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Electron_p4()[h_cand1[0]] );
 				m_Z				= ( lep1_p4 + lep2_p4 ).M();
+				var1			= max_bTag * m_Z;
 			}
 			if ( cat6 ){
 				lep1_p4			=	Muon_p4()[h_cand1[0]];
@@ -618,25 +674,28 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
 				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
+				var1			= max_bTag * ( lep1_p4 + lep2_p4 ).M();
 			}
 			if ( cat7 ){
-				lep1_p4			=	Tau_p4()[h_cand1[0]];
-				lep1_pt			=	Tau_pt()[h_cand1[0]];
-				lep1_eta		=	Tau_eta()[h_cand1[0]];
-				lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep1_phi		=	Tau_phi()[h_cand1[0]];	
-				lep1_charge		=	Tau_charge()[h_cand1[0]];
-				lep1_pdgID		=	15 * sgn( lep2_charge );
-				lep1_id_vs_e	=	Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
-				lep1_id_vs_m	=	Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
-				lep1_id_vs_jet	=	Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+				lep1_p4					=	Tau_p4()[h_cand1[0]];
+				lep1_pt					=	Tau_pt()[h_cand1[0]];
+				lep1_eta				=	Tau_eta()[h_cand1[0]];
+				lep1_eta_bdt			=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
+				lep1_phi				=	Tau_phi()[h_cand1[0]];	
+				lep1_charge				=	Tau_charge()[h_cand1[0]];
+				lep1_pdgID				=	15 * sgn( lep2_charge );
+				lep1_id_vs_e			=	Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
+				lep1_id_vs_m			=	Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
+				lep1_id_vs_jet			=	Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
 
-				lep2_pt			=	IsoTrack_pt()[h_cand2[0]];
-				lep2_eta		=	IsoTrack_eta()[h_cand2[0]];
-				lep2_eta_bdt	=	IsoTrack_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep2_phi		=	IsoTrack_phi()[h_cand2[0]];	
-				lep2_charge		=	IsoTrack_pdgId()[h_cand2[0]]/fabs(IsoTrack_pdgId()[h_cand2[0]]);
-				lep2_pdgID		=	IsoTrack_pdgId()[h_cand2[0]];
+				lep2_pt					=	IsoTrack_pt()[h_cand2[0]];
+				lep2_eta				=	IsoTrack_eta()[h_cand2[0]];
+				lep2_eta_bdt			=	IsoTrack_eta()[h_cand2[0]] * sgn( gg_eta );
+				lep2_phi				=	IsoTrack_phi()[h_cand2[0]];	
+				lep2_charge				=	IsoTrack_pdgId()[h_cand2[0]]/fabs(IsoTrack_pdgId()[h_cand2[0]]);
+				lep2_pdgID				=	IsoTrack_pdgId()[h_cand2[0]];
+				lep2_pfRelIso03_all 	= 	IsoTrack_pfRelIso03_all()[h_cand2[0]];;
+				lep2_pfRelIso03_chg 	= 	IsoTrack_pfRelIso03_chg()[h_cand2[0]];;
 
 				LorentzVector iso_track(IsoTrack_pt()[h_cand2[0]], IsoTrack_eta()[h_cand2[0]], IsoTrack_phi()[h_cand2[0]], 0);
 				lep2_p4 = iso_track;
@@ -653,6 +712,15 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep1_id_vs_e	=	Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
 				lep1_id_vs_m	=	Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
 				lep1_id_vs_jet	=	Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+			}
+
+			if ( lep1_pt > lep2_pt ){
+				max_lep_pt = lep1_pt;
+				min_lep_pt = lep2_pt;
+			}
+			else{
+				max_lep_pt = lep2_pt;
+				min_lep_pt = lep1_pt;
 			}
 
 			dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
@@ -715,8 +783,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				jet2_id		=	Jet_jetId()[sel_jets[1]];
 			}
 
-			out_tree->Fill();
-
 			//make histograms for yields
 			h_mgg->Fill( mgg, weight );
 			if ( cat1 || cat2 ) h_mgg_1t1l->Fill( mgg, weight );
@@ -724,6 +790,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( cat4 || cat5 || cat6 ) h_mgg_0t2l->Fill( mgg, weight );
 			if ( cat7 || cat8 ) h_mgg_1t0l->Fill( mgg, weight );
 			if ( cat7 ) h_mgg_1t0l_iso->Fill( mgg, weight );
+
+			out_tree->Fill();
 
         } // Event loop
         delete file;
