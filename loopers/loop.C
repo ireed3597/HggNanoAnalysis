@@ -43,7 +43,7 @@ using namespace tas;
 
 int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool resonant = false ) {
 
-	TString file_name = proc + "_06Oct2021_" +  std::to_string(year);
+	TString file_name = proc + "_27Oct2021_" +  std::to_string(year);
 
 	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
@@ -126,6 +126,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("gg_tt_hel"			,	&gg_tt_hel				,	"gg_tt_hel/F"		);
 	out_tree->Branch("gg_tt_hel_phys"		,	&gg_tt_hel_phys			,	"gg_tt_hel_phys/F"	);
 	out_tree->Branch("mgg"					,	&mgg					,	"mgg/F"				);
+	out_tree->Branch("CMS_hgg_mass"			,	&mgg					,	"CMS_hgg_mass/F"	);
 
 	out_tree->Branch("lep1_pt"				,	&lep1_pt				, 	"lep1_pt/F"					);	  
 	out_tree->Branch("lep1_eta"				,	&lep1_eta				,  	"lep1_eta/F"				);
@@ -193,6 +194,8 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("eta_tautau_vis"		,	&eta_tautau_vis				, 	"eta_tautau_vis/F"			);	  
 	out_tree->Branch("eta_tautau_vis_bdt"	,	&eta_tautau_vis_bdt			, 	"eta_tautau_vis_bdt/F"		);	  
 	out_tree->Branch("phi_tautau_vis"		,	&phi_tautau_vis				, 	"phi_tautau_vis/F"			);	  
+
+	out_tree->Branch("dZ"					,	&dZ  						, 	"dZ/F"						);	  
 
 	//define process ids
 	if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)	process_id = -4;
