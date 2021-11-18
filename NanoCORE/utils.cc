@@ -544,4 +544,23 @@ void clear_branches(){
 	ll_dEta					= -9;
 	ll_dR					= -9;
 	m_Z						= -9;
+	dZ						= 0;
+	g1_energyErr	= -9;
+	g2_energyErr	= -9;
+	max_g_ptmgg		= -9;
+	min_g_ptmgg		= -9;
+	max_g_idmva		= -9;
+	min_g_idmva		= -9;
+	lep2_pfRelIso03_all	= -9;
+	lep2_pfRelIso03_chg	= -9;
+	max_lep_pt		= -9;
+	min_lep_pt		= -9;
+	tau1_pt_SVFit			= -9;
+	tau1_eta_SVFit		= -9;
+	tau1_phi_SVFit		= -9;
+	tau1_m_SVFit			= -9;
+	tau2_pt_SVFit			= -9;
+	tau2_eta_SVFit		= -9;
+	tau2_phi_SVFit		= -9;
+	tau2_m_SVFit			= -9;
 }
