@@ -387,35 +387,35 @@
     "HH_ggZZ_2l2q": {
         "2016": {
             "metadata": {
-                "n_events": 791855,
-                "scale1fb": 1.7949808111125326e-08,
-                "sumWeights": 29049.892721516648,
+                "n_events": 995997,
+                "scale1fb": 1.8502264132368093e-08,
+                "sumWeights": 28182.496816040282,
                 "xs": 5.2144e-07
             },
             "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/skimNano-Hggselection__v5/211007_194532/0000/"
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/skimNano-Hggselection__v5/210816_205112/0000/"
             ]
         },
         "2017": {
             "metadata": {
-                "n_events": 791855,
-                "scale1fb": 1.7949808111125326e-08,
-                "sumWeights": 29049.892721516648,
+                "n_events": 995997,
+                "scale1fb": 1.8502264132368093e-08,
+                "sumWeights": 28182.496816040282,
                 "xs": 5.2144e-07
             },
             "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/skimNano-Hggselection__v5/211007_194532/0000/"
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/skimNano-Hggselection__v5/210816_205112/0000/"
             ]
         },
         "2018": {
             "metadata": {
-                "n_events": 791855,
-                "scale1fb": 1.7949808111125326e-08,
-                "sumWeights": 29049.892721516648,
+                "n_events": 995997,
+                "scale1fb": 1.8502264132368093e-08,
+                "sumWeights": 28182.496816040282,
                 "xs": 5.2144e-07
             },
             "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/skimNano-Hggselection__v5/211007_194532/0000/"
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/HHggZZ2L2Q_Era2018_private_mc18/skimNano-Hggselection__v5/210816_205112/0000/"
             ]
         },
         "fpo": 10,
