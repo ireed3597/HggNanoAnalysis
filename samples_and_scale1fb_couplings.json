@@ -1,0 +1,420 @@
+{
+    "ggf_c0_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1640800,
+                "scale1fb": 7.13122521421927e-08,
+                "sumWeights": 123947.84534886824,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c0_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 1427204,
+                "scale1fb": 1.02699374939005e-07,
+                "sumWeights": 86066.73609503116,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c0_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1253200,
+                "scale1fb": 1.169882605891744e-07,
+                "sumWeights": 75554.5894561144,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c0_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -10,
+        "resonant": true
+    },
+    "ggf_c1_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 936000,
+                "scale1fb": 1.4336265077238088e-07,
+                "sumWeights": 61654.830964543326,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c1_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 2.688792287181634e-07,
+                "sumWeights": 32873.49507114569,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c1_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 3.3004111612409174e-07,
+                "sumWeights": 26781.511660736945,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c1_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -11,
+        "resonant": true
+    },
+    "ggf_c2p45_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 7.483558396071498e-07,
+                "sumWeights": 11811.22606678668,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c2p45_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 998000,
+                "scale1fb": 3.3824922800450935e-08,
+                "sumWeights": 261316.1913818814,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c2p45_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 998000,
+                "scale1fb": 7.752641956947976e-07,
+                "sumWeights": 11401.274622360732,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c2p45_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -12,
+        "resonant": true
+    },
+    "ggf_c5_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 1.0639234177617391e-07,
+                "sumWeights": 83079.28796788129,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c5_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 986000,
+                "scale1fb": 1.0649872912628403e-07,
+                "sumWeights": 82996.29556629632,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c5_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 998000,
+                "scale1fb": 9.161367072432735e-09,
+                "sumWeights": 964812.3396995233,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/GGF_c5_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -13,
+        "resonant": true
+    },
+    "vbf_cv_0p5_c2v_1_c3_1_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.875221610954666e-10,
+                "sumWeights": 994211.2147494481,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_0_5_C2V_1_C3_1_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 998000,
+                "scale1fb": 4.860107547384763e-10,
+                "sumWeights": 997303.0334705627,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_0_5_C2V_1_C3_1_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.850471646709008e-10,
+                "sumWeights": 999284.2661576296,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_0_5_C2V_1_C3_1_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -14,
+        "resonant": true
+    },
+    "vbf_cv_1_c2v_0_c3_1_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 2495600,
+                "scale1fb": 1.9527930094339862e-10,
+                "sumWeights": 2482085.902901145,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_0_C3_1_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 2353600,
+                "scale1fb": 2.0607616128290753e-10,
+                "sumWeights": 2352043.035849204,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_0_C3_1_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 2332800,
+                "scale1fb": 2.0791810667219777e-10,
+                "sumWeights": 2331206.299238645,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_0_C3_1_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -16,
+        "resonant": true
+    },
+    "vbf_cv_1_c2v_1_c3_0_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.865511571144506e-10,
+                "sumWeights": 996195.3494768586,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_0_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 998000,
+                "scale1fb": 4.859288504938875e-10,
+                "sumWeights": 997471.130819587,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_0_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.849565238651343e-10,
+                "sumWeights": 999471.0373971468,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_0_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -17,
+        "resonant": true
+    },
+    "vbf_cv_1_c2v_1_c3_1_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 6891200,
+                "scale1fb": 7.067066716951286e-11,
+                "sumWeights": 6858573.994177578,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_1_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 5571600,
+                "scale1fb": 8.704778816467631e-11,
+                "sumWeights": 5568205.812226365,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_1_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 5468800,
+                "scale1fb": 8.868482679066697e-11,
+                "sumWeights": 5465421.961572901,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_1_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -18,
+        "resonant": true
+    },
+    "vbf_cv_1_c2v_1_c3_2_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.867837787167571e-10,
+                "sumWeights": 995719.2930252312,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_2_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.850036009443868e-10,
+                "sumWeights": 999374.0233190112,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_2_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.849996263242326e-10,
+                "sumWeights": 999382.2132884855,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_1_C3_2_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -19,
+        "resonant": true
+    },
+    "vbf_cv_1_c2v_2_c3_1_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 2284800,
+                "scale1fb": 2.1341540094833324e-10,
+                "sumWeights": 2271157.5539824483,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_2_C3_1_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 2294400,
+                "scale1fb": 2.1140905776146382e-10,
+                "sumWeights": 2292711.6043764534,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_2_C3_1_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 2553600,
+                "scale1fb": 1.8995305648633687e-10,
+                "sumWeights": 2551683.0787867,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_C2V_2_C3_1_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -20,
+        "resonant": true
+    },
+    "vbf_cv_1p5_c2v_1_c3_1_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.871270784605644e-10,
+                "sumWeights": 995017.5661179941,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_5_C2V_1_C3_1_HHggtautau_Era2016_private_mc16/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.850010944117948e-10,
+                "sumWeights": 999379.1881806785,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_5_C2V_1_C3_1_HHggtautau_Era2017_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1000000,
+                "scale1fb": 4.850114355910844e-10,
+                "sumWeights": 999357.8799009041,
+                "xs": 4.847e-07
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/VBF_CV_1_5_C2V_1_C3_1_HHggtautau_Era2018_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -15,
+        "resonant": true
+    }
+}
