@@ -43,7 +43,7 @@ using namespace tas;
 
 int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool resonant = false ) {
 
-	TString file_name = proc + "_31Jan2022_" +  std::to_string(year);
+	TString file_name = proc + "_test_" +  std::to_string(year);
 
 	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
@@ -138,9 +138,9 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("lep1_charge"			,	&lep1_charge			, 	"lep1_charge/I"				);	  
 	out_tree->Branch("lep1_pdgID"			,	&lep1_pdgID				,  	"lep1_pdgID/F"				);
 	out_tree->Branch("lep1_tightID"			,	&lep1_tightID			,	"lep1_tightID/F"			);
-	out_tree->Branch("lep1_id_vs_e"			,	&lep1_id_vs_e			, 	"lep1_id_vs_e/UChar_t"			);	  
-	out_tree->Branch("lep1_id_vs_m"			,	&lep1_id_vs_m			,  	"lep1_id_vs_m/UChar_t"			);
-	out_tree->Branch("lep1_id_vs_jet"		,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/UChar_t"			);
+	out_tree->Branch("lep1_id_vs_e"			,	&lep1_id_vs_e			, 	"lep1_id_vs_e/b");	  
+	out_tree->Branch("lep1_id_vs_m"			,	&lep1_id_vs_m			,  	"lep1_id_vs_m/b");
+	out_tree->Branch("lep1_id_vs_jet"		,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/b");
 	out_tree->Branch("lep2_pt"				,	&lep2_pt				, 	"lep2_pt/F"					);	  
 	out_tree->Branch("lep2_eta"				,	&lep2_eta				,  	"lep2_eta/F"				);
 	out_tree->Branch("lep2_eta_bdt"			,	&lep2_eta_bdt			,  	"lep2_eta_bdt/F"			);
@@ -148,9 +148,9 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("lep2_charge"			,	&lep2_charge			, 	"lep2_charge/I"				);	  
 	out_tree->Branch("lep2_pdgID"			,	&lep2_pdgID				,  	"lep2_pdgID/F"				);
 	out_tree->Branch("lep2_tightID"			,	&lep2_tightID			,	"lep2_tightID/F"			);
-	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/UChar_t"			);	  
-	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/UChar_t"			);
-	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/UChar_t"			);
+	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/b"			);	  
+	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/b"			);
+	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/b"			);
 	out_tree->Branch("lep2_pfRelIso03_all"	,	&lep2_pfRelIso03_all	,	"lep2_pfRelIso03_all/F"		);
 	out_tree->Branch("lep2_pfRelIso03_chg"	,	&lep2_pfRelIso03_chg	,	"lep2_pfRelIso03_chg/F"		);
 	out_tree->Branch("max_lep_pt"			,	&max_lep_pt				, 	"max_lep_pt/F"				);	  
