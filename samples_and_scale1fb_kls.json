@@ -1,0 +1,154 @@
+{
+    "ggf_c0_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 1640798,
+                "scale1fb": 2.018936983236583e-07,
+                "sumWeights": 98797.86655858497,
+                "xs": 1.9946666666e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c0_HHggtautau_Era2016_private_v0.1_20210714/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 1427202,
+                "scale1fb": 2.3209387922720753e-07,
+                "sumWeights": 85942.23480780929,
+                "xs": 1.9946666666e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c0_HHggtautau_Era2017_private_v0.1_20210714/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1335994,
+                "scale1fb": 2.4791223090208876e-07,
+                "sumWeights": 80458.58243225522,
+                "xs": 1.9946666666e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c0_HHggtautau_Era2018_private_v0.1_20210714/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -10,
+        "resonant": true
+    },
+    "ggf_c1_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 995995,
+                "scale1fb": 3.317147285755269e-07,
+                "sumWeights": 26646.389920511112,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c1_HHggtautau_Era2016_private_v0.1_20210714/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 999995,
+                "scale1fb": 3.299745463128053e-07,
+                "sumWeights": 26786.91462347193,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c1_HHggtautau_Era2017_private_v0.1_20210714/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 999999,
+                "scale1fb": 3.300538667242563e-07,
+                "sumWeights": 26780.477040690294,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c1_HHggtautau_Era2018_private_v0.1_20210714/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -11,
+        "resonant": true
+    },
+    "ggf_c2p45_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 997997,
+                "scale1fb": 3.301163419029009e-07,
+                "sumWeights": 11296.017575212418,
+                "xs": 3.729e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c2p45_HHggtautau_Era2016_private_v0.1_20210714/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 997996,
+                "scale1fb": 3.301691703424372e-07,
+                "sumWeights": 11294.210165450766,
+                "xs": 3.729e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c2p45_HHggtautau_Era2017_private_v0.1_20210714/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 997999,
+                "scale1fb": 3.3046476732905816e-07,
+                "sumWeights": 11284.107622543836,
+                "xs": 3.729e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c2p45_HHggtautau_Era2018_private_v0.1_20210714/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -12,
+        "resonant": true
+    },
+    "ggf_c5_HHggtautau": {
+        "2016": {
+            "metadata": {
+                "n_events": 997995,
+                "scale1fb": 3.426089893433574e-07,
+                "sumWeights": 78784.85632187729,
+                "xs": 2.69924e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c5_HHggtautau_Era2016_private_v0.1_20210714/"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 985993,
+                "scale1fb": 3.468503676712695e-07,
+                "sumWeights": 77821.45419428324,
+                "xs": 2.69924e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c5_HHggtautau_Era2017_private_v0.1_20210714/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 997995,
+                "scale1fb": 3.426158326872851e-07,
+                "sumWeights": 78783.28268803826,
+                "xs": 2.69924e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/GGF_c5_HHggtautau_Era2018_private_v0.1_20210714/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -13,
+        "resonant": true
+    }
+}

@@ -544,6 +544,7 @@ void clear_branches(){
 	ll_dEta					= -9;
 	ll_dR					= -9;
 	m_Z						= -9;
+
 	dZ						= 0;
 	g1_energyErr	= -9;
 	g2_energyErr	= -9;
@@ -563,4 +564,7 @@ void clear_branches(){
 	tau2_eta_SVFit		= -9;
 	tau2_phi_SVFit		= -9;
 	tau2_m_SVFit			= -9;
+	mX						= -9;
+	m_llg_lead			= -9;
+	m_llg_subl			= -9;
 }

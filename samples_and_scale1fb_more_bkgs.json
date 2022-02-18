@@ -1,0 +1,119 @@
+{
+    "WW": {
+        "2016": {
+            "metadata": {
+                "n_events": 7982180,
+                "scale1fb": 0.007918760037740113,
+                "sumWeights": 7982310.3236803105,
+                "xs": 63.21
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WW_TuneCUETP8M1_13TeV-pythia8_private_mc16",
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WW_TuneCUETP8M1_13TeV-pythia8_private_mc16_2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 7791498,
+                "scale1fb": 0.008112623506064485,
+                "sumWeights": 7791560.886900297,
+                "xs": 63.21
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WW_TuneCP5_13TeV-pythia8_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 7850000,
+                "scale1fb": 0.008056194842409919,
+                "sumWeights": 7846135.953322033,
+                "xs": 63.21
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WW_TuneCP5_13TeV-pythia8_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": 14,
+        "resonant": false
+    },
+    "WZ": {
+        "2016": {
+            "metadata": {
+                "n_events": 3997571,
+                "scale1fb": 0.0057084664662616375,
+                "sumWeights": 3997571.0,
+                "xs": 22.82
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WZ_TuneCUETP8M1_13TeV-pythia8_private_mc16",
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WZ_TuneCUETP8M1_13TeV-pythia8_private_mc16_2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 3928630,
+                "scale1fb": 0.005808640671175448,
+                "sumWeights": 3928630.0,
+                "xs": 22.82
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WZ_TuneCP5_13TeV-pythia8_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 3885000,
+                "scale1fb": 0.00587513358003437,
+                "sumWeights": 3884167.0047383844,
+                "xs": 22.82
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/WZ_TuneCP5_13TeV-pythia8_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": 15,
+        "resonant": false
+    },
+    "ZZ": {
+        "2016": {
+            "metadata": {
+                "n_events": 1988098,
+                "scale1fb": 0.005190890992295148,
+                "sumWeights": 1988098.0,
+                "xs": 10.32
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/ZZ_TuneCUETP8M1_13TeV-pythia8_private_mc16",
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/ZZ_TuneCUETP8M1_13TeV-pythia8_private_mc16_2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 1925931,
+                "scale1fb": 0.005358447421013526,
+                "sumWeights": 1925931.0,
+                "xs": 10.32
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/ZZ_TuneCP5_13TeV-pythia8_private_mc17/"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 1979000,
+                "scale1fb": 0.005215343262418523,
+                "sumWeights": 1978776.7517366216,
+                "xs": 10.32
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-Hggselection-wFjets/ZZ_TuneCP5_13TeV-pythia8_private_mc18/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": 16,
+        "resonant": false
+    }
+}

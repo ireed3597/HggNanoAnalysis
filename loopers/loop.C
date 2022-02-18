@@ -43,7 +43,7 @@ using namespace tas;
 
 int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool resonant = false ) {
 
-	TString file_name = proc + "_27Oct2021_" +  std::to_string(year);
+	TString file_name = proc + "_31Jan2022_" +  std::to_string(year);
 
 	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
@@ -80,7 +80,10 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("n_jets"				,	&n_jets					,	"n_jets/I"			);
 	out_tree->Branch("n_bjets"				,	&n_bjets				,	"n_bjets/I"			);
 
-	out_tree->Branch("m_Z"					,	&m_Z					, 	"m_Z/F"				);	  
+	out_tree->Branch("m_Z"						,	&m_Z					, 	"m_Z/F"				);	  
+	out_tree->Branch("mX"							,	&mX						, 	"mX/F"				);	  
+	out_tree->Branch("m_llg_lead"			,	&m_llg_lead		, 	"m_llg_lead/F"				);	  
+	out_tree->Branch("m_llg_subl"			,	&m_llg_subl		, 	"m_llg_subl/F"				);	  
 
 	out_tree->Branch("MET_gg_dPhi"			,	&MET_gg_dPhi			, 	"MET_gg_dPhi/F"		);	  
 	out_tree->Branch("MET_ll_dPhi"			,	&MET_ll_dPhi			, 	"MET_ll_dPhi/F"		);	  
@@ -135,9 +138,9 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("lep1_charge"			,	&lep1_charge			, 	"lep1_charge/I"				);	  
 	out_tree->Branch("lep1_pdgID"			,	&lep1_pdgID				,  	"lep1_pdgID/F"				);
 	out_tree->Branch("lep1_tightID"			,	&lep1_tightID			,	"lep1_tightID/F"			);
-	out_tree->Branch("lep1_id_vs_e"			,	&lep1_id_vs_e			, 	"lep1_id_vs_e/I"			);	  
-	out_tree->Branch("lep1_id_vs_m"			,	&lep1_id_vs_m			,  	"lep1_id_vs_m/I"			);
-	out_tree->Branch("lep1_id_vs_jet"		,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/I"			);
+	out_tree->Branch("lep1_id_vs_e"			,	&lep1_id_vs_e			, 	"lep1_id_vs_e/UChar_t"			);	  
+	out_tree->Branch("lep1_id_vs_m"			,	&lep1_id_vs_m			,  	"lep1_id_vs_m/UChar_t"			);
+	out_tree->Branch("lep1_id_vs_jet"		,	&lep1_id_vs_jet			,	"lep1_id_vs_jet/UChar_t"			);
 	out_tree->Branch("lep2_pt"				,	&lep2_pt				, 	"lep2_pt/F"					);	  
 	out_tree->Branch("lep2_eta"				,	&lep2_eta				,  	"lep2_eta/F"				);
 	out_tree->Branch("lep2_eta_bdt"			,	&lep2_eta_bdt			,  	"lep2_eta_bdt/F"			);
@@ -145,9 +148,9 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 	out_tree->Branch("lep2_charge"			,	&lep2_charge			, 	"lep2_charge/I"				);	  
 	out_tree->Branch("lep2_pdgID"			,	&lep2_pdgID				,  	"lep2_pdgID/F"				);
 	out_tree->Branch("lep2_tightID"			,	&lep2_tightID			,	"lep2_tightID/F"			);
-	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/I"			);	  
-	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/I"			);
-	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/I"			);
+	out_tree->Branch("lep2_id_vs_e"			,	&lep2_id_vs_e			, 	"lep2_id_vs_e/UChar_t"			);	  
+	out_tree->Branch("lep2_id_vs_m"			,	&lep2_id_vs_m			,  	"lep2_id_vs_m/UChar_t"			);
+	out_tree->Branch("lep2_id_vs_jet"		,	&lep2_id_vs_jet			,	"lep2_id_vs_jet/UChar_t"			);
 	out_tree->Branch("lep2_pfRelIso03_all"	,	&lep2_pfRelIso03_all	,	"lep2_pfRelIso03_all/F"		);
 	out_tree->Branch("lep2_pfRelIso03_chg"	,	&lep2_pfRelIso03_chg	,	"lep2_pfRelIso03_chg/F"		);
 	out_tree->Branch("max_lep_pt"			,	&max_lep_pt				, 	"max_lep_pt/F"				);	  
@@ -197,25 +200,41 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 	out_tree->Branch("dZ"					,	&dZ  						, 	"dZ/F"						);	  
 
+	bool ggf_samples = false;
 	//define process ids
 	if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)	process_id = -4;
-	if (proc.find(std::string("HH_ggWW_dileptonic")) != std::string::npos) 	process_id = -3;
-	//if (proc.find(std::string("HH_ggZZ")) != std::string::npos) 				process_id = -2;
-	if (proc.find(std::string("HH_ggZZ_2l2q")) != std::string::npos) 				process_id = -6;
-	if (proc.find(std::string("HH_ggZZ_4l")) != std::string::npos) 				process_id = -5;
-	if (proc.find(std::string("HH_ggTauTau")) != std::string::npos) 			process_id = -1;
-	if (proc.find(std::string("Data")) != std::string::npos) 				process_id = 0;
-	if (proc.find(std::string("ZGamma")) != std::string::npos) 				process_id = 2;
-	if (proc.find(std::string("DiPhoton")) != std::string::npos) 			process_id = 3;
-	if (proc.find(std::string("WGamma")) != std::string::npos) 				process_id = 4;
-	if (proc.find(std::string("TTbar")) != std::string::npos) 				process_id = 5;
-	if (proc.find(std::string("TTGamma")) != std::string::npos) 				process_id = 6;
-	if (proc.find(std::string("TTGG")) != std::string::npos) 				process_id = 7;
-	if (proc.find(std::string("GJets")) != std::string::npos)				process_id = 8;
-	if (proc.find(std::string("VH")) != std::string::npos) 					process_id = 9;
-	if (proc.find(std::string("ttH")) != std::string::npos) 					process_id = 10;
-	if (proc.find(std::string("ggH")) != std::string::npos) 					process_id = 11;
-	if (proc.find(std::string("VBFH")) != std::string::npos) 				process_id = 12;
+	else if (proc.find(std::string("HH_ggWW_dileptonic")) != std::string::npos) 	process_id = -3;
+	//else if (proc.find(std::string("HH_ggZZ")) != std::string::npos) 				process_id = -2;
+	else if (proc.find(std::string("HH_ggZZ_2l2q")) != std::string::npos) 				process_id = -6;
+	else if (proc.find(std::string("HH_ggZZ_4l")) != std::string::npos) 				process_id = -5;
+	else if (proc.find(std::string("HH_ggTauTau")) != std::string::npos) 			process_id = -1;
+	else if (proc.find(std::string("Data")) != std::string::npos) 				process_id = 0;
+	else if (proc.find(std::string("ZGamma")) != std::string::npos) 				process_id = 2;
+	else if (proc.find(std::string("DiPhoton")) != std::string::npos) 			process_id = 3;
+	else if (proc.find(std::string("WGamma")) != std::string::npos) 				process_id = 4;
+	else if (proc.find(std::string("TTbar")) != std::string::npos) 				process_id = 5;
+	else if (proc.find(std::string("TTGamma")) != std::string::npos) 				process_id = 6;
+	else if (proc.find(std::string("TTGG")) != std::string::npos) 				process_id = 7;
+	else if (proc.find(std::string("GJets")) != std::string::npos)				process_id = 8;
+	else if (proc.find(std::string("VH")) != std::string::npos) 					process_id = 9;
+	else if (proc.find(std::string("ttH")) != std::string::npos) 					process_id = 10;
+	else if (proc.find(std::string("ggH")) != std::string::npos) 					process_id = 11;
+	else if (proc.find(std::string("VBFH")) != std::string::npos) 				process_id = 12;
+	else if (proc.find(std::string("WW")) != std::string::npos) 				process_id = 14;
+	else if (proc.find(std::string("WZ")) != std::string::npos) 				process_id = 15;
+	else if (proc.find(std::string("ZZ")) != std::string::npos) 				process_id = 16;
+	//non-SM couplings
+	else if (proc.find(std::string("ggf_c0_HHggtautau")) != std::string::npos) 		{		process_id = -10;		ggf_samples = true;		}
+	else if (proc.find(std::string("ggf_c1_HHggtautau")) != std::string::npos) 		{		process_id = -11;		ggf_samples = true;		}
+	else if (proc.find(std::string("ggf_c2p45_HHggtautau")) != std::string::npos) {				process_id = -12;		ggf_samples = true;		}
+	else if (proc.find(std::string("ggf_c5_HHggtautau")) != std::string::npos) 		{		process_id = -13;		ggf_samples = true;		}
+	else if (proc.find(std::string("vbf_cv_0p5_c2v_1_c3_1_HHggtautau")) != std::string::npos) 				process_id = -14;
+	else if (proc.find(std::string("vbf_cv_1p5_c2v_1_c3_1_HHggtautau")) != std::string::npos) 				process_id = -15;
+	else if (proc.find(std::string("vbf_cv_1_c2v_0_c3_1_HHggtautau")) != std::string::npos) 				process_id = -16;
+	else if (proc.find(std::string("vbf_cv_1_c2v_1_c3_0_HHggtautau")) != std::string::npos) 				process_id = -17;
+	else if (proc.find(std::string("vbf_cv_1_c2v_1_c3_1_HHggtautau")) != std::string::npos) 				process_id = -18;
+	else if (proc.find(std::string("vbf_cv_1_c2v_1_c3_2_HHggtautau")) != std::string::npos) 				process_id = -19;
+	else if (proc.find(std::string("vbf_cv_1_c2v_2_c3_1_HHggtautau")) != std::string::npos) 				process_id = -20;
 
     int nEventsTotal = 0;
     int nEventsChain = ch->GetEntries();
@@ -232,18 +251,20 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
         tree->SetCacheLearnEntries(100);
 
         //auto psRead = new TTreePerfStats("readPerf", tree);
-		nt.SetYear(year);
+				nt.SetYear(year);
         nt.Init(tree);
 
         for( unsigned int loop_event = 0; loop_event < tree->GetEntriesFast(); ++loop_event) {
 
-            nt.GetEntry(loop_event);
-            tree->LoadTree(loop_event);
+         nt.GetEntry(loop_event);
+         tree->LoadTree(loop_event);
 
-            nEventsTotal++;
-            bar.progress(nEventsTotal, nEventsChain);
+         nEventsTotal++;
+         bar.progress(nEventsTotal, nEventsChain);
 
-			clear_branches();
+				clear_branches();
+
+				if ( proc != "Data" && ggf_samples & ( fabs(genWeight()) >= 1 ) )  continue;
 
 			//di-photon selection
 			mgg = (float)(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]) ).M();
@@ -632,7 +653,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 				lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
 				m_Z				= ( lep1_p4 + lep2_p4 ).M();
-				var1			= max_bTag * m_Z;
 			}
 			if ( cat5 ){
 				lep1_p4			=	Electron_p4()[h_cand1[0]];
@@ -655,7 +675,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Electron_p4()[h_cand1[0]] );
 				m_Z				= ( lep1_p4 + lep2_p4 ).M();
-				var1			= max_bTag * m_Z;
 			}
 			if ( cat6 ){
 				lep1_p4			=	Muon_p4()[h_cand1[0]];
@@ -677,7 +696,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
 				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
-				var1			= max_bTag * ( lep1_p4 + lep2_p4 ).M();
 			}
 			if ( cat7 ){
 				lep1_p4					=	Tau_p4()[h_cand1[0]];
@@ -767,7 +785,17 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 					tt_hel							= 	fabs( helicityCosTheta( diTau_p4 , tau2_p4 ) ) ;
 					gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) + diTau_p4, diTau_p4  ) ) ;
 				}
+
+				mX	= ( diTau_p4 + Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]) ).M() - ( diTau_p4.M() - mHiggs ) - ( mgg - mHiggs );
 			}
+
+
+			//remove main ZGamma bkg in 0tau2lep 
+			if ( category >3 && category < 7 ){
+				m_llg_lead	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx()[0]) ).M();
+				m_llg_subl	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx()[1]) ).M();
+			}
+			//if ( fabs( m_llg_lead - mZ ) < 5 | fabs( m_llg_subl - mZ ) < 5 ) continue;
 
 			if ( sel_jets.size() > 0 ){
 				jet1_pt		=	Jet_pt()[sel_jets[0]];

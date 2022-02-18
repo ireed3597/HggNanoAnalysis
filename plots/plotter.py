@@ -6,7 +6,7 @@ from yahist.utils import plot_stack
 import json
 import mplhep as hep
 import sys
-from root_pandas import read_root
+#from root_pandas import read_root
 
 plt.style.use([hep.style.CMS, hep.style.firamath])
 
@@ -86,18 +86,13 @@ class Plotter:
 
         if type(self.input) is str:
             # Open the file and store the dataframe in self.input
+            self.input_options = '../samples_and_scale1fb.json'
             if ".pkl" in self.input:
-                if not self.input_options:
-                    self.input_options = self.input.replace(".pkl", ".json")
                 self.input = pd.read_pickle(self.input)
             elif ".hdf" in self.input:
-                if not self.input_options:
-                    self.input_options = self.input.replace(".hdf5", ".json")
                 self.input = pd.read_hdf(self.input)
-            elif ".root" in self.input:
-                if not self.input_options:
-                    self.input_options = '../samples_and_scale1fb.json'
-                self.input = read_root(self.input)
+            #elif ".root" in self.input:
+            #    self.input = read_root(self.input)
             else:
                 print("Not a recognized format! Cannot Plot!")
                 sys.exit(1)
@@ -132,7 +127,7 @@ class Plotter:
             )
         for var, plot_info in self.plot_options.items():
             if not "signal" in plot_info.keys():
-                plot_info["signal"] = ["HH_ggTauTau","HH_ggWW_dileptonic","HH_ggWW_semileptonic"]
+                plot_info["signal"] = ["HH_ggTauTau"]
         if self.debug:
             print("[plotter.py] Loaded dataframe and options")
 
@@ -276,8 +271,12 @@ class Plotter:
                 fig, ax1 = plt.subplots()
 
             hist_stack = []
+            res_bkg = [ "VH", "ttH", "VBFH", "ggH" ]
+            nonSM_couplings = []
             for process, hist in self.histograms[branch].items():
-                if process == "signal" or process == "Data":
+                if "ggf" in process or "vbf" in process:
+                    nonSM_couplings += [process]
+                if process == "signal" or process == "Data" or "ggf" in process or "vbf" in process or process in res_bkg:
                     continue
                 else:
                     hist_stack.append(hist)
@@ -348,6 +347,29 @@ class Plotter:
                 self.histograms[branch]["signal"].plot(
                     histtype="step", label=signal_label, ax=ax1, color="black"
                 )
+
+            # Plotting resonant bkgs 
+            for proc in res_bkg:
+              if proc in self.histograms[branch]:
+                  if unit_normalize:
+                      self.histograms[branch][proc] /= self.histograms[
+                          branch
+                      ][proc].integral
+                  self.histograms[branch][proc].plot(
+                      histtype="step", label=proc, ax=ax1, #color="black"
+                  )
+
+            # Plotting non-SM samples
+            for proc in nonSM_couplings:
+              if proc in self.histograms[branch]:
+                  proc_label = proc.split("_HH")[0].replace("ggf_c","$k_{\lambda}$=")
+                  if unit_normalize:
+                      self.histograms[branch][proc] /= self.histograms[
+                          branch
+                      ][proc].integral
+                  self.histograms[branch][proc].plot(
+                      histtype="step", label=proc_label, ax=ax1, #color="black"
+                  )
 
             if "xlabel" in self.plot_options[branch].keys():
                 ax1.set_xlabel(self.plot_options[branch]["xlabel"])
@@ -434,8 +456,10 @@ class Plotter:
 # unit test
 if __name__ == "__main__":
     p = Plotter(
-        df="../hadded/hadded_out.root",
-        plot_options="options.json",
+        #df="../pickles/coupling_scan/run2_scan_clean.pkl",
+        df="/home/users/fsetti/HHggTauTau/HggAnalysisDev/MVAs/out_zipped/run2_01Feb2022_final.pkl",
+        #plot_options="couplings_check.json",
+        plot_options="plot_1var.json",
         branches="all",
         debug=True,
         save_filenames=["abc", "bcd", "cda"],
