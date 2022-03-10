@@ -444,7 +444,6 @@ void clear_branches(){
 	cat7					= false;
 	cat8					= false;
 
-	mgg						= -9;
 	n_electrons				= -9;
 	n_muons					= -9;
 	n_taus 					= -9;
@@ -480,6 +479,7 @@ void clear_branches(){
 	gg_tt_CS				= -9;
 	gg_tt_hel				= -9;
 	gg_tt_hel_phys			= -9;
+	mgg						= -9;
 
 	lep1_pt					= -9;
 	lep1_eta				= -9;

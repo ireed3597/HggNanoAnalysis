@@ -8,6 +8,7 @@ const float trans_eta_low 			= 1.4442;
 const float trans_eta_high 			= 1.566;
 const float mZ_veto_low				= 80;
 const float mZ_veto_up				= 100;
+const float mllg_window				= 25;
 
 //di-photon selection
 const float mgg_lower 				= 100;
@@ -133,9 +134,9 @@ float 			lep1_phi			;
 float 			lep1_charge			;
 float 			lep1_pdgID			;
 float 			lep1_tightID		;
-UChar_t 			lep1_id_vs_e		;
-UChar_t 			lep1_id_vs_m		;
-UChar_t 			lep1_id_vs_jet		;
+Int_t 			lep1_id_vs_e		;
+Int_t 			lep1_id_vs_m		;
+Int_t 			lep1_id_vs_jet		;
 
 float 			lep2_pt;
 float 			lep2_eta;
@@ -144,9 +145,9 @@ float 			lep2_phi;
 float 			lep2_charge;
 float 			lep2_pdgID;
 float 			lep2_tightID;
-UChar_t 			lep2_id_vs_e;
-UChar_t 			lep2_id_vs_m;
-UChar_t 			lep2_id_vs_jet;
+Int_t 			lep2_id_vs_e;
+Int_t 			lep2_id_vs_m;
+Int_t 			lep2_id_vs_jet;
 
 float 			jet1_pt			;
 float 			jet1_eta		;

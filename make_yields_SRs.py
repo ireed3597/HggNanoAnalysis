@@ -8,14 +8,16 @@ parser.add_argument(
     "--input",
     help = "path to input root file",
     type = str,
-    default = "/home/users/fsetti/HHggTauTau/HggNanoAnalysis/pickles/run2_ggf.pkl"
+    default = "pickles_zipped/run2_20UL_09Mar2022.pkl"
 )
 parser.add_argument(
     "--mvas",
 	nargs='*',
     help = "mva limits to SRs",
     type = float,
-    default = [0.978630,  0.9908]		#gave 19.3000 x SM w/ flashgg , 18.6 - correct
+    #default = [0.978630,  0.9908]		#gave 19.3000 x SM w/ flashgg , 18.6 - correct
+    #default = [0.973863,  0.9901]		#now gives 19.75 x SM with private tools... worse than 18.6 above
+    default = [0.975774,  0.9945]		#now gives 19.75 x SM with private tools... worse than 18.6 above
 )
 parser.add_argument(
     "--nSRs",
@@ -31,7 +33,7 @@ args.mvas.sort(reverse=True)
 
 df = pd.read_pickle(args.input)
 
-procs = { 'signal': [-11,-11], 'non_res_MC': [1,8], 'non_res_Data': [0,0], 'res_MC': [9,12] }
+procs = { 'signal': [-6,-1], 'non_res_MC': [1,8], 'non_res_Data': [0,0], 'res_MC': [9,12] }
 yields = {}
 
 #Yields in SRs

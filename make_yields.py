@@ -14,7 +14,7 @@ yields['allBkg'] = { 'inclusive': 0. , '1tau0lep': 0., '1tau0lep_iso':0., '1tau1
 
 for proc in procs:
 		yields[proc] = { 'inclusive': 0. , '1tau0lep': 0., '1tau0lep_iso':0., '1tau1lep': 0., '2tau0lep': 0., '0tau2lep': 0. }
-		files = glob.glob('outputs/'+proc+'*17Jan*.root')
+		files = glob.glob('outputs_UL/'+proc+'*09Mar2022*.root')
 		for file_ in files:
 			file_ = r.TFile(file_)
 			h			= file_.Get('mgg')

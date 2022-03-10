@@ -41,11 +41,15 @@ struct debugger { template<typename T> debugger& operator , (const T& v) { cerr<
 using namespace std;
 using namespace tas;
 
-int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool resonant = false ) {
+int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1, bool resonant = false ) {
 
-	TString file_name = proc + "_18Feb2022_" +  std::to_string(year);
+  int year;
+  if ( str_year == "2016_APV") year = 2016;
+  else { year = stoi(str_year); }
 
-	TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
+  TString file_name = proc + "_09Mar2022_" +  str_year;
+
+	TFile* f1 = new TFile("outputs_UL/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
 	H1(mgg_1t0l, 60, 100 , 180 );
 	H1(mgg_1t1l, 60, 100 , 180 );
@@ -266,19 +270,53 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 
 				if ( proc != "Data" && ggf_samples & ( fabs(genWeight()) >= 1 ) )  continue;
 
+				//////////////////////////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////////////////////////////////////
+				///////////////////							photon selection
+				vector<int> pho_cands;
+				vector<float> pho_pt_cands;
+				for (unsigned int i=0; i<nPhoton(); i++){
+					if ( Photon_electronVeto().at(i)  >=0.5 &&
+						 (	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) > 0.85 )			//pho_EB_highR9
+						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) > 0.90 )			//pho_EE_highR9
+//						||	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.16544*fixedGridRhoAll() ) < 4.0 )			//pho_EB_lowR9
+//						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.13212*fixedGridRhoAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
+						||	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_pfPhoIso03().at(i) - 0.16544*fixedGridRhoFastjetAll() ) < 4.0 )			//pho_EB_lowR9
+						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_pfPhoIso03().at(i) - 0.13212*fixedGridRhoFastjetAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
+					 	&& 	Photon_hoe().at(i) < 0.08
+						&&	fabs(Photon_eta().at(i)) < 2.5
+						&&	(	fabs(Photon_eta().at(i)) < 1.442 || fabs(Photon_eta().at(i)) > 1.566 )
+						&&	( Photon_r9().at(i) > 0.8 || Photon_chargedHadronIso().at(i) < 20 || Photon_chargedHadronIso().at(i) / Photon_pt().at(i) < 0.3 )
+						&&  ( Photon_isScEtaEB().at(i) || Photon_isScEtaEE().at(i) )
+						//&&    Photon_mvaID().at(i) > -0.9
+						){
+							pho_cands.push_back(i);					
+							pho_pt_cands.push_back( Photon_pt().at(i) );					
+					}
+				}
+				if ( pho_cands.size() < 2 ) continue;
+
+				sort(pho_pt_cands.begin(), pho_pt_cands.end(), greater<float>());
+				int gHidx[2] = {-1,-1};
+				for (unsigned int i=0; i<pho_cands.size();i++){
+					if ( Photon_pt().at(pho_cands[i]) == pho_pt_cands[0] && Photon_pt().at(pho_cands[i]) > 35 ) gHidx[0]	= pho_cands[i];
+					if ( Photon_pt().at(pho_cands[i]) == pho_pt_cands[1] && Photon_pt().at(pho_cands[i]) > 25 ) gHidx[1]	= pho_cands[i];
+				}
+				if ( gHidx[0] < 0 || gHidx[1] < 0 ) continue;
+
 			//di-photon selection
-			mgg = (float)(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]) ).M();
+			mgg = (float)(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ).M();
 			if ( mgg < mgg_lower || mgg > mgg_upper ) continue;
 			if ( (proc == "Data" || !resonant) && mgg > mgg_sideband_lower && mgg < mgg_sideband_upper ) continue;
 
 			//photon selection
-			if ( Photon_pt().at(gHidx()[0]) < pho_pt_cut 				|| Photon_pt().at(gHidx()[1]) < pho_pt_cut ) continue;
-			if ( Photon_pt().at(gHidx()[0]) / mgg < lead_pt_mgg_cut 	|| Photon_pt().at(gHidx()[1]) / mgg < sublead_pt_mgg_cut ) continue;
-			if ( Photon_mvaID().at(gHidx()[0]) < pho_idmva_cut 			|| Photon_mvaID().at(gHidx()[1]) < pho_idmva_cut ) continue;
-			if ( Photon_electronVeto().at(gHidx()[0]) < pho_eveto_cut 	|| Photon_electronVeto().at(gHidx()[1]) < pho_eveto_cut ) continue;
-			if ( fabs(Photon_eta().at(gHidx()[0])) > pho_eta_cut 		|| fabs(Photon_eta().at(gHidx()[1])) > pho_eta_cut ) continue;
-			if ( fabs(Photon_eta().at(gHidx()[0])) > trans_eta_low 		&& fabs(Photon_eta().at(gHidx()[0])) < trans_eta_high ) continue;
-			if ( fabs(Photon_eta().at(gHidx()[1])) > trans_eta_low 		&& fabs(Photon_eta().at(gHidx()[1])) < trans_eta_high ) continue;
+			if ( Photon_pt().at(gHidx[0]) < pho_pt_cut 				|| Photon_pt().at(gHidx[1]) < pho_pt_cut ) continue;
+			if ( Photon_pt().at(gHidx[0]) / mgg < lead_pt_mgg_cut 	|| Photon_pt().at(gHidx[1]) / mgg < sublead_pt_mgg_cut ) continue;
+			if ( Photon_mvaID().at(gHidx[0]) < pho_idmva_cut 			|| Photon_mvaID().at(gHidx[1]) < pho_idmva_cut ) continue;
+			if ( Photon_electronVeto().at(gHidx[0]) < pho_eveto_cut 	|| Photon_electronVeto().at(gHidx[1]) < pho_eveto_cut ) continue;
+			if ( fabs(Photon_eta().at(gHidx[0])) > pho_eta_cut 		|| fabs(Photon_eta().at(gHidx[1])) > pho_eta_cut ) continue;
+			if ( fabs(Photon_eta().at(gHidx[0])) > trans_eta_low 		&& fabs(Photon_eta().at(gHidx[0])) < trans_eta_high ) continue;
+			if ( fabs(Photon_eta().at(gHidx[1])) > trans_eta_low 		&& fabs(Photon_eta().at(gHidx[1])) < trans_eta_high ) continue;
 
 			//trigger requirements
 			//if ( year == 2016 && !HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90() ) continue;
@@ -288,7 +326,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			for(unsigned int i=0; i<nElectron(); i++){
 				if (Electron_pt().at(i) > ele_pt && fabs(Electron_eta().at(i)) < ele_eta && ( fabs(Electron_eta().at(i)) < trans_eta_low || fabs(Electron_eta().at(i)) > trans_eta_high ) && fabs(Electron_dxy().at(i)) < ele_dxy && fabs(Electron_dz().at(i)) < ele_dz 
 				&& ( (Electron_pfRelIso03_all().at(i) < ele_pfRelIso && Electron_mvaFall17V2noIso_WP90().at(i)) || (Electron_mvaFall17V2Iso_WP90().at(i) ) ) 
-				&& deltaR( Electron_p4().at(i) , Photon_p4().at(gHidx()[0]) ) > ele_dR_pho && deltaR( Electron_p4().at(i) , Photon_p4().at(gHidx()[1]) ) > ele_dR_pho 
+				&& deltaR( Electron_p4().at(i) , Photon_p4().at(gHidx[0]) ) > ele_dR_pho && deltaR( Electron_p4().at(i) , Photon_p4().at(gHidx[1]) ) > ele_dR_pho 
 				){
 					sel_eles.push_back(i);
 				}
@@ -299,7 +337,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				if (Muon_pt().at(i) > muon_pt && fabs(Muon_eta().at(i)) < muon_eta && fabs(Muon_dxy().at(i)) < muon_dxy && fabs(Muon_dz().at(i)) < muon_dz 
 				&& Muon_pfRelIso03_all().at(i) < muon_pfRelIso 
 				&& Muon_isGlobal().at(i) 
-				&& deltaR( Muon_p4().at(i) , Photon_p4().at(gHidx()[0]) ) > muon_dR_pho && deltaR( Muon_p4().at(i) , Photon_p4().at(gHidx()[1]) ) > muon_dR_pho 
+				&& deltaR( Muon_p4().at(i) , Photon_p4().at(gHidx[0]) ) > muon_dR_pho && deltaR( Muon_p4().at(i) , Photon_p4().at(gHidx[1]) ) > muon_dR_pho 
 				){
 					sel_muons.push_back(i);
 				}
@@ -307,9 +345,9 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			
 			vector<int> sel_taus;
 			for(unsigned int i=0; i<nTau(); i++){
-				if (Tau_pt().at(i) > tau_pt && fabs(Tau_eta().at(i)) < tau_eta && Tau_idDecayModeNewDMs().at(i) && fabs(Tau_dz().at(i)) < tau_dz 
+				if (Tau_pt().at(i) > tau_pt && fabs(Tau_eta().at(i)) < tau_eta && /*Tau_idDecayModeNewDMs().at(i) &&*/ fabs(Tau_dz().at(i)) < tau_dz 
 				&& Tau_idDeepTau2017v2p1VSe().at(i) >= tau_deepID_e && Tau_idDeepTau2017v2p1VSmu().at(i) >= tau_deepID_m && Tau_idDeepTau2017v2p1VSjet().at(i) >= tau_deepID_j 
-				&& deltaR( Tau_p4().at(i) , Photon_p4().at(gHidx()[0]) ) > tau_dR_pho && deltaR( Tau_p4().at(i) , Photon_p4().at(gHidx()[1]) ) > tau_dR_pho 
+				&& deltaR( Tau_p4().at(i) , Photon_p4().at(gHidx[0]) ) > tau_dR_pho && deltaR( Tau_p4().at(i) , Photon_p4().at(gHidx[1]) ) > tau_dR_pho 
 				){
 
 					bool overlap = false;
@@ -330,7 +368,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
                 if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) ){
                     LorentzVector *iso_track = new LorentzVector;
                     iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
-                    if ( deltaR( iso_track , Photon_p4().at(gHidx()[0]) ) > isoTrk_dR  && deltaR( iso_track , Photon_p4().at(gHidx()[1]) ) > isoTrk_dR  ){
+                    if ( deltaR( iso_track , Photon_p4().at(gHidx[0]) ) > isoTrk_dR  && deltaR( iso_track , Photon_p4().at(gHidx[1]) ) > isoTrk_dR  ){
 						bool iso = true;
 						for (unsigned int j=0; j<sel_eles.size(); j++){
                     		if ( deltaR( iso_track , Electron_p4().at(sel_eles.at(j)) ) < isoTrk_dR ){
@@ -353,35 +391,35 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			}
 			//Jet Selection			
 			vector<int> sel_jets;
-			for(unsigned int i=0; i<nJet(); i++){
-				if (Jet_pt().at(i) > jet_pt && fabs(Jet_eta().at(i)) < jet_eta && Jet_neEmEF().at(i) < jet_neEmEF && Jet_neHEF().at(i) < jet_neHEF && Jet_chHEF()[i] > jet_chHEF && Jet_chEmEF()[i] < jet_chEmEF && Jet_nConstituents()[i] > jet_nConstituents && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx()[0]) ) > jet_dR_pho && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx()[1]) ) > jet_dR_pho ){
-
-					bool overlap = false;
-					for (unsigned int j=0; j<sel_eles.size(); j++){
-						if ( !overlap && deltaR( Jet_p4().at(i) , Electron_p4().at(sel_eles.at(j)) ) < jet_dR_lep ){
-							overlap = true;
-							break;
-						}
-					}
-					for (unsigned int j=0; j<sel_muons.size(); j++){
-						if ( !overlap && deltaR( Jet_p4().at(i) , Muon_p4().at(sel_muons.at(j)) ) < jet_dR_lep ){
-							overlap = true;
-							break;
-						}
-					}
-					for (unsigned int j=0; j<sel_taus.size(); j++){
-						if ( !overlap && deltaR( Jet_p4().at(i) , Tau_p4().at(sel_taus.at(j)) ) < jet_dR_tau ){
-							overlap = true;
-							break;
-						}
-					}
-
-					if ( !overlap ){
-						sel_jets.push_back(i);
-						if ( Jet_btagDeepFlavB().at(i) > max_bTag ) max_bTag = Jet_btagDeepFlavB().at(i);
-					}
-				}
-			}
+//			for(unsigned int i=0; i<nJet(); i++){
+//				if (Jet_pt().at(i) > jet_pt && fabs(Jet_eta().at(i)) < jet_eta && Jet_neEmEF().at(i) < jet_neEmEF && Jet_neHEF().at(i) < jet_neHEF && Jet_chHEF()[i] > jet_chHEF && Jet_chEmEF()[i] < jet_chEmEF && Jet_nConstituents()[i] > jet_nConstituents && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx[0]) ) > jet_dR_pho && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx[1]) ) > jet_dR_pho ){
+//
+//					bool overlap = false;
+//					for (unsigned int j=0; j<sel_eles.size(); j++){
+//						if ( !overlap && deltaR( Jet_p4().at(i) , Electron_p4().at(sel_eles.at(j)) ) < jet_dR_lep ){
+//							overlap = true;
+//							break;
+//						}
+//					}
+//					for (unsigned int j=0; j<sel_muons.size(); j++){
+//						if ( !overlap && deltaR( Jet_p4().at(i) , Muon_p4().at(sel_muons.at(j)) ) < jet_dR_lep ){
+//							overlap = true;
+//							break;
+//						}
+//					}
+//					for (unsigned int j=0; j<sel_taus.size(); j++){
+//						if ( !overlap && deltaR( Jet_p4().at(i) , Tau_p4().at(sel_taus.at(j)) ) < jet_dR_tau ){
+//							overlap = true;
+//							break;
+//						}
+//					}
+//
+//					if ( !overlap ){
+//						sel_jets.push_back(i);
+//						if ( Jet_btagDeepFlavB().at(i) > max_bTag ) max_bTag = Jet_btagDeepFlavB().at(i);
+//					}
+//				}
+//			}
 
 			//bJet Selection			
 			vector<int> sel_bJets;
@@ -510,37 +548,37 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			t_MET_pt		= MET_pt();
 			t_MET_phi		= MET_phi();
 			t_weight		= weight;
-			MET_gg_dPhi		= deltaPhi( MET_phi() , (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).phi() );
+			MET_gg_dPhi		= deltaPhi( MET_phi() , (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() );
 
-			gg_pt			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).pt() ;
+			gg_pt			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).pt() ;
 			gg_ptmgg		=	gg_pt / mgg;
-			gg_eta			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).eta() ;
+			gg_eta			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).eta() ;
 			//gg_eta_bdt		=	gg_eta * sgn( gg_eta ) ;
-			gg_phi			=	(Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])).phi() ;
-			gg_dR			=	deltaR(Photon_p4().at(gHidx()[0]) , Photon_p4().at(gHidx()[1])) ;
-			gg_dPhi			=	deltaPhi(Photon_p4().at(gHidx()[0]) , Photon_p4().at(gHidx()[1])) ;
-			gg_hel_phys		= 	fabs(helicityCosTheta_phys( Photon_p4().at(gHidx()[0]), Photon_p4().at(gHidx()[1]) ) ); 
+			gg_phi			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() ;
+			gg_dR			=	deltaR(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
+			gg_dPhi			=	deltaPhi(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
+			gg_hel_phys		= 	fabs(helicityCosTheta_phys( Photon_p4().at(gHidx[0]), Photon_p4().at(gHidx[1]) ) ); 
 			bool roll		= 	rand() % 2 == 0;
-			if (roll ) 		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]), Photon_p4().at(gHidx()[0]) ) ) ;
-			else	{		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]), Photon_p4().at(gHidx()[1]) ) ) ; }
+			if (roll ) 		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[0]) ) ) ;
+			else	{		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[1]) ) ) ; }
 
-			g1_ptmgg		=	Photon_pt().at(gHidx()[0]) / mgg;
-			g1_pt			=	Photon_pt().at(gHidx()[0]) ;
-			g1_eta			=	Photon_eta().at(gHidx()[0]) ;
+			g1_ptmgg		=	Photon_pt().at(gHidx[0]) / mgg;
+			g1_pt			=	Photon_pt().at(gHidx[0]) ;
+			g1_eta			=	Photon_eta().at(gHidx[0]) ;
 			g1_eta_bdt		=	g1_eta * sgn( gg_eta ) ;
-			g1_phi			=	Photon_phi().at(gHidx()[0]) ;
-			g1_idmva		=	Photon_mvaID().at(gHidx()[0]) ;
-			g1_pixVeto		=   Photon_pixelSeed().at(gHidx()[0]) ;
-			g1_energyErr	=   Photon_energyErr().at(gHidx()[0]) ;
+			g1_phi			=	Photon_phi().at(gHidx[0]) ;
+			g1_idmva		=	Photon_mvaID().at(gHidx[0]) ;
+			g1_pixVeto		=   Photon_pixelSeed().at(gHidx[0]) ;
+			g1_energyErr	=   Photon_energyErr().at(gHidx[0]) ;
 
-			g2_ptmgg		=	Photon_pt().at(gHidx()[1]) / mgg;
-			g2_pt			=	Photon_pt().at(gHidx()[1]) ;
-			g2_eta			=	Photon_eta().at(gHidx()[1]) ;
+			g2_ptmgg		=	Photon_pt().at(gHidx[1]) / mgg;
+			g2_pt			=	Photon_pt().at(gHidx[1]) ;
+			g2_eta			=	Photon_eta().at(gHidx[1]) ;
 			g2_eta_bdt		=	g2_eta * sgn( gg_eta ) ;
-			g2_phi			=	Photon_phi().at(gHidx()[1]) ;
-			g2_idmva		=	Photon_mvaID().at(gHidx()[1]) ;
-			g2_pixVeto		=   Photon_pixelSeed().at(gHidx()[1]) ;
-			g2_energyErr	=   Photon_energyErr().at(gHidx()[1]) ;
+			g2_phi			=	Photon_phi().at(gHidx[1]) ;
+			g2_idmva		=	Photon_mvaID().at(gHidx[1]) ;
+			g2_pixVeto		=   Photon_pixelSeed().at(gHidx[1]) ;
+			g2_energyErr	=   Photon_energyErr().at(gHidx[1]) ;
 
 			if ( g1_pt > g2_pt ){
 				max_g_ptmgg = g1_pt / mgg;
@@ -763,7 +801,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				eta_tautau_vis_bdt					= eta_tautau_vis * sgn( gg_eta );
 				phi_tautau_vis						= (lep1_p4 + lep2_p4).phi()	;
 
-				gg_tt_CS							= fabs( getCosThetaStar_CS_old( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 ) );
+				gg_tt_CS							= fabs( getCosThetaStar_CS_old( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), diTau_p4 ) );
 
 				pt_tautauSVFitLoose					= diTau_p4.pt();
 				eta_tautauSVFitLoose				= diTau_p4.eta();
@@ -771,29 +809,29 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 				phi_tautauSVFitLoose				= diTau_p4.phi();
 				m_tautauSVFitLoose					= diTau_p4.M();
 				dR_tautauSVFitLoose					= deltaR( tau1_p4 , tau2_p4 );
-				dR_ggtautauSVFitLoose				= deltaR( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+				dR_ggtautauSVFitLoose				= deltaR( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), diTau_p4 );
 				dPhi_tautauSVFitLoose				= deltaPhi( tau1_p4 , tau2_p4 );
-				dPhi_ggtautauSVFitLoose				= deltaPhi( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])), diTau_p4 );
+				dPhi_ggtautauSVFitLoose				= deltaPhi( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), diTau_p4 );
 
 				tt_hel_phys							= 	fabs( helicityCosTheta_phys( tau1_p4, tau2_p4 ) ) ;
-				gg_tt_hel_phys						= 	fabs( helicityCosTheta_phys( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) + diTau_p4, (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]))  ) ) ;
+				gg_tt_hel_phys						= 	fabs( helicityCosTheta_phys( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])) + diTau_p4, (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]))  ) ) ;
 				if (roll ){
 					tt_hel							= 	fabs( helicityCosTheta( diTau_p4 , tau1_p4 ) ) ;
-					gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) + diTau_p4, (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]))  ) ) ;
+					gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])) + diTau_p4, (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]))  ) ) ;
 				}
 				else{
 					tt_hel							= 	fabs( helicityCosTheta( diTau_p4 , tau2_p4 ) ) ;
-					gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1])) + diTau_p4, diTau_p4  ) ) ;
+					gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])) + diTau_p4, diTau_p4  ) ) ;
 				}
 
-				mX	= ( diTau_p4 + Photon_p4().at(gHidx()[0]) + Photon_p4().at(gHidx()[1]) ).M() - ( diTau_p4.M() - mHiggs ) - ( mgg - mHiggs );
+				mX	= ( diTau_p4 + Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ).M() - ( diTau_p4.M() - mHiggs ) - ( mgg - mHiggs );
 			}
 
 
 			//remove main ZGamma bkg in 0tau2lep 
 			if ( category >3 && category < 7 ){
-				m_llg_lead	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx()[0]) ).M();
-				m_llg_subl	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx()[1]) ).M();
+				m_llg_lead	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx[0]) ).M();
+				m_llg_subl	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx[1]) ).M();
 			}
 			if ( fabs( m_llg_lead - mZ ) < mllg_window | fabs( m_llg_subl - mZ ) < mllg_window  ) continue;
 
@@ -819,7 +857,7 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
 			if ( cat1 || cat2 ) h_mgg_1t1l->Fill( mgg, weight );
 			if ( cat3 ) h_mgg_2t0l->Fill( mgg, weight );
 			if ( cat4 || cat5 || cat6 ) h_mgg_0t2l->Fill( mgg, weight );
-			if ( cat7 || cat8 ) h_mgg_1t0l->Fill( mgg, weight );
+			if ( cat8 ) h_mgg_1t0l->Fill( mgg, weight );
 			if ( cat7 ) h_mgg_1t0l_iso->Fill( mgg, weight );
 
 			out_tree->Fill();
