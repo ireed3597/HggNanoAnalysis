@@ -8,23 +8,22 @@ from tqdm import tqdm
 from ROOT import gROOT
 
 r.gSystem.Load('NanoCORE/libTauAnalysis_ClassicSVfit.so')
-#r.gSystem.Load('loopers/loop_C.so')
-#r.gSystem.Load('loopers/loop_UL_skim_check_C.so')
-r.gSystem.Load('loopers/loop_UL_C.so')
+r.gSystem.Load('loopers/loop_ReReco_skim_check_C.so')
 
-lumi = { "2016" : 17.95, "2016_APV" : 17.95, "2017" : 41.5, "2018" : 59.8 }
-years = ['2016', '2016_APV', '2017', '2018']
-#lumi = { "2016" : 35.9, "2017" : 41.5, "2018" : 59.8 }
-#years = ['2016', '2017', '2018']
-#years = [ '2017']
+#lumi = { "2016" : 17.95, "2016_APV" : 17.95, "2017" : 41.5, "2018" : 59.8 }
+#years = ['2016', '2016_APV', '2017', '2018']
+lumi = { "2016" : 35.9, "2017" : 41.5, "2018" : 59.8 }
+years = [ '2016']
 samples = {}
 
-with open('samples_and_scale1fb_UL_nanoAODv9.json', "r") as f_in:
+
+with open('samples_and_scale1fb.json', "r") as f_in:
+#with open('skim_check_samples_and_scale1fb.json', "r") as f_in:
 	samples = json.load(f_in)
 
 switch = False
 for name, sample in samples.items()[:]:
-	if 'ggf_' in name or "vbf_" in name:
+	if "ggf" in name or "vbf_" in name :
 		continue
 	if "Data" in name:
 		switch = True
@@ -36,12 +35,7 @@ for name, sample in samples.items()[:]:
 			list_of_files = []
 			try:
 				for path in sample[year]['paths']:
-					if name == "HH_ggZZ_2l2q":
-						list_of_files += glob.glob(path+'/*.root')
-					else :
-						list_of_files += glob.glob(path+'/*/*/*/*.root')
-				#list_of_files += glob.glob(path+'/*.root')
-				#list_of_files = [ x for x in list_of_files if x not in corrupted_files_check ]
+					list_of_files += glob.glob(path+'/*/*/*/*.root')
 				list_of_files = [ x for x in list_of_files if 'tree' in x ]
 				for file_ in list_of_files[:]:
 					ch.Add(file_);

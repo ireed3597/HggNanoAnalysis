@@ -1,0 +1,34 @@
+{
+    "DiPhoton": {
+        "2017": {
+            "metadata": {
+                "n_events": 50520313,
+                "scale1fb": 0.003864392532099895,
+                "sumWeights": 21840431.399999987,
+                "xs": 84.4
+            },
+            "paths": [
+                "/hadoop/cms/store/user/hmei/nanoaod_runII/HHggtautau/DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2_MINIAODSIM_v0.6_20201021/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": 3,
+        "resonant": false
+    },
+    "HH_ggTauTau": {
+        "2017": {
+            "metadata": {
+                "n_events": 998000,
+                "scale1fb": 8.857618714537959e-09,
+                "sumWeights": 997898.0,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms//store/user/hmei/nanoaod_runII/HHggtautau/HHggtautau_Era2017_private_v0.1_20201117/"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -1,
+        "resonant": true
+    }
+}

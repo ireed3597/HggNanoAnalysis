@@ -518,16 +518,6 @@ void clear_branches(){
 	jet2_id					= -9;
 
 	max_bTag				= -9;
-
-	pt_tautauSVFitLoose		= -9;
-	eta_tautauSVFitLoose	= -9;
-	eta_tautauSVFitLoose_bdt= -9;
-	phi_tautauSVFitLoose	= -9;
-	m_tautauSVFitLoose		= -9;
-	dR_tautauSVFitLoose		= -9;
-	dR_ggtautauSVFitLoose	= -9;
-	dPhi_tautauSVFitLoose	= -9;
-	dPhi_ggtautauSVFitLoose	= -9;
 	tt_hel					= -9;
 	tt_hel_phys				= -9;
 
@@ -556,6 +546,17 @@ void clear_branches(){
 	lep2_pfRelIso03_chg	= -9;
 	max_lep_pt		= -9;
 	min_lep_pt		= -9;
+
+	pt_tautauSVFitLoose		= -9;
+	eta_tautauSVFitLoose	= -9;
+	eta_tautauSVFitLoose_bdt= -9;
+	phi_tautauSVFitLoose	= -9;
+	m_tautauSVFitLoose		= -9;
+	dR_tautauSVFitLoose		= -9;
+	dR_ggtautauSVFitLoose	= -9;
+	dPhi_tautauSVFitLoose	= -9;
+	dPhi_ggtautauSVFitLoose	= -9;
+
 	tau1_pt_SVFit			= -9;
 	tau1_eta_SVFit		= -9;
 	tau1_phi_SVFit		= -9;
@@ -564,6 +565,26 @@ void clear_branches(){
 	tau2_eta_SVFit		= -9;
 	tau2_phi_SVFit		= -9;
 	tau2_m_SVFit			= -9;
+
+	pt_tautau_sntMtt		= -9;
+	eta_tautau_sntMtt	= -9;
+	eta_tautau_sntMtt_bdt= -9;
+	phi_tautau_sntMtt	= -9;
+	m_tautau_sntMtt		= -9;
+	dR_tautau_sntMtt		= -9;
+	dR_ggtautau_sntMtt	= -9;
+	dPhi_tautau_sntMtt	= -9;
+	dPhi_ggtautau_sntMtt	= -9;
+
+	tau1_pt_sntMtt			= -9;
+	tau1_eta_sntMtt		= -9;
+	tau1_phi_sntMtt		= -9;
+	tau1_m_sntMtt			= -9;
+	tau2_pt_sntMtt			= -9;
+	tau2_eta_sntMtt		= -9;
+	tau2_phi_sntMtt		= -9;
+	tau2_m_sntMtt			= -9;
+
 	mX						= -9;
 	m_llg_lead			= -9;
 	m_llg_subl			= -9;

@@ -4402,8 +4402,12 @@ protected:
     vector<float> v_Jet_muonSubtrFactor_;
     TBranch *b_Jet_muonSubtrFactor_;
     bool loaded_Jet_muonSubtrFactor_;
-    int Jet_nConstituents_[NJET_MAX];
-    vector<int> v_Jet_nConstituents_;
+    //int Jet_nConstituents_[NJET_MAX];
+    //vector<int> v_Jet_nConstituents_;
+    //TBranch *b_Jet_nConstituents_;
+    //bool loaded_Jet_nConstituents_;
+    UChar_t Jet_nConstituents_[NJET_MAX];
+    vector<UChar_t> v_Jet_nConstituents_;
     TBranch *b_Jet_nConstituents_;
     bool loaded_Jet_nConstituents_;
     int Jet_nElectrons_[NJET_MAX];
@@ -8618,7 +8622,8 @@ public:
     const vector<int> &Jet_muonIdx1();
     const vector<int> &Jet_muonIdx2();
     const vector<float> &Jet_muonSubtrFactor();
-    const vector<int> &Jet_nConstituents();
+    //const vector<int> &Jet_nConstituents();
+    const vector<UChar_t> &Jet_nConstituents();
     const vector<int> &Jet_nElectrons();
     const vector<int> &Jet_nMuons();
     const vector<float> &Jet_neEmEF();
@@ -10878,7 +10883,8 @@ namespace tas {
     const vector<int> &Jet_muonIdx1(); // index of first matching muon
     const vector<int> &Jet_muonIdx2(); // index of second matching muon
     const vector<float> &Jet_muonSubtrFactor(); // 1-(muon-subtracted raw pt)/(raw pt)
-    const vector<int> &Jet_nConstituents(); // Number of particles in the jet
+    //const vector<int> &Jet_nConstituents(); // Number of particles in the jet
+    const vector<UChar_t> &Jet_nConstituents(); // Number of particles in the jet
     const vector<int> &Jet_nElectrons(); // number of electrons in the jet
     const vector<int> &Jet_nMuons(); // number of muons in the jet
     const vector<float> &Jet_neEmEF(); // neutral Electromagnetic Energy Fraction

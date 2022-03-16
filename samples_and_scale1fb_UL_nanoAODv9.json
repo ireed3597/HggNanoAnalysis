@@ -1,4 +1,47 @@
 {
+    "Data": {
+        "2016": {
+            "metadata": {},
+            "paths": [
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016F-UL2016_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016H-UL2016_MiniAODv2-v1_MINIAOD_final"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {},
+            "paths": [
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016B-ver1_HIPM_UL2016_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016B-ver2_HIPM_UL2016_MiniAODv2-v3_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016C-HIPM_UL2016_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016D-HIPM_UL2016_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016E-HIPM_UL2016_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016F-HIPM_UL2016_MiniAODv2-v1_MINIAOD_final"
+            ]
+        },
+        "2017": {
+            "metadata": {},
+            "paths": [
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2017B-UL2017_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2017C-UL2017_MiniAODv2-v2_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2017D-UL2017_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2017E-UL2017_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2017F-UL2017_MiniAODv2-v2_MINIAOD_final"
+            ]
+        },
+        "2018": {
+            "metadata": {},
+            "paths": [
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/EGamma_Run2018A-UL2018_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/EGamma_Run2018B-UL2018_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/EGamma_Run2018C-UL2018_MiniAODv2-v1_MINIAOD_final",
+							"/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/EGamma_Run2018D-UL2018_MiniAODv2-v2_MINIAOD_final"
+            ]
+        },
+        "fpo": 25,
+        "process_id": 0,
+        "resonant": false
+    },
     "DiPhoton": {
         "2016": {
             "metadata": {
@@ -292,153 +335,6 @@
         "fpo": 10,
         "process_id": 8,
         "resonant": false
-    },
-    "HH_ggTauTau": {
-        "2016": {
-            "metadata": {
-                "n_events": 180000,
-                "scale1fb": 1.7786830313192585e-06,
-                "sumWeights": 4969.407052499999,
-                "xs": 8.839e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2016_final"
-            ]
-        },
-        "2016_APV": {
-            "metadata": {
-                "n_events": 180000,
-                "scale1fb": 1.8413190248900326e-06,
-                "sumWeights": 4800.363152999998,
-                "xs": 8.839e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2016_APV_final"
-            ]
-        },
-        "2017": {
-            "metadata": {
-                "n_events": 380000,
-                "scale1fb": 8.625027908928785e-07,
-                "sumWeights": 10248.082781099998,
-                "xs": 8.839e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2017_final"
-            ]
-        },
-        "2018": {
-            "metadata": {
-                "n_events": 380000,
-                "scale1fb": 8.69945957900641e-07,
-                "sumWeights": 10160.401252199998,
-                "xs": 8.839e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2018_final"
-            ]
-        },
-        "fpo": 10,
-        "process_id": -1,
-        "resonant": true
-    },
-    "HH_ggWW_dileptonic": {
-        "2016": {
-            "metadata": {
-                "n_events": 350986,
-                "scale1fb": 8.635672078088585e-09,
-                "sumWeights": 350986.0,
-                "xs": 3.031e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_SM_2016_final"
-            ]
-        },
-        "2016_APV": {
-            "metadata": {
-                "n_events": 901983,
-                "scale1fb": 3.3603737542725306e-09,
-                "sumWeights": 901983.0,
-                "xs": 3.031e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_SM_2016_APV_final"
-            ]
-        },
-        "2017": {
-            "metadata": {
-                "n_events": 485478,
-                "scale1fb": 6.243331314704271e-09,
-                "sumWeights": 485478.0,
-                "xs": 3.031e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_SM_2017_final"
-            ]
-        },
-        "2018": {
-            "metadata": {
-                "n_events": 379989,
-                "scale1fb": 7.976546689509433e-09,
-                "sumWeights": 379989.0,
-                "xs": 3.031e-06
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_SM_2018_final"
-            ]
-        },
-        "fpo": 10,
-        "process_id": -3,
-        "resonant": true
-    },
-    "HH_ggWW_semileptonic": {
-        "2016": {
-            "metadata": {
-                "n_events": 179886,
-                "scale1fb": 7.261821375760203e-08,
-                "sumWeights": 179886.0,
-                "xs": 1.3063e-05
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_SM_2016_final"
-            ]
-        },
-        "2016_APV": {
-            "metadata": {
-                "n_events": 179885,
-                "scale1fb": 7.261861745003752e-08,
-                "sumWeights": 179885.0,
-                "xs": 1.3063e-05
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_SM_2016_APV_final"
-            ]
-        },
-        "2017": {
-            "metadata": {
-                "n_events": 379752,
-                "scale1fb": 3.4398765510122393e-08,
-                "sumWeights": 379752.0,
-                "xs": 1.3063e-05
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_SM_2017_final"
-            ]
-        },
-        "2018": {
-            "metadata": {
-                "n_events": 379740,
-                "scale1fb": 3.439985253067888e-08,
-                "sumWeights": 379740.0,
-                "xs": 1.3063e-05
-            },
-            "paths": [
-                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_SM_2018_final"
-            ]
-        },
-        "fpo": 10,
-        "process_id": -4,
-        "resonant": true
     },
     "TTGG": {
         "2016": {
@@ -1026,6 +922,153 @@
         },
         "fpo": 10,
         "process_id": 10,
+        "resonant": true
+    },
+    "HH_ggTauTau": {
+        "2016": {
+            "metadata": {
+                "n_events": 179999,
+                "scale1fb": 1.8390319424141971e-06,
+                "sumWeights": 4806.333047373046,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2016_final"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 180000,
+                "scale1fb": 1.8413190248900326e-06,
+                "sumWeights": 4800.363152999998,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2016_APV_final"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379999,
+                "scale1fb": 8.697100988222104e-07,
+                "sumWeights": 10163.156679415428,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2017_final"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 380000,
+                "scale1fb": 8.699459579006409e-07,
+                "sumWeights": 10160.4012522,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2018_final"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -1,
+        "resonant": true
+    },
+    "HH_ggWW_dileptonic": {
+        "2016": {
+            "metadata": {
+                "n_events": 179989,
+                "scale1fb": 6.29973998546298e-07,
+                "sumWeights": 4811.309684199999,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2016_final"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179988,
+                "scale1fb": 6.302361821649422e-07,
+                "sumWeights": 4809.308138399998,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2016_APV_final"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379982,
+                "scale1fb": 2.985789053788464e-07,
+                "sumWeights": 10151.420429899998,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2017_final"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379987,
+                "scale1fb": 2.9846608229260184e-07,
+                "sumWeights": 10155.257765699998,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2018_final"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -3,
+        "resonant": true
+    },
+    "HH_ggWW_semileptonic": {
+        "2016": {
+            "metadata": {
+                "n_events": 179892,
+                "scale1fb": 2.7160291545809155e-06,
+                "sumWeights": 4809.594910999998,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2016_final"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179896,
+                "scale1fb": 2.7179618712899025e-06,
+                "sumWeights": 4806.174854027847,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2016_APV_final"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379754,
+                "scale1fb": 1.2879262919050005e-06,
+                "sumWeights": 10142.661177199998,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2017_final"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379736,
+                "scale1fb": 1.2869966075604703e-06,
+                "sumWeights": 10149.987904599995,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2018_final"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -4,
         "resonant": true
     }
 }

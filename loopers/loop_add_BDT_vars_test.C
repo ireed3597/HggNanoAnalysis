@@ -426,35 +426,40 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 		}
 		//Jet Selection			
 		vector<int> sel_jets;
-			for(unsigned int i=0; i<nJet(); i++){
-				if (Jet_pt().at(i) > jet_pt && fabs(Jet_eta().at(i)) < jet_eta && Jet_neEmEF().at(i) < jet_neEmEF && Jet_neHEF().at(i) < jet_neHEF && Jet_chHEF()[i] > jet_chHEF && Jet_chEmEF()[i] < jet_chEmEF && (int)Jet_nConstituents()[i] > jet_nConstituents && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx[0]) ) > jet_dR_pho && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx[1]) ) > jet_dR_pho ){
+		for(unsigned int i=0; i<nJet(); i++){
+			if (Jet_pt().at(i) > jet_pt && fabs(Jet_eta().at(i)) < jet_eta && Jet_neEmEF().at(i) < jet_neEmEF && Jet_neHEF().at(i) < jet_neHEF && Jet_chHEF()[i] > jet_chHEF && Jet_chEmEF()[i] < jet_chEmEF && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx[0]) ) > jet_dR_pho && deltaR( Jet_p4().at(i) , Photon_p4().at(gHidx[1]) ) > jet_dR_pho ){
 
-					bool overlap = false;
-					for (unsigned int j=0; j<sel_eles.size(); j++){
-						if ( !overlap && deltaR( Jet_p4().at(i) , Electron_p4().at(sel_eles.at(j)) ) < jet_dR_lep ){
-							overlap = true;
-							break;
-						}
-					}
-					for (unsigned int j=0; j<sel_muons.size(); j++){
-						if ( !overlap && deltaR( Jet_p4().at(i) , Muon_p4().at(sel_muons.at(j)) ) < jet_dR_lep ){
-							overlap = true;
-							break;
-						}
-					}
-					for (unsigned int j=0; j<sel_taus.size(); j++){
-						if ( !overlap && deltaR( Jet_p4().at(i) , Tau_p4().at(sel_taus.at(j)) ) < jet_dR_tau ){
-							overlap = true;
-							break;
-						}
-					}
+				int jet_const = (int)Jet_nConstituents().at(i) ;
+				if ( jet_const <= jet_nConstituents ) continue;
+				cout << jet_const << endl;
+				//if ( Jet_nConstituents()[i] <= jet_nConstituents ) continue;
 
-					if ( !overlap ){
-						sel_jets.push_back(i);
-						if ( Jet_btagDeepFlavB().at(i) > max_bTag ) max_bTag = Jet_btagDeepFlavB().at(i);
+				bool overlap = false;
+				for (unsigned int j=0; j<sel_eles.size(); j++){
+					if ( !overlap && deltaR( Jet_p4().at(i) , Electron_p4().at(sel_eles.at(j)) ) < jet_dR_lep ){
+						overlap = true;
+						break;
 					}
 				}
+				for (unsigned int j=0; j<sel_muons.size(); j++){
+					if ( !overlap && deltaR( Jet_p4().at(i) , Muon_p4().at(sel_muons.at(j)) ) < jet_dR_lep ){
+						overlap = true;
+						break;
+					}
+				}
+				for (unsigned int j=0; j<sel_taus.size(); j++){
+					if ( !overlap && deltaR( Jet_p4().at(i) , Tau_p4().at(sel_taus.at(j)) ) < jet_dR_tau ){
+						overlap = true;
+						break;
+					}
+				}
+
+				if ( !overlap ){
+					sel_jets.push_back(i);
+					if ( Jet_btagDeepFlavB().at(i) > max_bTag ) max_bTag = Jet_btagDeepFlavB().at(i);
+				}
 			}
+		}
 
  		//bJet Selection			
  		vector<int> sel_bJets;
@@ -523,389 +528,10 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
  		if ( h_cand1[1] == 2 && h_cand2[1] == -1 ) cat8 = true;
 
  		category = 99;
- 		if ( cat1 ) category = 1;
- 		if ( cat2 ) category = 2;
- 		if ( cat3 ) category = 3;
- 		if ( cat4 ) category = 4;
- 		if ( cat5 ) category = 5;
- 		if ( cat6 ) category = 6;
- 		if ( cat7 ) category = 7;
- 		if ( cat8 ) category = 8;
-
- 		vector<classic_svFit::LorentzVector> svFit_res;
- 		classic_svFit::LorentzVector diTau_p4, tau1_p4, tau2_p4;
- 		float METx	= MET_pt() * TMath::Cos(MET_phi());
- 		float METy	= MET_pt() * TMath::Sin(MET_phi());
-
- 		if ( category == 1 ){
- 			svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , Tau_decayMode()[h_cand1[0]], 1 , 3, Muon_pt()[h_cand2[0]], Muon_eta()[h_cand2[0]], Muon_phi()[h_cand2[0]], -1 , Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]] );
- 		}
- 		if ( category == 2 ){
- 			svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , Tau_decayMode()[h_cand1[0]], 2 , 3, Electron_pt()[h_cand2[0]], Electron_eta()[h_cand2[0]], Electron_phi()[h_cand2[0]], -1 , Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]] );
- 		}
- 		if ( category == 3 ){
- 			svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), Tau_decayMode()[h_cand1[0]], Tau_decayMode()[h_cand2[0]], 3 , 3, Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]], Tau_pt()[h_cand2[0]], Tau_eta()[h_cand2[0]], Tau_phi()[h_cand2[0]], Tau_mass()[h_cand2[0]] );
- 		}
- 		if ( category == 4 ){
- 			svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , -1 , 1 , 1, Muon_pt()[h_cand1[0]], Muon_eta()[h_cand1[0]], Muon_phi()[h_cand1[0]], -1 ,Muon_pt()[h_cand2[0]], Muon_eta()[h_cand2[0]], Muon_phi()[h_cand2[0]], -1 );
- 		}
- 		if ( category == 5 ){
- 			svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , -1 , 2 , 2, Electron_pt()[h_cand1[0]], Electron_eta()[h_cand1[0]], Electron_phi()[h_cand1[0]], -1 , Electron_pt()[h_cand2[0]], Electron_eta()[h_cand2[0]], Electron_phi()[h_cand2[0]], -1 );
- 		}
- 		if ( category == 6 ){
- 			svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , -1 , 1 , 2, Muon_pt()[h_cand1[0]], Muon_eta()[h_cand1[0]], Muon_phi()[h_cand1[0]], -1,  Electron_pt()[h_cand2[0]], Electron_eta()[h_cand2[0]], Electron_phi()[h_cand2[0]], -1 );
- 		}
- 		if ( category == 7 ){
- 			int isoTrk_svfit_code = -1;
- 			if ( fabs(IsoTrack_pdgId()[h_cand2[1]]) == 11 ) isoTrk_svfit_code = 2;
- 			if ( fabs(IsoTrack_pdgId()[h_cand2[1]]) == 13 ) isoTrk_svfit_code = 1;
- 			if ( fabs(IsoTrack_pdgId()[h_cand2[1]]) != 11 && fabs(IsoTrack_pdgId()[h_cand2[1]]) != 13 ) isoTrk_svfit_code = 3;
- 			//assuming, if hadronic IsoTrack, one-prong WITH neutral pions (larger Br) and massless
- 			svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), 1 , Tau_decayMode()[h_cand1[0]] , isoTrk_svfit_code , 3, IsoTrack_pt()[h_cand2[0]], IsoTrack_eta()[h_cand2[0]], IsoTrack_phi()[h_cand2[0]], 0.0, Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]] );
- 		}
-
-
- 		if ( category < 8 ){
- 			diTau_p4	= svFit_res[0];
- 			tau1_p4		= svFit_res[1];
- 			tau2_p4		= svFit_res[2];
-
- 			tau1_pt_SVFit	= tau1_p4.pt();
- 			tau1_eta_SVFit	= tau1_p4.eta();
- 			tau1_phi_SVFit	= tau1_p4.phi();
- 			tau1_m_SVFit	= tau1_p4.M();
- 			tau2_pt_SVFit	= tau2_p4.pt();
- 			tau2_eta_SVFit	= tau2_p4.eta();
- 			tau2_phi_SVFit	= tau2_p4.phi();
- 			tau2_m_SVFit	= tau2_p4.M();
- 		}
-
- 		float weight = 1.;
- 		if ( proc != "Data" ) weight = genWeight() * scale_factor;
-
- 		t_run			= run();
- 		t_lumiBlock		= luminosityBlock();
- 		t_event			= event();
- 		t_MET_pt		= MET_pt();
- 		t_MET_phi		= MET_phi();
- 		t_weight		= weight;
- 		MET_gg_dPhi		= deltaPhi( MET_phi() , (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() );
-
- 		gg_pt			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).pt() ;
- 		gg_ptmgg		=	gg_pt / mgg;
- 		gg_eta			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).eta() ;
- 		//gg_eta_bdt		=	gg_eta * sgn( gg_eta ) ;
- 		gg_phi			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() ;
- 		gg_dR			=	deltaR(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
- 		gg_dPhi			=	deltaPhi(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
- 		gg_hel_phys		= 	fabs(helicityCosTheta_phys( Photon_p4().at(gHidx[0]), Photon_p4().at(gHidx[1]) ) ); 
- 		bool roll		= 	rand() % 2 == 0;
- 		if (roll ) 		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[0]) ) ) ;
- 		else	{		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[1]) ) ) ; }
-
- 		g1_ptmgg		=	Photon_pt().at(gHidx[0]) / mgg;
- 		g1_pt			=	Photon_pt().at(gHidx[0]) ;
- 		g1_eta			=	Photon_eta().at(gHidx[0]) ;
- 		g1_eta_bdt		=	g1_eta * sgn( gg_eta ) ;
- 		g1_phi			=	Photon_phi().at(gHidx[0]) ;
- 		g1_idmva		=	Photon_mvaID().at(gHidx[0]) ;
- 		g1_pixVeto		=   Photon_pixelSeed().at(gHidx[0]) ;
- 		g1_energyErr	=   Photon_energyErr().at(gHidx[0]) ;
-
- 		g2_ptmgg		=	Photon_pt().at(gHidx[1]) / mgg;
- 		g2_pt			=	Photon_pt().at(gHidx[1]) ;
- 		g2_eta			=	Photon_eta().at(gHidx[1]) ;
- 		g2_eta_bdt		=	g2_eta * sgn( gg_eta ) ;
- 		g2_phi			=	Photon_phi().at(gHidx[1]) ;
- 		g2_idmva		=	Photon_mvaID().at(gHidx[1]) ;
- 		g2_pixVeto		=   Photon_pixelSeed().at(gHidx[1]) ;
- 		g2_energyErr	=   Photon_energyErr().at(gHidx[1]) ;
-
- 		if ( g1_pt > g2_pt ){
- 			max_g_ptmgg = g1_pt / mgg;
- 			min_g_ptmgg = g2_pt / mgg;
- 		}
- 		else{
- 			max_g_ptmgg = g2_pt / mgg;
- 			min_g_ptmgg = g1_pt / mgg;
- 		}
- 		if ( g1_idmva > g2_idmva ){
- 			max_g_idmva = g1_idmva;
- 			min_g_idmva = g2_idmva;
- 		}
- 		else{
- 			max_g_idmva = g2_idmva;
- 			min_g_idmva = g1_idmva;
- 		}
-
- 		LorentzVector lep1_p4, lep2_p4;
-
- 		if ( cat1 ){
- 			lep1_p4			=	Muon_p4()[h_cand2[0]];
- 			lep1_pt			=	Muon_pt()[h_cand2[0]];
- 			lep1_eta		=	Muon_eta()[h_cand2[0]];
- 			lep1_eta_bdt	=	Muon_eta()[h_cand2[0]] * sgn( gg_eta );
- 			lep1_phi		=	Muon_phi()[h_cand2[0]];	
- 			lep1_charge		=	Muon_charge()[h_cand2[0]];
- 			lep1_pdgID		=	Muon_pdgId()[h_cand2[0]];
- 			lep1_tightID	=	Muon_tightId()[h_cand2[0]];
-
- 			lep2_p4			=	Tau_p4()[h_cand1[0]];
- 			lep2_pt			=	Tau_pt()[h_cand1[0]];
- 			lep2_eta		=	Tau_eta()[h_cand1[0]];
- 			lep2_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep2_phi		=	Tau_phi()[h_cand1[0]];	
- 			lep2_charge		=	Tau_charge()[h_cand1[0]];
- 			lep2_pdgID		=	15 * sgn( lep2_charge );
- 			lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
- 			lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
- 			lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
- 		
- 			lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
- 		}
- 		if ( cat2 ){
- 			lep1_p4			=	Electron_p4()[h_cand2[0]];
- 			lep1_pt			=	Electron_pt()[h_cand2[0]];
- 			lep1_eta		=	Electron_eta()[h_cand2[0]];
- 			lep1_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
- 			lep1_phi		=	Electron_phi()[h_cand2[0]];	
- 			lep1_charge		=	Electron_charge()[h_cand2[0]];
- 			lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
- 			lep1_pdgID		=	Electron_pdgId()[h_cand2[0]];
-
- 			lep2_p4			=	Tau_p4()[h_cand1[0]];
- 			lep2_pt			=	Tau_pt()[h_cand1[0]];
- 			lep2_eta		=	Tau_eta()[h_cand1[0]];
- 			lep2_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep2_phi		=	Tau_phi()[h_cand1[0]];	
- 			lep2_charge		=	Tau_charge()[h_cand1[0]];
- 			lep2_pdgID		=	15 * sgn( lep2_charge );
- 			lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
- 			lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
- 			lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
-
- 			lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
- 		}
- 		if ( cat3 ){
- 			lep1_p4			=	Tau_p4()[h_cand1[0]];
- 			lep1_pt			=	Tau_pt()[h_cand1[0]];
- 			lep1_eta		=	Tau_eta()[h_cand1[0]];
- 			lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep1_phi		=	Tau_phi()[h_cand1[0]];	
- 			lep1_charge		=	Tau_charge()[h_cand1[0]];
- 			lep1_pdgID		=	15 * sgn( lep1_charge );
- 			lep1_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
- 			lep1_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
- 			lep1_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
-
- 			lep2_p4			=	Tau_p4()[h_cand2[0]];
- 			lep2_pt			=	Tau_pt()[h_cand2[0]];
- 			lep2_eta		=	Tau_eta()[h_cand2[0]];
- 			lep2_eta_bdt	=	Tau_eta()[h_cand2[0]] * sgn( gg_eta );
- 			lep2_phi		=	Tau_phi()[h_cand2[0]];	
- 			lep2_charge		=	Tau_charge()[h_cand2[0]];
- 			lep2_pdgID		=	15 * sgn( lep2_charge );
- 			lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand2[0]];	
- 			lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand2[0]];	
- 			lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand2[0]];
-
- 			lep12_dr		= deltaR( Tau_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
- 		}
- 		if ( cat4 ){
- 			lep1_p4			=	Muon_p4()[h_cand1[0]];
- 			lep1_pt			=	Muon_pt()[h_cand1[0]];
- 			lep1_eta		=	Muon_eta()[h_cand1[0]];
- 			lep1_eta_bdt	=	Muon_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep1_phi		=	Muon_phi()[h_cand1[0]];	
- 			lep1_charge		=	Muon_charge()[h_cand1[0]];
- 			lep1_pdgID		=	Muon_pdgId()[h_cand1[0]];
- 			lep1_tightID	=	Muon_tightId()[h_cand1[0]];
-
- 			lep2_p4			=	Muon_p4()[h_cand2[0]];
- 			lep2_pt			=	Muon_pt()[h_cand2[0]];
- 			lep2_eta		=	Muon_eta()[h_cand2[0]];
- 			lep2_eta_bdt	=	Muon_eta()[h_cand2[0]] * sgn( gg_eta );
- 			lep2_phi		=	Muon_phi()[h_cand2[0]];	
- 			lep2_charge		=	Muon_charge()[h_cand2[0]];
- 			lep2_pdgID		=	Muon_pdgId()[h_cand2[0]];
- 			lep2_tightID	=	Muon_tightId()[h_cand2[0]];
-
- 			lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
- 			m_Z				= ( lep1_p4 + lep2_p4 ).M();
- 		}
- 		if ( cat5 ){
- 			lep1_p4			=	Electron_p4()[h_cand1[0]];
- 			lep1_pt			=	Electron_pt()[h_cand1[0]];
- 			lep1_eta		=	Electron_eta()[h_cand1[0]];
- 			lep1_eta_bdt	=	Electron_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep1_phi		=	Electron_phi()[h_cand1[0]];	
- 			lep1_charge		=	Electron_charge()[h_cand1[0]];
- 			lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand1[0]];
- 			lep1_pdgID		=	Electron_pdgId()[h_cand1[0]];
-
- 			lep2_p4			=	Electron_p4()[h_cand2[0]];
- 			lep2_pt			=	Electron_pt()[h_cand2[0]];
- 			lep2_eta		=	Electron_eta()[h_cand2[0]];
- 			lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
- 			lep2_phi		=	Electron_phi()[h_cand2[0]];	
- 			lep2_charge		=	Electron_charge()[h_cand2[0]];
- 			lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
- 			lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
-
- 			lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Electron_p4()[h_cand1[0]] );
- 			m_Z				= ( lep1_p4 + lep2_p4 ).M();
- 		}
- 		if ( cat6 ){
- 			lep1_p4			=	Muon_p4()[h_cand1[0]];
- 			lep1_pt			=	Muon_pt()[h_cand1[0]];
- 			lep1_eta		=	Muon_eta()[h_cand1[0]];
- 			lep1_eta_bdt	=	Muon_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep1_phi		=	Muon_phi()[h_cand1[0]];	
- 			lep1_charge		=	Muon_charge()[h_cand1[0]];
- 			lep1_pdgID		=	Muon_pdgId()[h_cand1[0]];
- 			lep1_tightID	=	Muon_tightId()[h_cand1[0]];
-
- 			lep2_p4			=	Electron_p4()[h_cand2[0]];
- 			lep2_pt			=	Electron_pt()[h_cand2[0]];
- 			lep2_eta		=	Electron_eta()[h_cand2[0]];
- 			lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
- 			lep2_phi		=	Electron_phi()[h_cand2[0]];	
- 			lep2_charge		=	Electron_charge()[h_cand2[0]];
- 			lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
- 			lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
-
- 			lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
- 		}
- 		if ( cat7 ){
- 			lep1_p4					=	Tau_p4()[h_cand1[0]];
- 			lep1_pt					=	Tau_pt()[h_cand1[0]];
- 			lep1_eta				=	Tau_eta()[h_cand1[0]];
- 			lep1_eta_bdt			=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep1_phi				=	Tau_phi()[h_cand1[0]];	
- 			lep1_charge				=	Tau_charge()[h_cand1[0]];
- 			lep1_pdgID				=	15 * sgn( lep2_charge );
- 			lep1_id_vs_e			=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
- 			lep1_id_vs_m			=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
- 			lep1_id_vs_jet			=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
-
- 			lep2_pt					=	IsoTrack_pt()[h_cand2[0]];
- 			lep2_eta				=	IsoTrack_eta()[h_cand2[0]];
- 			lep2_eta_bdt			=	IsoTrack_eta()[h_cand2[0]] * sgn( gg_eta );
- 			lep2_phi				=	IsoTrack_phi()[h_cand2[0]];	
- 			lep2_charge				=	IsoTrack_pdgId()[h_cand2[0]]/fabs(IsoTrack_pdgId()[h_cand2[0]]);
- 			lep2_pdgID				=	IsoTrack_pdgId()[h_cand2[0]];
- 			lep2_pfRelIso03_all 	= 	IsoTrack_pfRelIso03_all()[h_cand2[0]];;
- 			lep2_pfRelIso03_chg 	= 	IsoTrack_pfRelIso03_chg()[h_cand2[0]];;
-
- 			LorentzVector iso_track(IsoTrack_pt()[h_cand2[0]], IsoTrack_eta()[h_cand2[0]], IsoTrack_phi()[h_cand2[0]], 0);
- 			lep2_p4 = iso_track;
- 			lep12_dr		= deltaR( iso_track, Tau_p4()[h_cand1[0]] );
- 		}
-
- 		if ( cat8 ){
- 			lep1_pt			=	Tau_pt()[h_cand1[0]];
- 			lep1_eta		=	Tau_eta()[h_cand1[0]];
- 			lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
- 			lep1_phi		=	Tau_phi()[h_cand1[0]];	
- 			lep1_charge		=	Tau_charge()[h_cand1[0]];
- 			lep1_pdgID		=	15 * sgn( lep1_charge );
- 			lep1_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
- 			lep1_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
- 			lep1_id_vs_jet	=	(int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
- 		}
-
- 		if ( lep1_pt > lep2_pt ){
- 			max_lep_pt = lep1_pt;
- 			min_lep_pt = lep2_pt;
- 		}
- 		else{
- 			max_lep_pt = lep2_pt;
- 			min_lep_pt = lep1_pt;
- 		}
-
- 		dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
-
- 		if ( category < 8 ){
-
- 			if ( lep1_pt > lep2_pt ) dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
- 			else { 					 dPhi_MET_l	= deltaPhi( t_MET_phi, lep2_phi ); }
-
- 			MET_ll_dPhi							= deltaPhi( MET_phi() , diTau_p4.phi() );
-
- 			lep12_dphi							= deltaPhi( lep2_phi , lep1_phi );
- 			lep12_deta							= fabs(lep2_eta - lep1_eta) ;
- 			lep12_deta_bdt						= fabs(lep2_eta - lep1_eta) * sgn( gg_eta ) ;
-
- 			m_tautau_vis						= (lep1_p4 + lep2_p4).M()	;
- 			pt_tautau_vis						= (lep1_p4 + lep2_p4).pt()	;
- 			eta_tautau_vis						= (lep1_p4 + lep2_p4).eta()	;
- 			eta_tautau_vis_bdt					= eta_tautau_vis * sgn( gg_eta );
- 			phi_tautau_vis						= (lep1_p4 + lep2_p4).phi()	;
-
- 			gg_tt_CS							= fabs( getCosThetaStar_CS_old( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), diTau_p4 ) );
-
- 			pt_tautauSVFitLoose					= diTau_p4.pt();
- 			eta_tautauSVFitLoose				= diTau_p4.eta();
- 			eta_tautauSVFitLoose_bdt			= diTau_p4.eta() * sgn( gg_eta ) ;
- 			phi_tautauSVFitLoose				= diTau_p4.phi();
- 			m_tautauSVFitLoose					= diTau_p4.M();
- 			dR_tautauSVFitLoose					= deltaR( tau1_p4 , tau2_p4 );
- 			dR_ggtautauSVFitLoose				= deltaR( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), diTau_p4 );
- 			dPhi_tautauSVFitLoose				= deltaPhi( tau1_p4 , tau2_p4 );
- 			dPhi_ggtautauSVFitLoose				= deltaPhi( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), diTau_p4 );
-
- 			tt_hel_phys							= 	fabs( helicityCosTheta_phys( tau1_p4, tau2_p4 ) ) ;
- 			gg_tt_hel_phys						= 	fabs( helicityCosTheta_phys( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])) + diTau_p4, (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]))  ) ) ;
- 			if (roll ){
- 				tt_hel							= 	fabs( helicityCosTheta( diTau_p4 , tau1_p4 ) ) ;
- 				gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])) + diTau_p4, (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]))  ) ) ;
- 			}
- 			else{
- 				tt_hel							= 	fabs( helicityCosTheta( diTau_p4 , tau2_p4 ) ) ;
- 				gg_tt_hel						= 	fabs( helicityCosTheta( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])) + diTau_p4, diTau_p4  ) ) ;
- 			}
-
- 			mX	= ( diTau_p4 + Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ).M() - ( diTau_p4.M() - mHiggs ) - ( mgg - mHiggs );
- 		}
-
-
- 		//remove main ZGamma bkg in 0tau2lep 
- 		if ( category >3 && category < 7 ){
- 			m_llg_lead	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx[0]) ).M();
- 			m_llg_subl	= ( lep1_p4 + lep2_p4 + Photon_p4().at(gHidx[1]) ).M();
- 		}
- 		if ( fabs( m_llg_lead - mZ ) < mllg_window | fabs( m_llg_subl - mZ ) < mllg_window  ){
-			out_tree->Fill();
-			continue;
-		}
-
- 		if ( sel_jets.size() > 0 ){
- 			jet1_pt		=	Jet_pt()[sel_jets[0]];
- 			jet1_eta	=	Jet_eta()[sel_jets[0]];
- 			jet1_eta_bdt=	jet1_eta* sgn( gg_eta );
- 			jet1_phi	=	Jet_phi()[sel_jets[0]];
- 			jet1_bTag	=	Jet_btagDeepFlavB()[sel_jets[0]];
- 			jet1_id		=	Jet_jetId()[sel_jets[0]];
- 		}
- 		if ( sel_jets.size() > 1 ){
- 			jet2_pt		=	Jet_pt()[sel_jets[1]];
- 			jet2_eta	=	Jet_eta()[sel_jets[1]];
- 			jet2_eta_bdt=	jet2_eta* sgn( gg_eta );
- 			jet2_phi	=	Jet_phi()[sel_jets[1]];
- 			jet2_bTag	=	Jet_btagDeepFlavB()[sel_jets[1]];
- 			jet2_id		=	Jet_jetId()[sel_jets[1]];
- 		}
-
- 		//make histograms for yields
- 		h_mgg->Fill( mgg, weight );
- 		if ( cat1 || cat2 ) h_mgg_1t1l->Fill( mgg, weight );
- 		if ( cat3 ) h_mgg_2t0l->Fill( mgg, weight );
- 		if ( cat4 || cat5 || cat6 ) h_mgg_0t2l->Fill( mgg, weight );
- 		if ( cat8 ) h_mgg_1t0l->Fill( mgg, weight );
- 		if ( cat7 ) h_mgg_1t0l_iso->Fill( mgg, weight );
 
  		out_tree->Fill();
   } // Event loop
+
 	f1->cd();
 	f1->Write();
 	f1->Close();

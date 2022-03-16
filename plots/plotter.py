@@ -456,10 +456,10 @@ class Plotter:
 # unit test
 if __name__ == "__main__":
     p = Plotter(
-        #df="../pickles/coupling_scan/run2_scan_clean.pkl",
-        df="/home/users/fsetti/HHggTauTau/HggAnalysisDev/MVAs/out_zipped/run2_01Feb2022_final.pkl",
+        df="../pickles_zipped/run2_20UL_09Mar2022_SRs.pkl",
+        #df="/home/users/fsetti/HHggTauTau/HggAnalysisDev/MVAs/out_zipped/run2_01Feb2022_final.pkl",
         #plot_options="couplings_check.json",
-        plot_options="plot_1var.json",
+        plot_options="options.json",
         branches="all",
         debug=True,
         save_filenames=["abc", "bcd", "cda"],

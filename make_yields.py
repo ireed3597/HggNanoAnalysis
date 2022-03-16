@@ -5,7 +5,7 @@ import ROOT as r
 import numpy as np
 import pandas as pd
 
-#procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'Data', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic', 'HH_ggZZ']
+#procs = ['DiPhoton', 'HH_ggTauTau']
 procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'Data', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic', 'HH_ggZZ_4l', 'HH_ggZZ_2l2q']
 bkgs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH']
 
@@ -14,7 +14,7 @@ yields['allBkg'] = { 'inclusive': 0. , '1tau0lep': 0., '1tau0lep_iso':0., '1tau1
 
 for proc in procs:
 		yields[proc] = { 'inclusive': 0. , '1tau0lep': 0., '1tau0lep_iso':0., '1tau1lep': 0., '2tau0lep': 0., '0tau2lep': 0. }
-		files = glob.glob('outputs_UL/'+proc+'*09Mar2022*.root')
+		files = glob.glob('outputs_UL/'+proc+'*_09Mar2022_20*.root')
 		for file_ in files:
 			file_ = r.TFile(file_)
 			h			= file_.Get('mgg')

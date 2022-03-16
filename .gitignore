@@ -1,5 +1,9 @@
-outputs/
+outputs*
 hadded/
-pickles/
+pickles*
 test/
 NP_couplings_output/
+*.so
+*.d
+*.pcm
+

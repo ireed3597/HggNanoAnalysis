@@ -164,16 +164,6 @@ float 			jet2_bTag		;
 int 			jet2_id			;
 
 float			max_bTag		;
-
-float 			pt_tautauSVFitLoose		;
-float 			eta_tautauSVFitLoose	;
-float 			eta_tautauSVFitLoose_bdt;
-float 			phi_tautauSVFitLoose	;
-float 			m_tautauSVFitLoose		;
-float 			dR_tautauSVFitLoose		;
-float 			dR_ggtautauSVFitLoose	;
-float 			dPhi_tautauSVFitLoose	;
-float 			dPhi_ggtautauSVFitLoose	;
 float			tt_hel					;
 float			tt_hel_phys				;
 
@@ -202,6 +192,17 @@ float			lep2_pfRelIso03_all	;
 float			lep2_pfRelIso03_chg	;
 float			max_lep_pt		;
 float			min_lep_pt		;
+
+float 		pt_tautauSVFitLoose		;
+float 		eta_tautauSVFitLoose	;
+float 		eta_tautauSVFitLoose_bdt;
+float 		phi_tautauSVFitLoose	;
+float 		m_tautauSVFitLoose		;
+float 		dR_tautauSVFitLoose		;
+float 		dR_ggtautauSVFitLoose	;
+float 		dPhi_tautauSVFitLoose	;
+float 		dPhi_ggtautauSVFitLoose	;
+
 float			tau1_pt_SVFit		;
 float			tau1_eta_SVFit	;
 float			tau1_phi_SVFit	;
@@ -210,6 +211,26 @@ float			tau2_pt_SVFit		;
 float			tau2_eta_SVFit	;
 float			tau2_phi_SVFit	;
 float			tau2_m_SVFit		;
+
+float 		pt_tautau_sntMtt		;
+float 		eta_tautau_sntMtt	;
+float 		eta_tautau_sntMtt_bdt;
+float 		phi_tautau_sntMtt	;
+float 		m_tautau_sntMtt		;
+float 		dR_tautau_sntMtt		;
+float 		dR_ggtautau_sntMtt	;
+float 		dPhi_tautau_sntMtt	;
+float 		dPhi_ggtautau_sntMtt	;
+
+float			tau1_pt_sntMtt		;
+float			tau1_eta_sntMtt	;
+float			tau1_phi_sntMtt	;
+float			tau1_m_sntMtt		;
+float			tau2_pt_sntMtt		;
+float			tau2_eta_sntMtt	;
+float			tau2_phi_sntMtt	;
+float			tau2_m_sntMtt		;
+
 float			mX		;
 float 		m_llg_lead;
 float 		m_llg_subl;

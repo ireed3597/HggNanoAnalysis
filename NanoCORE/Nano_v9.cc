@@ -1,4 +1,4 @@
-#include "Nano.h"
+#include "Nano_v9.h"
 Nano nt;
 
 void Nano::Init(TTree *tree) {
@@ -18034,11 +18034,20 @@ const vector<float> &Nano::Jet_muonSubtrFactor() {
     }
     return v_Jet_muonSubtrFactor_;
 }
-const vector<int> &Nano::Jet_nConstituents() {
+//const vector<int> &Nano::Jet_nConstituents() {
+//    if (!loaded_Jet_nConstituents_) {
+//        if (!b_Jet_nConstituents_) throw std::runtime_error("Jet_nConstituents branch doesn't exist");
+//        int bytes = b_Jet_nConstituents_->GetEntry(index);
+//        v_Jet_nConstituents_ = vector<int>(Jet_nConstituents_,Jet_nConstituents_+bytes/sizeof(Jet_nConstituents_[0]));
+//        loaded_Jet_nConstituents_ = true;
+//    }
+//    return v_Jet_nConstituents_;
+//}
+const vector<UChar_t> &Nano::Jet_nConstituents() {
     if (!loaded_Jet_nConstituents_) {
         if (!b_Jet_nConstituents_) throw std::runtime_error("Jet_nConstituents branch doesn't exist");
         int bytes = b_Jet_nConstituents_->GetEntry(index);
-        v_Jet_nConstituents_ = vector<int>(Jet_nConstituents_,Jet_nConstituents_+bytes/sizeof(Jet_nConstituents_[0]));
+        v_Jet_nConstituents_ = vector<UChar_t>(Jet_nConstituents_,Jet_nConstituents_+bytes/sizeof(Jet_nConstituents_[0]));
         loaded_Jet_nConstituents_ = true;
     }
     return v_Jet_nConstituents_;
@@ -26663,7 +26672,8 @@ namespace tas {
     const vector<int> &Jet_muonIdx1() { return nt.Jet_muonIdx1(); }
     const vector<int> &Jet_muonIdx2() { return nt.Jet_muonIdx2(); }
     const vector<float> &Jet_muonSubtrFactor() { return nt.Jet_muonSubtrFactor(); }
-    const vector<int> &Jet_nConstituents() { return nt.Jet_nConstituents(); }
+    //const vector<int> &Jet_nConstituents() { return nt.Jet_nConstituents(); }
+    const vector<UChar_t> &Jet_nConstituents() { return nt.Jet_nConstituents(); }
     const vector<int> &Jet_nElectrons() { return nt.Jet_nElectrons(); }
     const vector<int> &Jet_nMuons() { return nt.Jet_nMuons(); }
     const vector<float> &Jet_neEmEF() { return nt.Jet_neEmEF(); }
@@ -27948,7 +27958,7 @@ namespace tas {
         else if (name == "Jet_jetId") return nt.Jet_jetId();
         else if (name == "Jet_muonIdx1") return nt.Jet_muonIdx1();
         else if (name == "Jet_muonIdx2") return nt.Jet_muonIdx2();
-        else if (name == "Jet_nConstituents") return nt.Jet_nConstituents();
+        //else if (name == "Jet_nConstituents") return nt.Jet_nConstituents();
         else if (name == "Jet_nElectrons") return nt.Jet_nElectrons();
         else if (name == "Jet_nMuons") return nt.Jet_nMuons();
         else if (name == "Jet_partonFlavour") return nt.Jet_partonFlavour();

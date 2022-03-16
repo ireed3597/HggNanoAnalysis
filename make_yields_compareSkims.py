@@ -5,9 +5,14 @@ import ROOT as r
 import numpy as np
 import pandas as pd
 
-procs = ['HH_ggTauTau']
-#procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'Data', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic', 'HH_ggZZ_4l', 'HH_ggZZ_2l2q']
-#bkgs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH']
+#procs = ['HH_ggTauTau', 'DiPhoton']
+procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'Data', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic']
+bkgs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH']
+procs_rounds = { 'GJets': 1, 'TT': 2, 'ZGamma': 2, 'WGamma': 2, 'DiPhoton': 1, 'VH': 3, 'ggH': 3, 'ttH': 3, 'VBFH': 3, 'Data': 0, 'HH_ggTauTau': 4, 'HH_ggWW_semileptonic' :4, 'HH_ggWW_dileptonic' :4 }
+
+res_bkgs = ['VH', 'ggH', 'ttH', 'VBFH']
+nonRes_bkgs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton']
+sig = ['HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic']
 
 skims = [ "*_ReRecoCheck_*" ]
 #skims = [ '*old*' , '*new*', '*old*2016*' , '*new*2016*', '*old*2017*' , '*new*2017*', '*old*2018*' , '*new*2018*']
@@ -42,9 +47,9 @@ for skim in skims:
 					
 				except:
 					print ('File ' , file_.GetName() , ' failed to load weights' )
-	
+
 	df = pd.DataFrame.from_dict( yields, orient='index')
+	#df = df.T.round(decimals=procs_rounds).T
 	df = df[['inclusive','1tau0lep','1tau0lep_iso','1tau1lep','2tau0lep','0tau2lep']]
-	#df.sort_index()
-	print(df.to_latex(index=True))
+	print(df.to_latex(index=True, float_format="%.3f" ) )
 
