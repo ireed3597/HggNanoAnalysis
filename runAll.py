@@ -11,7 +11,7 @@ r.gSystem.Load('NanoCORE/libTauAnalysis_ClassicSVfit.so')
 #r.gSystem.Load('loopers/loop_C.so')
 r.gSystem.Load('loopers/loop_ReReco_skim_check_C.so')
 
-#lumi = { "2016" : 17.95, "2016_APV" : 17.95, "2017" : 41.5, "2018" : 59.8 }
+#lumi = { "2016" : 16.51, "2016_APV" : 19.39, "2017" : 41.5, "2018" : 59.8 }
 #years = ['2016', '2016_APV', '2017', '2018']
 #years = ['2016', '2017', '2018']
 lumi = { "2016" : 35.9, "2017" : 41.5, "2018" : 59.8 }

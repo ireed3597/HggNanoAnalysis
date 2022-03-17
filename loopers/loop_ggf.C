@@ -257,7 +257,6 @@ int ScanChain( TChain *ch, string proc, int year, float scale_factor = 1, bool r
         for( unsigned int loop_event = 0; loop_event < tree->GetEntriesFast(); ++loop_event) {
 
          nt.GetEntry(loop_event);
-         tree->LoadTree(loop_event);
 
          nEventsTotal++;
          bar.progress(nEventsTotal, nEventsChain);
