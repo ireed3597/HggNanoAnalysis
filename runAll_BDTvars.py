@@ -12,24 +12,24 @@ r.gSystem.Load('loopers/loop_add_BDT_vars_C.so')
 
 lumi = { "2016" : 16.51, "2016_APV" : 19.39, "2017" : 41.5, "2018" : 59.8 }
 years = ['2016', '2016_APV', '2017', '2018']
-#years = [ '2016']
+#years = ['2018']
 samples = {}
 
-os.system("mkdir -p outputs_UL/add_BDT_vars/")
-os.system("mkdir -p outputs_UL/add_BDT_vars/hadded")
+date="23Mar2022"
+base_dir='/ceph/cms/store/user/fsetti/c++_looper_ul_output/'
+os.system("mkdir -p %s/%s/"%(base_dir,date))
+os.system("mkdir -p %s/%s/hadded"%(base_dir,date))
 
 corrupted_files = [ "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_1.root", "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_134.root", "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_161.root", "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_165.root" ]
 
 with open('samples_and_scale1fb_UL_nanoAODv9.json', "r") as f_in:
 	samples = json.load(f_in)
 
-#switch = False
 
 for name, sample in samples.items()[:]:
 	if "Data" in name:
 		continue
-	os.system("rm -rf outputs_UL/add_BDT_vars/%s"%(name))
-	os.system("mkdir -p outputs_UL/add_BDT_vars/%s"%(name))
+	os.system("mkdir -p %s/%s/%s"%(base_dir,date,name))
 	for year in years:
 		print 'Start processing ', year, ' ' , str(name)
 		ch = r.TChain("Events")
@@ -37,17 +37,20 @@ for name, sample in samples.items()[:]:
 		try:
 			for path in sample[year]['paths']:
 				list_of_files += glob.glob(path+'/*/*/*/*.root')
-			list_of_files = [ x for x in list_of_files if 'tree' in x and x not in corrupted_files ]
+			#list_of_files = [ x for x in list_of_files if 'tree' in x and x in corrupted_files ]
+			list_of_files = [ x for x in list_of_files if 'tree' in x ]
 			for file_ in list_of_files[:]:
 				ch.Add(file_);
 			if str(name) != 'Data' and ch.GetEntries() != 0 :
 				scale_factor = sample[year]['metadata']['scale1fb'] * lumi[year]
-				r.ScanChain(ch, str(name) , year , scale_factor, bool(sample['resonant']) )
+				r.ScanChain(ch, str(name) , year , date, scale_factor, bool(sample['resonant']) )
 			if str(name) == 'Data' and ch.GetEntries() != 0 :
 				scale_factor = 1
-				r.ScanChain(ch, str(name) , year , scale_factor )
+				r.ScanChain(ch, str(name) , year , date, scale_factor )
 		except:
 			print name ,' ' , year , ' not available in the samples file or detected corrupted file. '
 			print 'Exiting now. '
 			sys.exit()
-		os.system("hadd -f -k outputs_UL/add_BDT_vars/hadded/%s_%s_hadded.root outputs_UL/add_BDT_vars/%s/%s*_%s.root"%(name,year,name,name,year))
+		if "Data" in name:
+			continue
+		os.system("hadd -f -k %s/%s/hadded/%s_%s_hadded.root %s/%s/%s/%s*_%s.root"%(base_dir,date,name,year,base_dir,date,name,name,year))
