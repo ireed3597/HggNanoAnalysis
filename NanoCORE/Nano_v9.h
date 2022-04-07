@@ -44,11 +44,13 @@ typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > LorentzVector
 #define NGENJETAK8_MAX 24 // for GenJetAK8_* collection
 #define NELECTRON_MAX 21 // for Electron_* collection
 #define NFATJET_MAX 18 // for FatJet_* collection
-#define NJET_MAX 81 // for Jet_* collection
+//#define NJET_MAX 81 // for Jet_* collection
+#define NJET_MAX 981 // for Jet_* collection
 #define NGENISOLATEDPHOTON_MAX 12 // for GenIsolatedPhoton_* collection
 #define NGENDRESSEDLEPTON_MAX 12 // for GenDressedLepton_* collection
 #define NGENPART_MAX 402 // for GenPart_* collection
-#define NPHOTON_MAX 24 // for Photon_* collection
+//#define NPHOTON_MAX 24 // for Photon_* collection
+#define NPHOTON_MAX 1123 // for Photon_* collection
 #define NLHEREWEIGHTINGWEIGHT_MAX 3 // for LHEReweightingWeight_* collection
 #define NLHEWEIGHT_MAX 60 // for LHEWeight_mg_reweighting collection
 

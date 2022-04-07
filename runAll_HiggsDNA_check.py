@@ -16,15 +16,19 @@ lumi = { "2016" : 35.9, "2017" : 41.5, "2018" : 59.8 }
 years = [ '2016']
 samples = {}
 
+switch=False
 
 with open('samples_and_scale1fb.json', "r") as f_in:
 #with open('skim_check_samples_and_scale1fb.json', "r") as f_in:
 	samples = json.load(f_in)
 
 for name, sample in samples.items()[:]:
-	if "ggf" in name or "vbf_" in name :
+	if "ggf" in name or "vbf_" in name or "ggZZ" in name:
 		continue
-	if "ZGamma" not in name:
+	if "Data" in name:
+		switch=True
+		continue
+	if not switch:
 		continue
 	for year in years:
 		print 'Start processing ', year, ' ' , str(name)

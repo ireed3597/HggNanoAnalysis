@@ -5,8 +5,8 @@ import ROOT as r
 import numpy as np
 import pandas as pd
 
-#procs = ['HH_ggTauTau', 'DiPhoton']
-procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'Data', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic']
+procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic']
+#procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'Data', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic']
 bkgs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH']
 procs_rounds = { 'GJets': 1, 'TT': 2, 'ZGamma': 2, 'WGamma': 2, 'DiPhoton': 1, 'VH': 3, 'ggH': 3, 'ttH': 3, 'VBFH': 3, 'Data': 0, 'HH_ggTauTau': 4, 'HH_ggWW_semileptonic' :4, 'HH_ggWW_dileptonic' :4 }
 
@@ -51,5 +51,5 @@ for skim in skims:
 	df = pd.DataFrame.from_dict( yields, orient='index')
 	#df = df.T.round(decimals=procs_rounds).T
 	df = df[['inclusive','1tau0lep','1tau0lep_iso','1tau1lep','2tau0lep','0tau2lep']]
-	print(df.to_latex(index=True, float_format="%.3f" ) )
+	print(df.to_latex(index=True, float_format="%.1f" ) )
 

@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 #procs = ['DiPhoton', 'HH_ggTauTau']
-procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'Data', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic', 'HH_ggZZ_4l', 'HH_ggZZ_2l2q']
+procs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH', 'HH_ggTauTau', 'HH_ggWW_semileptonic', 'HH_ggWW_dileptonic', 'Data']
 bkgs = ['GJets', 'TT', 'ZGamma', 'WGamma', 'DiPhoton', 'VH', 'ggH', 'ttH', 'VBFH']
 
 yields = {}
@@ -14,7 +14,7 @@ yields['allBkg'] = { 'inclusive': 0. , '1tau0lep': 0., '1tau0lep_iso':0., '1tau1
 
 for proc in procs:
 		yields[proc] = { 'inclusive': 0. , '1tau0lep': 0., '1tau0lep_iso':0., '1tau1lep': 0., '2tau0lep': 0., '0tau2lep': 0. }
-		files = glob.glob('outputs_UL/'+proc+'*_09Mar2022_20*.root')
+		files = glob.glob('../outputs_UL/'+proc+'*15Mar2022_fixIsoTrk*.root')
 		for file_ in files:
 			file_ = r.TFile(file_)
 			h			= file_.Get('mgg')
@@ -44,5 +44,4 @@ for proc in procs:
 df = pd.DataFrame.from_dict( yields, orient='index')
 df = df[['inclusive','1tau0lep','1tau0lep_iso','1tau1lep','2tau0lep','0tau2lep']]
 #df.sort_index()
-print(df.to_latex(index=True))
-
+print(df.to_latex(index=True, float_format="%.2f" ) )

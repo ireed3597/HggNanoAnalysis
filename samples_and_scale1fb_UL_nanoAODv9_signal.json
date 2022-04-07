@@ -1,0 +1,590 @@
+{
+    "HH_ggTauTau": {
+        "2016": {
+            "metadata": {
+                "n_events": 179998,
+                "scale1fb": 1.832395723438815e-06,
+                "sumWeights": 4823.739701494201,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 199999,
+                "scale1fb": 1.6520422892374907e-06,
+                "sumWeights": 5350.347298966353,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 380000,
+                "scale1fb": 8.701244063547678e-07,
+                "sumWeights": 10158.317518099999,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379998,
+                "scale1fb": 8.706592904799652e-07,
+                "sumWeights": 10152.076818852247,
+                "xs": 8.839e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH1_TuneCP5_13TeV-powheg-pythia8_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -1,
+        "resonant": true
+    },
+    "HH_ggTauTau_kl0": {
+        "2016": {
+            "metadata": {
+                "n_events": 179999,
+                "scale1fb": 1.8443890529374558e-06,
+                "sumWeights": 10814.782615539847,
+                "xs": 1.9946666666e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH0_TuneCP5_13TeV-powheg-pythia8_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 200000,
+                "scale1fb": 1.6611596286438303e-06,
+                "sumWeights": 12007.676036700004,
+                "xs": 1.9946666666e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH0_TuneCP5_13TeV-powheg-pythia8_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379998,
+                "scale1fb": 8.738421745846514e-07,
+                "sumWeights": 22826.395024342826,
+                "xs": 1.9946666666e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH0_TuneCP5_13TeV-powheg-pythia8_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379997,
+                "scale1fb": 8.741225619457847e-07,
+                "sumWeights": 22819.073130430355,
+                "xs": 1.9946666666e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH0_TuneCP5_13TeV-powheg-pythia8_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -10,
+        "resonant": true
+    },
+    "HH_ggTauTau_kl2p45": {
+        "2016": {
+            "metadata": {
+                "n_events": 180000,
+                "scale1fb": 1.7738756197942997e-06,
+                "sumWeights": 2102.1767019000004,
+                "xs": 3.729e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH2p45_TuneCP5_13TeV-powheg-pythia8_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179999,
+                "scale1fb": 1.7342326503392546e-06,
+                "sumWeights": 2150.2305352574954,
+                "xs": 3.729e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH2p45_TuneCP5_13TeV-powheg-pythia8_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379999,
+                "scale1fb": 7.773091092410371e-07,
+                "sumWeights": 4797.319310513404,
+                "xs": 3.729e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH2p45_TuneCP5_13TeV-powheg-pythia8_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379499,
+                "scale1fb": 7.969287367810021e-07,
+                "sumWeights": 4679.2138718229435,
+                "xs": 3.729e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH2p45_TuneCP5_13TeV-powheg-pythia8_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -11,
+        "resonant": true
+    },
+    "HH_ggTauTau_kl5": {
+        "2016": {
+            "metadata": {
+                "n_events": 180000,
+                "scale1fb": 1.898711301937996e-06,
+                "sumWeights": 14216.1686047,
+                "xs": 2.69924e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH5_TuneCP5_13TeV-powheg-pythia8_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 180000,
+                "scale1fb": 1.8973499438871557e-06,
+                "sumWeights": 14226.368776600004,
+                "xs": 2.69924e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH5_TuneCP5_13TeV-powheg-pythia8_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 380000,
+                "scale1fb": 8.986509918696858e-07,
+                "sumWeights": 30036.577318900007,
+                "xs": 2.69924e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH5_TuneCP5_13TeV-powheg-pythia8_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 380000,
+                "scale1fb": 8.985472417197009e-07,
+                "sumWeights": 30040.04547200001,
+                "xs": 2.69924e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2Tau_node_cHHH5_TuneCP5_13TeV-powheg-pythia8_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -12,
+        "resonant": true
+    },
+    "HH_ggWW_dileptonic": {
+        "2016": {
+            "metadata": {
+                "n_events": 179995,
+                "scale1fb": 6.295234499746396e-07,
+                "sumWeights": 4814.753128135423,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH1_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179994,
+                "scale1fb": 6.291504045725439e-07,
+                "sumWeights": 4817.6079646,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH1_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379984,
+                "scale1fb": 2.981989136449671e-07,
+                "sumWeights": 10164.356277999996,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH1_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379987,
+                "scale1fb": 2.9857219445689087e-07,
+                "sumWeights": 10151.648600478196,
+                "xs": 3.031e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH1_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -3,
+        "resonant": true
+    },
+    "HH_ggWW_dileptonic_kl0": {
+        "2016": {
+            "metadata": {
+                "n_events": 179998,
+                "scale1fb": 6.319160457499904e-07,
+                "sumWeights": 10824.222689078795,
+                "xs": 6.84e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179990,
+                "scale1fb": 6.327842360324184e-07,
+                "sumWeights": 10809.371679179405,
+                "xs": 6.84e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379979,
+                "scale1fb": 2.996131053096093e-07,
+                "sumWeights": 22829.441966271108,
+                "xs": 6.84e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379980,
+                "scale1fb": 3.001305025518521e-07,
+                "sumWeights": 22790.08611868194,
+                "xs": 6.84e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH0_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -30,
+        "resonant": true
+    },
+    "HH_ggWW_dileptonic_kl2p45": {
+        "2016": {
+            "metadata": {
+                "n_events": 179994,
+                "scale1fb": 5.777691996630756e-07,
+                "sumWeights": 2213.1674737000003,
+                "xs": 1.2787e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH2p45_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 199489,
+                "scale1fb": 5.592708370763402e-07,
+                "sumWeights": 2286.3698859832703,
+                "xs": 1.2787e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH2p45_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379735,
+                "scale1fb": 2.832341544027638e-07,
+                "sumWeights": 4514.639142642616,
+                "xs": 1.2787e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH2p45_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379487,
+                "scale1fb": 2.843422385296795e-07,
+                "sumWeights": 4497.045555426793,
+                "xs": 1.2787e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH2p45_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -31,
+        "resonant": true
+    },
+    "HH_ggWW_dileptonic_kl5": {
+        "2016": {
+            "metadata": {
+                "n_events": 179996,
+                "scale1fb": 6.509918823588352e-07,
+                "sumWeights": 14218.30325512104,
+                "xs": 9.256e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH5_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179995,
+                "scale1fb": 6.511483397192883e-07,
+                "sumWeights": 14214.886893500005,
+                "xs": 9.256e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH5_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379980,
+                "scale1fb": 3.084240915394519e-07,
+                "sumWeights": 30010.625803581315,
+                "xs": 9.256e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH5_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379991,
+                "scale1fb": 3.0835312391396383e-07,
+                "sumWeights": 30017.532764100015,
+                "xs": 9.256e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_dileptonic_node_cHHH5_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -32,
+        "resonant": true
+    },
+    "HH_ggWW_semileptonic": {
+        "2016": {
+            "metadata": {
+                "n_events": 179877,
+                "scale1fb": 2.7124207589897082e-06,
+                "sumWeights": 4815.9932254999985,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH1_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 199890,
+                "scale1fb": 2.447063726975937e-06,
+                "sumWeights": 5338.234495487846,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH1_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379746,
+                "scale1fb": 1.2855912636082668e-06,
+                "sumWeights": 10161.083362791453,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH1_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379759,
+                "scale1fb": 1.286315275848213e-06,
+                "sumWeights": 10155.364120499999,
+                "xs": 1.3063e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH1_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -4,
+        "resonant": true
+    },
+    "HH_ggWW_semileptonic_kl0": {
+        "2016": {
+            "metadata": {
+                "n_events": 179895,
+                "scale1fb": 2.728956989976866e-06,
+                "sumWeights": 10802.295568700005,
+                "xs": 2.9479e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179872,
+                "scale1fb": 2.7261271094067173e-06,
+                "sumWeights": 10813.508988000001,
+                "xs": 2.9479e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 379773,
+                "scale1fb": 1.2917983544126988e-06,
+                "sumWeights": 22820.12506000001,
+                "xs": 2.9479e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379750,
+                "scale1fb": 1.2925571127551572e-06,
+                "sumWeights": 22806.72916430275,
+                "xs": 2.9479e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH0_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -40,
+        "resonant": true
+    },
+    "HH_ggWW_semileptonic_kl2p45": {
+        "2016": {
+            "metadata": {
+                "n_events": 179377,
+                "scale1fb": 2.5698379277440685e-06,
+                "sumWeights": 2144.4932151179783,
+                "xs": 5.511e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH2p45_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179638,
+                "scale1fb": 2.6862659771032776e-06,
+                "sumWeights": 2051.5466625321897,
+                "xs": 5.511e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH2p45_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 378968,
+                "scale1fb": 1.2614285996983346e-06,
+                "sumWeights": 4368.856074230387,
+                "xs": 5.511e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH2p45_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 378992,
+                "scale1fb": 1.245269230509078e-06,
+                "sumWeights": 4425.54900175848,
+                "xs": 5.511e-06
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH2p45_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -41,
+        "resonant": true
+    },
+    "HH_ggWW_semileptonic_kl5": {
+        "2016": {
+            "metadata": {
+                "n_events": 199858,
+                "scale1fb": 2.526300486343192e-06,
+                "sumWeights": 15790.678985200006,
+                "xs": 3.9892e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH5_2016_v2"
+            ]
+        },
+        "2016_APV": {
+            "metadata": {
+                "n_events": 179872,
+                "scale1fb": 2.8065406431362676e-06,
+                "sumWeights": 14213.939889864298,
+                "xs": 3.9892e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH5_2016_APV_v2"
+            ]
+        },
+        "2017": {
+            "metadata": {
+                "n_events": 399733,
+                "scale1fb": 1.263793275618971e-06,
+                "sumWeights": 31565.289014900005,
+                "xs": 3.9892e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH5_2017_v2"
+            ]
+        },
+        "2018": {
+            "metadata": {
+                "n_events": 379733,
+                "scale1fb": 1.3293738782451051e-06,
+                "sumWeights": 30008.11182830001,
+                "xs": 3.9892e-05
+            },
+            "paths": [
+                "/ceph/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/GluGluToHHTo2G2W_semileptonic_node_cHHH5_2018_v2"
+            ]
+        },
+        "fpo": 10,
+        "process_id": -42,
+        "resonant": true
+    }
+}

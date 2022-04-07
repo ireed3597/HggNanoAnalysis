@@ -16,7 +16,7 @@
 #include "../NanoCORE/Nano_v9.cc"
 #include "../NanoCORE/tqdm.h"
 #include "../NanoCORE/utils.cc"
-#include "../NanoCORE/sntMtt/sntMtt.C"
+//#include "../NanoCORE/sntMtt/sntMtt.C"
 #include "SVfit_utils.cc"
 
 #include <string>
@@ -48,8 +48,9 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
   if ( str_year == "2016_APV") year = 2016;
   else { year = stoi(str_year); }
 
-  TString file_name = proc + "_15Mar2022_fixIsoTrk_" +  str_year;
+  TString file_name = proc + "_04Apr2022_fixIsoTrk_" +  str_year;
 
+	//TFile* f1 = new TFile("outputs/" + file_name + ".root", "RECREATE");
 	TFile* f1 = new TFile("outputs_UL/" + file_name + ".root", "RECREATE");
 	H1(mgg, 60, 100 , 180 );
 	H1(mgg_1t0l, 60, 100 , 180 );
@@ -195,24 +196,24 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 	out_tree->Branch("dPhi_tautau_SVFit"	,	&dPhi_tautauSVFitLoose		, 	"dPhi_tautau_SVFit/F"		);
 	out_tree->Branch("dPhi_ggtautau_SVFit"	,	&dPhi_ggtautauSVFitLoose	, 	"dPhi_ggtautau_SVFit/F"		);	  
 
-	out_tree->Branch("tau1_pt_sntMtt"		,	&tau1_pt_sntMtt			,	"tau1_pt_sntMtt/F"			);	  
-	out_tree->Branch("tau1_eta_sntMtt"		,	&tau1_eta_sntMtt			,	"tau1_eta_sntMtt/F"			);	  
-	out_tree->Branch("tau1_phi_sntMtt"		,	&tau1_phi_sntMtt			,	"tau1_phi_sntMtt/F"			);	  
-	out_tree->Branch("tau1_m_sntMtt"			,	&tau1_m_sntMtt			,	"tau1_m_sntMtt/F"			);	  
-	out_tree->Branch("tau2_pt_sntMtt"		,	&tau2_pt_sntMtt			,	"tau2_pt_sntMtt/F"			);	  
-	out_tree->Branch("tau2_eta_sntMtt"		,	&tau2_eta_sntMtt			,	"tau2_eta_sntMtt/F"			);	  
-	out_tree->Branch("tau2_phi_sntMtt"		,	&tau2_phi_sntMtt			,	"tau2_phi_sntMtt/F"			);	  
-	out_tree->Branch("tau2_m_sntMtt"			,	&tau2_m_sntMtt			,	"tau2_m_sntMtt/F"			);	  
-
-	out_tree->Branch("pt_tautau_sntMtt"		,	&pt_tautau_sntMtt		,	"pt_tautau_sntMtt/F"			);	  
-	out_tree->Branch("eta_tautau_sntMtt"		,	&eta_tautau_sntMtt		, 	"eta_tautau_sntMtt/F"		);	  
-	out_tree->Branch("eta_tautau_sntMtt_bdt"	,	&eta_tautau_sntMtt_bdt	, 	"eta_tautau_sntMtt_bdt/F"		);	  
-	out_tree->Branch("phi_tautau_sntMtt"		,	&phi_tautau_sntMtt		, 	"phi_tautau_sntMtt/F"		);	  
-	out_tree->Branch("m_tautau_sntMtt"		,	&m_tautau_sntMtt			, 	"m_tautau_sntMtt/F"			);	  
-	out_tree->Branch("dR_tautau_sntMtt"		,	&dR_tautau_sntMtt		, 	"dR_tautau_sntMtt/F"			);	  
-	out_tree->Branch("dR_ggtautau_sntMtt"	,	&dR_ggtautau_sntMtt		, 	"dR_ggtautau_sntMtt/F"		);	  
-	out_tree->Branch("dPhi_tautau_sntMtt"	,	&dPhi_tautau_sntMtt		, 	"dPhi_tautau_sntMtt/F"		);
-	out_tree->Branch("dPhi_ggtautau_sntMtt"	,	&dPhi_ggtautau_sntMtt	, 	"dPhi_ggtautau_sntMtt/F"		);	  
+//	out_tree->Branch("tau1_pt_sntMtt"		,	&tau1_pt_sntMtt			,	"tau1_pt_sntMtt/F"			);	  
+//	out_tree->Branch("tau1_eta_sntMtt"		,	&tau1_eta_sntMtt			,	"tau1_eta_sntMtt/F"			);	  
+//	out_tree->Branch("tau1_phi_sntMtt"		,	&tau1_phi_sntMtt			,	"tau1_phi_sntMtt/F"			);	  
+//	out_tree->Branch("tau1_m_sntMtt"			,	&tau1_m_sntMtt			,	"tau1_m_sntMtt/F"			);	  
+//	out_tree->Branch("tau2_pt_sntMtt"		,	&tau2_pt_sntMtt			,	"tau2_pt_sntMtt/F"			);	  
+//	out_tree->Branch("tau2_eta_sntMtt"		,	&tau2_eta_sntMtt			,	"tau2_eta_sntMtt/F"			);	  
+//	out_tree->Branch("tau2_phi_sntMtt"		,	&tau2_phi_sntMtt			,	"tau2_phi_sntMtt/F"			);	  
+//	out_tree->Branch("tau2_m_sntMtt"			,	&tau2_m_sntMtt			,	"tau2_m_sntMtt/F"			);	  
+//
+//	out_tree->Branch("pt_tautau_sntMtt"		,	&pt_tautau_sntMtt		,	"pt_tautau_sntMtt/F"			);	  
+//	out_tree->Branch("eta_tautau_sntMtt"		,	&eta_tautau_sntMtt		, 	"eta_tautau_sntMtt/F"		);	  
+//	out_tree->Branch("eta_tautau_sntMtt_bdt"	,	&eta_tautau_sntMtt_bdt	, 	"eta_tautau_sntMtt_bdt/F"		);	  
+//	out_tree->Branch("phi_tautau_sntMtt"		,	&phi_tautau_sntMtt		, 	"phi_tautau_sntMtt/F"		);	  
+//	out_tree->Branch("m_tautau_sntMtt"		,	&m_tautau_sntMtt			, 	"m_tautau_sntMtt/F"			);	  
+//	out_tree->Branch("dR_tautau_sntMtt"		,	&dR_tautau_sntMtt		, 	"dR_tautau_sntMtt/F"			);	  
+//	out_tree->Branch("dR_ggtautau_sntMtt"	,	&dR_ggtautau_sntMtt		, 	"dR_ggtautau_sntMtt/F"		);	  
+//	out_tree->Branch("dPhi_tautau_sntMtt"	,	&dPhi_tautau_sntMtt		, 	"dPhi_tautau_sntMtt/F"		);
+//	out_tree->Branch("dPhi_ggtautau_sntMtt"	,	&dPhi_ggtautau_sntMtt	, 	"dPhi_ggtautau_sntMtt/F"		);	  
 
 	out_tree->Branch("tt_hel"				,	&tt_hel  					, 	"tt_hel/F"					);	  
 	out_tree->Branch("tt_hel_phys"			,	&tt_hel_phys				, 	"tt_hel_phys/F"				);	  
@@ -296,12 +297,12 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 				vector<float> pho_pt_cands;
 				for (unsigned int i=0; i<nPhoton(); i++){
 					if ( Photon_electronVeto().at(i)  >=0.5 &&
-						 (	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) > 0.85 )			//pho_EB_highR9
-						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) > 0.90 )			//pho_EE_highR9
-//						||	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.16544*fixedGridRhoAll() ) < 4.0 )			//pho_EB_lowR9
-//						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.13212*fixedGridRhoAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
-						||	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_pfPhoIso03().at(i) - 0.16544*fixedGridRhoFastjetAll() ) < 4.0 )			//pho_EB_lowR9
-						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_pfPhoIso03().at(i) - 0.13212*fixedGridRhoFastjetAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
+						 (	(	Photon_isScEtaEB().at(i)	 && Photon_r9().at(i) > 0.85 )			//pho_EB_highR9
+						||	(	Photon_isScEtaEE().at(i)	 && Photon_r9().at(i) > 0.90 )			//pho_EE_highR9
+//						||	(	Photon_isScEtaEB().at(i)	 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.16544*fixedGridRhoAll() ) < 4.0 )			//pho_EB_lowR9
+//						||	(	Photon_isScEtaEE().at(i)	 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.13212*fixedGridRhoAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
+						||	(	Photon_isScEtaEB().at(i)	 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_pfPhoIso03().at(i) - 0.16544*fixedGridRhoFastjetAll() ) < 4.0 )			//pho_EB_lowR9
+						||	(	Photon_isScEtaEE().at(i)	 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_pfPhoIso03().at(i) - 0.13212*fixedGridRhoFastjetAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
 					 	&& 	Photon_hoe().at(i) < 0.08
 						&&	fabs(Photon_eta().at(i)) < 2.5
 						&&	(	fabs(Photon_eta().at(i)) < 1.442 || fabs(Photon_eta().at(i)) > 1.566 )
@@ -520,34 +521,34 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 			LorentzVector MET_p4;
 			MET_p4.SetXYZT( METx, METy, 1, 1);
 			vector<LorentzVector> snt_Mtt_res;
-			LorentzVector sntMtt_diTau_p4, sntMtt_tau1_p4, sntMtt_tau2_p4;
-			int sntMtt_algo = 3;
+//			LorentzVector sntMtt_diTau_p4, sntMtt_tau1_p4, sntMtt_tau2_p4;
+//			int sntMtt_algo = 3;
 
 			if ( category == 1 ){
 				svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , Tau_decayMode()[h_cand1[0]], 1 , 3, Muon_pt()[h_cand2[0]], Muon_eta()[h_cand2[0]], Muon_phi()[h_cand2[0]], -1 , Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]] );
 
 				//SnT-MTT
-				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], Muon_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), true, false, sel_jets.size(), sntMtt_algo );	
+//				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], Muon_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), true, false, sel_jets.size(), sntMtt_algo );	
 			}
 			if ( category == 2 ){
 				svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , Tau_decayMode()[h_cand1[0]], 2 , 3, Electron_pt()[h_cand2[0]], Electron_eta()[h_cand2[0]], Electron_phi()[h_cand2[0]], -1 , Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]] );
-				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], Electron_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), true, false, sel_jets.size(), sntMtt_algo );
+//				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], Electron_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), true, false, sel_jets.size(), sntMtt_algo );
 			}
 			if ( category == 3 ){
 				svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), Tau_decayMode()[h_cand1[0]], Tau_decayMode()[h_cand2[0]], 3 , 3, Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]], Tau_pt()[h_cand2[0]], Tau_eta()[h_cand2[0]], Tau_phi()[h_cand2[0]], Tau_mass()[h_cand2[0]] );
-				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], Tau_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), true, true, sel_jets.size(), sntMtt_algo );
+//				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], Tau_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), true, true, sel_jets.size(), sntMtt_algo );
 			}
 			if ( category == 4 ){
 				svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , -1 , 1 , 1, Muon_pt()[h_cand1[0]], Muon_eta()[h_cand1[0]], Muon_phi()[h_cand1[0]], -1 ,Muon_pt()[h_cand2[0]], Muon_eta()[h_cand2[0]], Muon_phi()[h_cand2[0]], -1 );
-				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Muon_p4()[h_cand1[0]], Muon_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), false, false, sel_jets.size(), sntMtt_algo );
+//				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Muon_p4()[h_cand1[0]], Muon_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), false, false, sel_jets.size(), sntMtt_algo );
 			}
 			if ( category == 5 ){
 				svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , -1 , 2 , 2, Electron_pt()[h_cand1[0]], Electron_eta()[h_cand1[0]], Electron_phi()[h_cand1[0]], -1 , Electron_pt()[h_cand2[0]], Electron_eta()[h_cand2[0]], Electron_phi()[h_cand2[0]], -1 );
-				snt_Mtt_res = sntMtt( MET_p4,(Photon_p4().at(gHidx[0])+Photon_p4().at(gHidx[1]) ),  Electron_p4()[h_cand1[0]], Electron_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), false, false, sel_jets.size(), sntMtt_algo );
+//				snt_Mtt_res = sntMtt( MET_p4,(Photon_p4().at(gHidx[0])+Photon_p4().at(gHidx[1]) ),  Electron_p4()[h_cand1[0]], Electron_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), false, false, sel_jets.size(), sntMtt_algo );
 			}
 			if ( category == 6 ){
 				svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), -1 , -1 , 1 , 2, Muon_pt()[h_cand1[0]], Muon_eta()[h_cand1[0]], Muon_phi()[h_cand1[0]], -1,  Electron_pt()[h_cand2[0]], Electron_eta()[h_cand2[0]], Electron_phi()[h_cand2[0]], -1 );
-				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Muon_p4()[h_cand1[0]], Electron_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), false, false, sel_jets.size(), sntMtt_algo );
+//				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Muon_p4()[h_cand1[0]], Electron_p4()[h_cand2[0]], MET_covXX(), MET_covYY(), MET_covXY(), false, false, sel_jets.size(), sntMtt_algo );
 			}
 			if ( category == 7 ){
 				int isoTrk_svfit_code = -1;
@@ -557,9 +558,9 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 				//assuming, if hadronic IsoTrack, one-prong WITH neutral pions (larger Br) and massless
 				svFit_res = SVfit_all_p4( METx, METy, MET_covXX() , MET_covXY(), MET_covYY(), 1 , Tau_decayMode()[h_cand1[0]] , isoTrk_svfit_code , 3, IsoTrack_pt()[h_cand2[0]], IsoTrack_eta()[h_cand2[0]], IsoTrack_phi()[h_cand2[0]], 0.0, Tau_pt()[h_cand1[0]], Tau_eta()[h_cand1[0]], Tau_phi()[h_cand1[0]], Tau_mass()[h_cand1[0]] );
 
-				ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > iso_track;
-				iso_track.SetXYZT( IsoTrack_pt().at(h_cand2[0])* TMath::Cos(IsoTrack_phi().at(h_cand2[0])) , IsoTrack_pt().at(h_cand2[0])*TMath::Sin( IsoTrack_phi().at(h_cand2[0])), IsoTrack_pt().at(h_cand2[0])*TMath::SinH( IsoTrack_eta().at(h_cand2[0])),  IsoTrack_pt().at(h_cand2[0])*TMath::CosH( IsoTrack_eta().at(h_cand2[0]) ) );
-				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], iso_track, MET_covXX(), MET_covYY(), MET_covXY(), true, isoTrk_svfit_code > 2, sel_jets.size(), sntMtt_algo );
+//				ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > iso_track;
+//				iso_track.SetXYZT( IsoTrack_pt().at(h_cand2[0])* TMath::Cos(IsoTrack_phi().at(h_cand2[0])) , IsoTrack_pt().at(h_cand2[0])*TMath::Sin( IsoTrack_phi().at(h_cand2[0])), IsoTrack_pt().at(h_cand2[0])*TMath::SinH( IsoTrack_eta().at(h_cand2[0])),  IsoTrack_pt().at(h_cand2[0])*TMath::CosH( IsoTrack_eta().at(h_cand2[0]) ) );
+//				snt_Mtt_res = sntMtt( MET_p4, ( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ),  Tau_p4()[h_cand1[0]], iso_track, MET_covXX(), MET_covYY(), MET_covXY(), true, isoTrk_svfit_code > 2, sel_jets.size(), sntMtt_algo );
 			}
 
 
@@ -577,264 +578,264 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 				tau2_phi_SVFit	= tau2_p4.phi();
 				tau2_m_SVFit	= tau2_p4.M();
 
-				sntMtt_diTau_p4		= snt_Mtt_res[0];
-				sntMtt_tau1_p4		= snt_Mtt_res[1];
-				sntMtt_tau2_p4		= snt_Mtt_res[2];
-
-				tau1_pt_sntMtt	= sntMtt_tau1_p4.pt();
-				tau1_eta_sntMtt	= sntMtt_tau1_p4.eta();
-				tau1_phi_sntMtt	= sntMtt_tau1_p4.phi();
-				tau1_m_sntMtt		= sntMtt_tau1_p4.M();
-				tau2_pt_sntMtt	= sntMtt_tau2_p4.pt();
-				tau2_eta_sntMtt	= sntMtt_tau2_p4.eta();
-				tau2_phi_sntMtt	= sntMtt_tau2_p4.phi();
-				tau2_m_sntMtt		= sntMtt_tau2_p4.M();
+//				sntMtt_diTau_p4		= snt_Mtt_res[0];
+//				sntMtt_tau1_p4		= snt_Mtt_res[1];
+//				sntMtt_tau2_p4		= snt_Mtt_res[2];
+//
+//				tau1_pt_sntMtt	= sntMtt_tau1_p4.pt();
+//				tau1_eta_sntMtt	= sntMtt_tau1_p4.eta();
+//				tau1_phi_sntMtt	= sntMtt_tau1_p4.phi();
+//				tau1_m_sntMtt		= sntMtt_tau1_p4.M();
+//				tau2_pt_sntMtt	= sntMtt_tau2_p4.pt();
+//				tau2_eta_sntMtt	= sntMtt_tau2_p4.eta();
+//				tau2_phi_sntMtt	= sntMtt_tau2_p4.phi();
+//				tau2_m_sntMtt		= sntMtt_tau2_p4.M();
 			}
 
-			float weight = 1.;
-			if ( proc != "Data" ) weight = genWeight() * scale_factor;
+		float weight = 1.;
+		if ( proc != "Data" ) weight = genWeight() * scale_factor;
 
-			t_run			= run();
-			t_lumiBlock		= luminosityBlock();
-			t_event			= event();
-			t_MET_pt		= MET_pt();
-			t_MET_phi		= MET_phi();
-			t_weight		= weight;
-			MET_gg_dPhi		= deltaPhi( MET_phi() , (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() );
+		t_run			= run();
+		t_lumiBlock		= luminosityBlock();
+		t_event			= event();
+		t_MET_pt		= MET_pt();
+		t_MET_phi		= MET_phi();
+		t_weight		= weight;
+		MET_gg_dPhi		= deltaPhi( MET_phi() , (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() );
 
-			gg_pt			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).pt() ;
-			gg_ptmgg		=	gg_pt / mgg;
-			gg_eta			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).eta() ;
-			//gg_eta_bdt		=	gg_eta * sgn( gg_eta ) ;
-			gg_phi			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() ;
-			gg_dR			=	deltaR(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
-			gg_dPhi			=	deltaPhi(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
-			gg_hel_phys		= 	fabs(helicityCosTheta_phys( Photon_p4().at(gHidx[0]), Photon_p4().at(gHidx[1]) ) ); 
-			bool roll		= 	rand() % 2 == 0;
-			if (roll ) 		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[0]) ) ) ;
-			else	{		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[1]) ) ) ; }
+		gg_pt			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).pt() ;
+		gg_ptmgg		=	gg_pt / mgg;
+		gg_eta			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).eta() ;
+		//gg_eta_bdt		=	gg_eta * sgn( gg_eta ) ;
+		gg_phi			=	(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])).phi() ;
+		gg_dR			=	deltaR(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
+		gg_dPhi			=	deltaPhi(Photon_p4().at(gHidx[0]) , Photon_p4().at(gHidx[1])) ;
+		gg_hel_phys		= 	fabs(helicityCosTheta_phys( Photon_p4().at(gHidx[0]), Photon_p4().at(gHidx[1]) ) ); 
+		bool roll		= 	rand() % 2 == 0;
+		if (roll ) 		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[0]) ) ) ;
+		else	{		gg_hel			= 	fabs( helicityCosTheta( Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]), Photon_p4().at(gHidx[1]) ) ) ; }
 
-			g1_ptmgg		=	Photon_pt().at(gHidx[0]) / mgg;
-			g1_pt			=	Photon_pt().at(gHidx[0]) ;
-			g1_eta			=	Photon_eta().at(gHidx[0]) ;
-			g1_eta_bdt		=	g1_eta * sgn( gg_eta ) ;
-			g1_phi			=	Photon_phi().at(gHidx[0]) ;
-			g1_idmva		=	Photon_mvaID().at(gHidx[0]) ;
-			g1_pixVeto		=   Photon_pixelSeed().at(gHidx[0]) ;
-			g1_energyErr	=   Photon_energyErr().at(gHidx[0]) ;
+		g1_ptmgg		=	Photon_pt().at(gHidx[0]) / mgg;
+		g1_pt			=	Photon_pt().at(gHidx[0]) ;
+		g1_eta			=	Photon_eta().at(gHidx[0]) ;
+		g1_eta_bdt		=	g1_eta * sgn( gg_eta ) ;
+		g1_phi			=	Photon_phi().at(gHidx[0]) ;
+		g1_idmva		=	Photon_mvaID().at(gHidx[0]) ;
+		g1_pixVeto		=   Photon_pixelSeed().at(gHidx[0]) ;
+		g1_energyErr	=   Photon_energyErr().at(gHidx[0]) ;
 
-			g2_ptmgg		=	Photon_pt().at(gHidx[1]) / mgg;
-			g2_pt			=	Photon_pt().at(gHidx[1]) ;
-			g2_eta			=	Photon_eta().at(gHidx[1]) ;
-			g2_eta_bdt		=	g2_eta * sgn( gg_eta ) ;
-			g2_phi			=	Photon_phi().at(gHidx[1]) ;
-			g2_idmva		=	Photon_mvaID().at(gHidx[1]) ;
-			g2_pixVeto		=   Photon_pixelSeed().at(gHidx[1]) ;
-			g2_energyErr	=   Photon_energyErr().at(gHidx[1]) ;
+		g2_ptmgg		=	Photon_pt().at(gHidx[1]) / mgg;
+		g2_pt			=	Photon_pt().at(gHidx[1]) ;
+		g2_eta			=	Photon_eta().at(gHidx[1]) ;
+		g2_eta_bdt		=	g2_eta * sgn( gg_eta ) ;
+		g2_phi			=	Photon_phi().at(gHidx[1]) ;
+		g2_idmva		=	Photon_mvaID().at(gHidx[1]) ;
+		g2_pixVeto		=   Photon_pixelSeed().at(gHidx[1]) ;
+		g2_energyErr	=   Photon_energyErr().at(gHidx[1]) ;
 
-			if ( g1_pt > g2_pt ){
-				max_g_ptmgg = g1_pt / mgg;
-				min_g_ptmgg = g2_pt / mgg;
-			}
-			else{
-				max_g_ptmgg = g2_pt / mgg;
-				min_g_ptmgg = g1_pt / mgg;
-			}
-			if ( g1_idmva > g2_idmva ){
-				max_g_idmva = g1_idmva;
-				min_g_idmva = g2_idmva;
-			}
-			else{
-				max_g_idmva = g2_idmva;
-				min_g_idmva = g1_idmva;
-			}
+		if ( g1_pt > g2_pt ){
+			max_g_ptmgg = g1_pt / mgg;
+			min_g_ptmgg = g2_pt / mgg;
+		}
+		else{
+			max_g_ptmgg = g2_pt / mgg;
+			min_g_ptmgg = g1_pt / mgg;
+		}
+		if ( g1_idmva > g2_idmva ){
+			max_g_idmva = g1_idmva;
+			min_g_idmva = g2_idmva;
+		}
+		else{
+			max_g_idmva = g2_idmva;
+			min_g_idmva = g1_idmva;
+		}
 
-			LorentzVector lep1_p4, lep2_p4;
+		LorentzVector lep1_p4, lep2_p4;
 
-			if ( cat1 ){
-				lep1_p4			=	Muon_p4()[h_cand2[0]];
-				lep1_pt			=	Muon_pt()[h_cand2[0]];
-				lep1_eta		=	Muon_eta()[h_cand2[0]];
-				lep1_eta_bdt	=	Muon_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep1_phi		=	Muon_phi()[h_cand2[0]];	
-				lep1_charge		=	Muon_charge()[h_cand2[0]];
-				lep1_pdgID		=	Muon_pdgId()[h_cand2[0]];
-				lep1_tightID	=	Muon_tightId()[h_cand2[0]];
+		if ( cat1 ){
+			lep1_p4			=	Muon_p4()[h_cand2[0]];
+			lep1_pt			=	Muon_pt()[h_cand2[0]];
+			lep1_eta		=	Muon_eta()[h_cand2[0]];
+			lep1_eta_bdt	=	Muon_eta()[h_cand2[0]] * sgn( gg_eta );
+			lep1_phi		=	Muon_phi()[h_cand2[0]];	
+			lep1_charge		=	Muon_charge()[h_cand2[0]];
+			lep1_pdgID		=	Muon_pdgId()[h_cand2[0]];
+			lep1_tightID	=	Muon_tightId()[h_cand2[0]];
 
-				lep2_p4			=	Tau_p4()[h_cand1[0]];
-				lep2_pt			=	Tau_pt()[h_cand1[0]];
-				lep2_eta		=	Tau_eta()[h_cand1[0]];
-				lep2_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep2_phi		=	Tau_phi()[h_cand1[0]];	
-				lep2_charge		=	Tau_charge()[h_cand1[0]];
-				lep2_pdgID		=	15 * sgn( lep2_charge );
-				lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
-				lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
-				lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
-			
-				lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
-			}
-			if ( cat2 ){
-				lep1_p4			=	Electron_p4()[h_cand2[0]];
-				lep1_pt			=	Electron_pt()[h_cand2[0]];
-				lep1_eta		=	Electron_eta()[h_cand2[0]];
-				lep1_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep1_phi		=	Electron_phi()[h_cand2[0]];	
-				lep1_charge		=	Electron_charge()[h_cand2[0]];
-				lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
-				lep1_pdgID		=	Electron_pdgId()[h_cand2[0]];
+			lep2_p4			=	Tau_p4()[h_cand1[0]];
+			lep2_pt			=	Tau_pt()[h_cand1[0]];
+			lep2_eta		=	Tau_eta()[h_cand1[0]];
+			lep2_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep2_phi		=	Tau_phi()[h_cand1[0]];	
+			lep2_charge		=	Tau_charge()[h_cand1[0]];
+			lep2_pdgID		=	15 * sgn( lep2_charge );
+			lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
+			lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
+			lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+		
+			lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
+		}
+		if ( cat2 ){
+			lep1_p4			=	Electron_p4()[h_cand2[0]];
+			lep1_pt			=	Electron_pt()[h_cand2[0]];
+			lep1_eta		=	Electron_eta()[h_cand2[0]];
+			lep1_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
+			lep1_phi		=	Electron_phi()[h_cand2[0]];	
+			lep1_charge		=	Electron_charge()[h_cand2[0]];
+			lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
+			lep1_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
-				lep2_p4			=	Tau_p4()[h_cand1[0]];
-				lep2_pt			=	Tau_pt()[h_cand1[0]];
-				lep2_eta		=	Tau_eta()[h_cand1[0]];
-				lep2_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep2_phi		=	Tau_phi()[h_cand1[0]];	
-				lep2_charge		=	Tau_charge()[h_cand1[0]];
-				lep2_pdgID		=	15 * sgn( lep2_charge );
-				lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
-				lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
-				lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+			lep2_p4			=	Tau_p4()[h_cand1[0]];
+			lep2_pt			=	Tau_pt()[h_cand1[0]];
+			lep2_eta		=	Tau_eta()[h_cand1[0]];
+			lep2_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep2_phi		=	Tau_phi()[h_cand1[0]];	
+			lep2_charge		=	Tau_charge()[h_cand1[0]];
+			lep2_pdgID		=	15 * sgn( lep2_charge );
+			lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
+			lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
+			lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
 
-				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
-			}
-			if ( cat3 ){
-				lep1_p4			=	Tau_p4()[h_cand1[0]];
-				lep1_pt			=	Tau_pt()[h_cand1[0]];
-				lep1_eta		=	Tau_eta()[h_cand1[0]];
-				lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep1_phi		=	Tau_phi()[h_cand1[0]];	
-				lep1_charge		=	Tau_charge()[h_cand1[0]];
-				lep1_pdgID		=	15 * sgn( lep1_charge );
-				lep1_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
-				lep1_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
-				lep1_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+			lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
+		}
+		if ( cat3 ){
+			lep1_p4			=	Tau_p4()[h_cand1[0]];
+			lep1_pt			=	Tau_pt()[h_cand1[0]];
+			lep1_eta		=	Tau_eta()[h_cand1[0]];
+			lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep1_phi		=	Tau_phi()[h_cand1[0]];	
+			lep1_charge		=	Tau_charge()[h_cand1[0]];
+			lep1_pdgID		=	15 * sgn( lep1_charge );
+			lep1_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
+			lep1_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
+			lep1_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
 
-				lep2_p4			=	Tau_p4()[h_cand2[0]];
-				lep2_pt			=	Tau_pt()[h_cand2[0]];
-				lep2_eta		=	Tau_eta()[h_cand2[0]];
-				lep2_eta_bdt	=	Tau_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep2_phi		=	Tau_phi()[h_cand2[0]];	
-				lep2_charge		=	Tau_charge()[h_cand2[0]];
-				lep2_pdgID		=	15 * sgn( lep2_charge );
-				lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand2[0]];	
-				lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand2[0]];	
-				lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand2[0]];
+			lep2_p4			=	Tau_p4()[h_cand2[0]];
+			lep2_pt			=	Tau_pt()[h_cand2[0]];
+			lep2_eta		=	Tau_eta()[h_cand2[0]];
+			lep2_eta_bdt	=	Tau_eta()[h_cand2[0]] * sgn( gg_eta );
+			lep2_phi		=	Tau_phi()[h_cand2[0]];	
+			lep2_charge		=	Tau_charge()[h_cand2[0]];
+			lep2_pdgID		=	15 * sgn( lep2_charge );
+			lep2_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand2[0]];	
+			lep2_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand2[0]];	
+			lep2_id_vs_jet	=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand2[0]];
 
-				lep12_dr		= deltaR( Tau_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
-			}
-			if ( cat4 ){
-				lep1_p4			=	Muon_p4()[h_cand1[0]];
-				lep1_pt			=	Muon_pt()[h_cand1[0]];
-				lep1_eta		=	Muon_eta()[h_cand1[0]];
-				lep1_eta_bdt	=	Muon_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep1_phi		=	Muon_phi()[h_cand1[0]];	
-				lep1_charge		=	Muon_charge()[h_cand1[0]];
-				lep1_pdgID		=	Muon_pdgId()[h_cand1[0]];
-				lep1_tightID	=	Muon_tightId()[h_cand1[0]];
+			lep12_dr		= deltaR( Tau_p4()[h_cand2[0]], Tau_p4()[h_cand1[0]] );
+		}
+		if ( cat4 ){
+			lep1_p4			=	Muon_p4()[h_cand1[0]];
+			lep1_pt			=	Muon_pt()[h_cand1[0]];
+			lep1_eta		=	Muon_eta()[h_cand1[0]];
+			lep1_eta_bdt	=	Muon_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep1_phi		=	Muon_phi()[h_cand1[0]];	
+			lep1_charge		=	Muon_charge()[h_cand1[0]];
+			lep1_pdgID		=	Muon_pdgId()[h_cand1[0]];
+			lep1_tightID	=	Muon_tightId()[h_cand1[0]];
 
-				lep2_p4			=	Muon_p4()[h_cand2[0]];
-				lep2_pt			=	Muon_pt()[h_cand2[0]];
-				lep2_eta		=	Muon_eta()[h_cand2[0]];
-				lep2_eta_bdt	=	Muon_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep2_phi		=	Muon_phi()[h_cand2[0]];	
-				lep2_charge		=	Muon_charge()[h_cand2[0]];
-				lep2_pdgID		=	Muon_pdgId()[h_cand2[0]];
-				lep2_tightID	=	Muon_tightId()[h_cand2[0]];
+			lep2_p4			=	Muon_p4()[h_cand2[0]];
+			lep2_pt			=	Muon_pt()[h_cand2[0]];
+			lep2_eta		=	Muon_eta()[h_cand2[0]];
+			lep2_eta_bdt	=	Muon_eta()[h_cand2[0]] * sgn( gg_eta );
+			lep2_phi		=	Muon_phi()[h_cand2[0]];	
+			lep2_charge		=	Muon_charge()[h_cand2[0]];
+			lep2_pdgID		=	Muon_pdgId()[h_cand2[0]];
+			lep2_tightID	=	Muon_tightId()[h_cand2[0]];
 
-				lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
-				m_Z				= ( lep1_p4 + lep2_p4 ).M();
-			}
-			if ( cat5 ){
-				lep1_p4			=	Electron_p4()[h_cand1[0]];
-				lep1_pt			=	Electron_pt()[h_cand1[0]];
-				lep1_eta		=	Electron_eta()[h_cand1[0]];
-				lep1_eta_bdt	=	Electron_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep1_phi		=	Electron_phi()[h_cand1[0]];	
-				lep1_charge		=	Electron_charge()[h_cand1[0]];
-				lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand1[0]];
-				lep1_pdgID		=	Electron_pdgId()[h_cand1[0]];
+			lep12_dr		= deltaR( Muon_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
+			m_Z				= ( lep1_p4 + lep2_p4 ).M();
+		}
+		if ( cat5 ){
+			lep1_p4			=	Electron_p4()[h_cand1[0]];
+			lep1_pt			=	Electron_pt()[h_cand1[0]];
+			lep1_eta		=	Electron_eta()[h_cand1[0]];
+			lep1_eta_bdt	=	Electron_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep1_phi		=	Electron_phi()[h_cand1[0]];	
+			lep1_charge		=	Electron_charge()[h_cand1[0]];
+			lep1_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand1[0]];
+			lep1_pdgID		=	Electron_pdgId()[h_cand1[0]];
 
-				lep2_p4			=	Electron_p4()[h_cand2[0]];
-				lep2_pt			=	Electron_pt()[h_cand2[0]];
-				lep2_eta		=	Electron_eta()[h_cand2[0]];
-				lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep2_phi		=	Electron_phi()[h_cand2[0]];	
-				lep2_charge		=	Electron_charge()[h_cand2[0]];
-				lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
-				lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
+			lep2_p4			=	Electron_p4()[h_cand2[0]];
+			lep2_pt			=	Electron_pt()[h_cand2[0]];
+			lep2_eta		=	Electron_eta()[h_cand2[0]];
+			lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
+			lep2_phi		=	Electron_phi()[h_cand2[0]];	
+			lep2_charge		=	Electron_charge()[h_cand2[0]];
+			lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
+			lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
-				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Electron_p4()[h_cand1[0]] );
-				m_Z				= ( lep1_p4 + lep2_p4 ).M();
-			}
-			if ( cat6 ){
-				lep1_p4			=	Muon_p4()[h_cand1[0]];
-				lep1_pt			=	Muon_pt()[h_cand1[0]];
-				lep1_eta		=	Muon_eta()[h_cand1[0]];
-				lep1_eta_bdt	=	Muon_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep1_phi		=	Muon_phi()[h_cand1[0]];	
-				lep1_charge		=	Muon_charge()[h_cand1[0]];
-				lep1_pdgID		=	Muon_pdgId()[h_cand1[0]];
-				lep1_tightID	=	Muon_tightId()[h_cand1[0]];
+			lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Electron_p4()[h_cand1[0]] );
+			m_Z				= ( lep1_p4 + lep2_p4 ).M();
+		}
+		if ( cat6 ){
+			lep1_p4			=	Muon_p4()[h_cand1[0]];
+			lep1_pt			=	Muon_pt()[h_cand1[0]];
+			lep1_eta		=	Muon_eta()[h_cand1[0]];
+			lep1_eta_bdt	=	Muon_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep1_phi		=	Muon_phi()[h_cand1[0]];	
+			lep1_charge		=	Muon_charge()[h_cand1[0]];
+			lep1_pdgID		=	Muon_pdgId()[h_cand1[0]];
+			lep1_tightID	=	Muon_tightId()[h_cand1[0]];
 
-				lep2_p4			=	Electron_p4()[h_cand2[0]];
-				lep2_pt			=	Electron_pt()[h_cand2[0]];
-				lep2_eta		=	Electron_eta()[h_cand2[0]];
-				lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep2_phi		=	Electron_phi()[h_cand2[0]];	
-				lep2_charge		=	Electron_charge()[h_cand2[0]];
-				lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
-				lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
+			lep2_p4			=	Electron_p4()[h_cand2[0]];
+			lep2_pt			=	Electron_pt()[h_cand2[0]];
+			lep2_eta		=	Electron_eta()[h_cand2[0]];
+			lep2_eta_bdt	=	Electron_eta()[h_cand2[0]] * sgn( gg_eta );
+			lep2_phi		=	Electron_phi()[h_cand2[0]];	
+			lep2_charge		=	Electron_charge()[h_cand2[0]];
+			lep2_tightID	=	Electron_mvaFall17V2Iso_WP90()[h_cand2[0]];
+			lep2_pdgID		=	Electron_pdgId()[h_cand2[0]];
 
-				lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
-			}
-			if ( cat7 ){
-				lep1_p4					=	Tau_p4()[h_cand1[0]];
-				lep1_pt					=	Tau_pt()[h_cand1[0]];
-				lep1_eta				=	Tau_eta()[h_cand1[0]];
-				lep1_eta_bdt			=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep1_phi				=	Tau_phi()[h_cand1[0]];	
-				lep1_charge				=	Tau_charge()[h_cand1[0]];
-				lep1_pdgID				=	15 * sgn( lep2_charge );
-				lep1_id_vs_e			=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
-				lep1_id_vs_m			=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
-				lep1_id_vs_jet			=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+			lep12_dr		= deltaR( Electron_p4()[h_cand2[0]], Muon_p4()[h_cand1[0]] );
+		}
+		if ( cat7 ){
+			lep1_p4					=	Tau_p4()[h_cand1[0]];
+			lep1_pt					=	Tau_pt()[h_cand1[0]];
+			lep1_eta				=	Tau_eta()[h_cand1[0]];
+			lep1_eta_bdt			=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep1_phi				=	Tau_phi()[h_cand1[0]];	
+			lep1_charge				=	Tau_charge()[h_cand1[0]];
+			lep1_pdgID				=	15 * sgn( lep2_charge );
+			lep1_id_vs_e			=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
+			lep1_id_vs_m			=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
+			lep1_id_vs_jet			=	 (int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
 
-				lep2_pt					=	IsoTrack_pt()[h_cand2[0]];
-				lep2_eta				=	IsoTrack_eta()[h_cand2[0]];
-				lep2_eta_bdt			=	IsoTrack_eta()[h_cand2[0]] * sgn( gg_eta );
-				lep2_phi				=	IsoTrack_phi()[h_cand2[0]];	
-				lep2_charge				=	IsoTrack_pdgId()[h_cand2[0]]/fabs(IsoTrack_pdgId()[h_cand2[0]]);
-				lep2_pdgID				=	IsoTrack_pdgId()[h_cand2[0]];
-				lep2_pfRelIso03_all 	= 	IsoTrack_pfRelIso03_all()[h_cand2[0]];;
-				lep2_pfRelIso03_chg 	= 	IsoTrack_pfRelIso03_chg()[h_cand2[0]];;
+			lep2_pt					=	IsoTrack_pt()[h_cand2[0]];
+			lep2_eta				=	IsoTrack_eta()[h_cand2[0]];
+			lep2_eta_bdt			=	IsoTrack_eta()[h_cand2[0]] * sgn( gg_eta );
+			lep2_phi				=	IsoTrack_phi()[h_cand2[0]];	
+			lep2_charge				=	IsoTrack_pdgId()[h_cand2[0]]/fabs(IsoTrack_pdgId()[h_cand2[0]]);
+			lep2_pdgID				=	IsoTrack_pdgId()[h_cand2[0]];
+			lep2_pfRelIso03_all 	= 	IsoTrack_pfRelIso03_all()[h_cand2[0]];;
+			lep2_pfRelIso03_chg 	= 	IsoTrack_pfRelIso03_chg()[h_cand2[0]];;
 
-				LorentzVector iso_track(IsoTrack_pt()[h_cand2[0]], IsoTrack_eta()[h_cand2[0]], IsoTrack_phi()[h_cand2[0]], 0);
-				lep2_p4 = iso_track;
-				lep12_dr		= deltaR( iso_track, Tau_p4()[h_cand1[0]] );
-			}
+			LorentzVector iso_track(IsoTrack_pt()[h_cand2[0]], IsoTrack_eta()[h_cand2[0]], IsoTrack_phi()[h_cand2[0]], 0);
+			lep2_p4 = iso_track;
+			lep12_dr		= deltaR( iso_track, Tau_p4()[h_cand1[0]] );
+		}
 
-			if ( cat8 ){
-				lep1_pt			=	Tau_pt()[h_cand1[0]];
-				lep1_eta		=	Tau_eta()[h_cand1[0]];
-				lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
-				lep1_phi		=	Tau_phi()[h_cand1[0]];	
-				lep1_charge		=	Tau_charge()[h_cand1[0]];
-				lep1_pdgID		=	15 * sgn( lep1_charge );
-				lep1_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
-				lep1_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
-				lep1_id_vs_jet	=	(int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
-			}
+		if ( cat8 ){
+			lep1_pt			=	Tau_pt()[h_cand1[0]];
+			lep1_eta		=	Tau_eta()[h_cand1[0]];
+			lep1_eta_bdt	=	Tau_eta()[h_cand1[0]] * sgn( gg_eta );
+			lep1_phi		=	Tau_phi()[h_cand1[0]];	
+			lep1_charge		=	Tau_charge()[h_cand1[0]];
+			lep1_pdgID		=	15 * sgn( lep1_charge );
+			lep1_id_vs_e	=	 (int)Tau_idDeepTau2017v2p1VSe()[h_cand1[0]];	
+			lep1_id_vs_m	=	 (int)Tau_idDeepTau2017v2p1VSmu()[h_cand1[0]];	
+			lep1_id_vs_jet	=	(int)Tau_idDeepTau2017v2p1VSjet()[h_cand1[0]];
+		}
 
-			if ( lep1_pt > lep2_pt ){
-				max_lep_pt = lep1_pt;
-				min_lep_pt = lep2_pt;
-			}
-			else{
-				max_lep_pt = lep2_pt;
-				min_lep_pt = lep1_pt;
-			}
+		if ( lep1_pt > lep2_pt ){
+			max_lep_pt = lep1_pt;
+			min_lep_pt = lep2_pt;
+		}
+		else{
+			max_lep_pt = lep2_pt;
+			min_lep_pt = lep1_pt;
+		}
 
-			dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
+		dPhi_MET_l	= deltaPhi( t_MET_phi, lep1_phi );
 
 			if ( category < 8 ){
 
@@ -865,15 +866,15 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 				dPhi_tautauSVFitLoose				= deltaPhi( tau1_p4 , tau2_p4 );
 				dPhi_ggtautauSVFitLoose				= deltaPhi( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), diTau_p4 );
 
-				pt_tautau_sntMtt					= sntMtt_diTau_p4.pt();
-				eta_tautau_sntMtt					= sntMtt_diTau_p4.eta();
-				eta_tautau_sntMtt_bdt			= sntMtt_diTau_p4.eta() * sgn( gg_eta ) ;
-				phi_tautau_sntMtt					= sntMtt_diTau_p4.phi();
-				m_tautau_sntMtt						= sntMtt_diTau_p4.M();
-				dR_tautau_sntMtt					= deltaR( sntMtt_tau1_p4 , sntMtt_tau2_p4 );
-				dR_ggtautau_sntMtt				= deltaR( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), sntMtt_diTau_p4 );
-				dPhi_tautau_sntMtt				= deltaPhi( sntMtt_tau1_p4 , sntMtt_tau2_p4 );
-				dPhi_ggtautau_sntMtt			= deltaPhi( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), sntMtt_diTau_p4 );
+//				pt_tautau_sntMtt					= sntMtt_diTau_p4.pt();
+//				eta_tautau_sntMtt					= sntMtt_diTau_p4.eta();
+//				eta_tautau_sntMtt_bdt			= sntMtt_diTau_p4.eta() * sgn( gg_eta ) ;
+//				phi_tautau_sntMtt					= sntMtt_diTau_p4.phi();
+//				m_tautau_sntMtt						= sntMtt_diTau_p4.M();
+//				dR_tautau_sntMtt					= deltaR( sntMtt_tau1_p4 , sntMtt_tau2_p4 );
+//				dR_ggtautau_sntMtt				= deltaR( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), sntMtt_diTau_p4 );
+//				dPhi_tautau_sntMtt				= deltaPhi( sntMtt_tau1_p4 , sntMtt_tau2_p4 );
+//				dPhi_ggtautau_sntMtt			= deltaPhi( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])), sntMtt_diTau_p4 );
 
 				tt_hel_phys							= 	fabs( helicityCosTheta_phys( tau1_p4, tau2_p4 ) ) ;
 				gg_tt_hel_phys						= 	fabs( helicityCosTheta_phys( (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1])) + diTau_p4, (Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]))  ) ) ;

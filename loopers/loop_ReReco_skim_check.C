@@ -129,17 +129,17 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 				vector<int> pho_cands;
 				vector<float> pho_pt_cands;
 				for (unsigned int i=0; i<nPhoton(); i++){
-					if ( Photon_electronVeto().at(i)  >=0.5 
-						&&	(	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) > 0.85 )			//pho_EB_highR9
-						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) > 0.90 )			//pho_EE_highR9
-						||	(	fabs(Photon_eta().at(i)) <  1.5 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.16544*fixedGridRhoAll() ) < 4.0 )			//pho_EB_lowR9
-						||	(	fabs(Photon_eta().at(i)) >  1.5 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.13212*fixedGridRhoAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
+					if ( Photon_electronVeto().at(i)  >=0.5 &&
+						 (	(	Photon_isScEtaEB().at(i)	 && Photon_r9().at(i) > 0.85 )			//pho_EB_highR9
+						||	(	Photon_isScEtaEE().at(i)	 && Photon_r9().at(i) > 0.90 )			//pho_EE_highR9
+						||	(	Photon_isScEtaEB().at(i)	 && Photon_r9().at(i) < 0.85 && Photon_r9().at(i) > 0.5 && Photon_sieie().at(i) < 0.015 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.16544*fixedGridRhoAll() ) < 4.0 )			//pho_EB_lowR9
+						||	(	Photon_isScEtaEE().at(i)	 && Photon_r9().at(i) < 0.90 && Photon_r9().at(i) > 0.8 && Photon_sieie().at(i) < 0.035 && Photon_trkSumPtHollowConeDR03().at(i) < 6.0  && ( Photon_photonIso().at(i) - 0.13212*fixedGridRhoAll() ) < 4.0 )			/*pho_EE_lowR9 */ )
 					 	&& 	Photon_hoe().at(i) < 0.08
 						&&	fabs(Photon_eta().at(i)) < 2.5
 						&&	(	fabs(Photon_eta().at(i)) < 1.442 || fabs(Photon_eta().at(i)) > 1.566 )
 						&&	( Photon_r9().at(i) > 0.8 || Photon_chargedHadronIso().at(i) < 20 || Photon_chargedHadronIso().at(i) / Photon_pt().at(i) < 0.3 )
 						&&  ( Photon_isScEtaEB().at(i) || Photon_isScEtaEE().at(i) )
-					 	&& 	Photon_mvaID().at(i) > - 0.7
+						&&    Photon_mvaID().at(i) > pho_idmva_cut
 						){
 							pho_cands.push_back(i);					
 							pho_pt_cands.push_back( Photon_pt().at(i) );					
@@ -158,7 +158,7 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 			//di-photon selection
 			mgg = (float)(Photon_p4().at(gHidx[0]) + Photon_p4().at(gHidx[1]) ).M();
 			if ( mgg < mgg_lower || mgg > mgg_upper ) continue;
-			//if ( (proc == "Data" || !resonant) && mgg > mgg_sideband_lower && mgg < mgg_sideband_upper ) continue;
+			if ( (proc == "Data" || !resonant) && mgg > mgg_sideband_lower && mgg < mgg_sideband_upper ) continue;
 
 			if ( ( Photon_pt().at(gHidx[0]) < pho_pt_cut 				|| Photon_pt().at(gHidx[1]) < pho_pt_cut ) 
 				|| ( Photon_pt().at(gHidx[0]) / mgg < lead_pt_mgg_cut 	|| Photon_pt().at(gHidx[1]) / mgg < sublead_pt_mgg_cut ) 

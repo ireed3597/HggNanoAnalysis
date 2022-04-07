@@ -695,7 +695,10 @@ int ScanChain( TChain *ch, string proc, string str_year, string date, float scal
 			//Isolated Tracks selection
 	          vector<int> sel_isoTracks;
 	          for (unsigned int i=0; i<nIsoTrack(); i++){
-	              if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) ){
+                if ( IsoTrack_isPFcand().at(i) && IsoTrack_fromPV().at(i) 
+									&&	fabs(IsoTrack_dxy().at(i)) < 0.2
+									&&	fabs(IsoTrack_dz().at(i)) < 0.1
+									){
 	                  LorentzVector *iso_track = new LorentzVector;
 	                  iso_track->SetXYZT( IsoTrack_pt().at(i)* TMath::Cos(IsoTrack_phi().at(i)) , IsoTrack_pt().at(i)*TMath::Sin( IsoTrack_phi().at(i)), IsoTrack_pt().at(i)*TMath::SinH( IsoTrack_eta().at(i)),  IsoTrack_pt().at(i)*TMath::CosH( IsoTrack_eta().at(i) ) );
 	                  if ( deltaR( iso_track , Photon_p4().at(gHidx[0]) ) > isoTrk_dR  && deltaR( iso_track , Photon_p4().at(gHidx[1]) ) > isoTrk_dR  ){

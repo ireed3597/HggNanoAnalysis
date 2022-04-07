@@ -15,20 +15,17 @@ years = ['2016', '2016_APV', '2017', '2018']
 #years = ['2018']
 samples = {}
 
-date="23Mar2022"
+date="07Apr2022_kls"
 base_dir='/ceph/cms/store/user/fsetti/c++_looper_ul_output/'
 os.system("mkdir -p %s/%s/"%(base_dir,date))
 os.system("mkdir -p %s/%s/hadded"%(base_dir,date))
 
-corrupted_files = [ "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_1.root", "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_134.root", "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_161.root", "/hadoop/cms/store/user/legianni/skimNano-TestUL__TEST-SamplesV9/DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final/skimNano-TestUL_DoubleEG_Run2016G-UL2016_MiniAODv2-v1_MINIAOD_final_TESTS/220308_012517/0000/tree_165.root" ]
-
-with open('samples_and_scale1fb_UL_nanoAODv9.json', "r") as f_in:
+with open('samples_and_scale1fb_UL_nanoAODv9_signal.json', "r") as f_in:
+#with open('samples_and_scale1fb_ul_fullData_v1.json', "r") as f_in:
 	samples = json.load(f_in)
 
 
 for name, sample in samples.items()[:]:
-	if "Data" in name:
-		continue
 	os.system("mkdir -p %s/%s/%s"%(base_dir,date,name))
 	for year in years:
 		print 'Start processing ', year, ' ' , str(name)
@@ -37,8 +34,8 @@ for name, sample in samples.items()[:]:
 		try:
 			for path in sample[year]['paths']:
 				list_of_files += glob.glob(path+'/*/*/*/*.root')
-			#list_of_files = [ x for x in list_of_files if 'tree' in x and x in corrupted_files ]
-			list_of_files = [ x for x in list_of_files if 'tree' in x ]
+				list_of_files += glob.glob(path+'/*.root')
+			list_of_files = [ x for x in list_of_files if '.root' in x ]
 			for file_ in list_of_files[:]:
 				ch.Add(file_);
 			if str(name) != 'Data' and ch.GetEntries() != 0 :
@@ -51,6 +48,6 @@ for name, sample in samples.items()[:]:
 			print name ,' ' , year , ' not available in the samples file or detected corrupted file. '
 			print 'Exiting now. '
 			sys.exit()
-		if "Data" in name:
-			continue
-		os.system("hadd -f -k %s/%s/hadded/%s_%s_hadded.root %s/%s/%s/%s*_%s.root"%(base_dir,date,name,year,base_dir,date,name,name,year))
+		#if "Data" in name:
+		#	continue
+		#os.system("hadd -f -k %s/%s/hadded/%s_%s_hadded.root %s/%s/%s/%s*_%s.root"%(base_dir,date,name,year,base_dir,date,name,name,year))
