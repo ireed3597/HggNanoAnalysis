@@ -227,27 +227,21 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 
 	bool ggf_samples = false;
 	//define process ids
-	if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)	process_id = -4;
-	else if (proc.find(std::string("HH_ggWW_dileptonic")) != std::string::npos) 	process_id = -3;
-	//else if (proc.find(std::string("HH_ggZZ")) != std::string::npos) 				process_id = -2;
-	else if (proc.find(std::string("HH_ggZZ_2l2q")) != std::string::npos) 				process_id = -6;
-	else if (proc.find(std::string("HH_ggZZ_4l")) != std::string::npos) 				process_id = -5;
-	else if (proc.find(std::string("HH_ggTauTau")) != std::string::npos) 			process_id = -1;
-	else if (proc.find(std::string("Data")) != std::string::npos) 				process_id = 0;
+	if (proc.find(std::string("Data")) != std::string::npos) 								process_id = 0;
 	else if (proc.find(std::string("ZGamma")) != std::string::npos) 				process_id = 2;
 	else if (proc.find(std::string("DiPhoton")) != std::string::npos) 			process_id = 3;
 	else if (proc.find(std::string("WGamma")) != std::string::npos) 				process_id = 4;
-	else if (proc.find(std::string("TTbar")) != std::string::npos) 				process_id = 5;
+	else if (proc.find(std::string("TTbar")) != std::string::npos) 					process_id = 5;
 	else if (proc.find(std::string("TTGamma")) != std::string::npos) 				process_id = 6;
-	else if (proc.find(std::string("TTGG")) != std::string::npos) 				process_id = 7;
-	else if (proc.find(std::string("GJets")) != std::string::npos)				process_id = 8;
-	else if (proc.find(std::string("VH")) != std::string::npos) 					process_id = 9;
-	else if (proc.find(std::string("ttH")) != std::string::npos) 					process_id = 10;
-	else if (proc.find(std::string("ggH")) != std::string::npos) 					process_id = 11;
-	else if (proc.find(std::string("VBFH")) != std::string::npos) 				process_id = 12;
-	else if (proc.find(std::string("WW")) != std::string::npos) 				process_id = 14;
-	else if (proc.find(std::string("WZ")) != std::string::npos) 				process_id = 15;
-	else if (proc.find(std::string("ZZ")) != std::string::npos) 				process_id = 16;
+	else if (proc.find(std::string("TTGG")) != std::string::npos) 					process_id = 7;
+	else if (proc.find(std::string("GJets")) != std::string::npos)					process_id = 8;
+	else if (proc.find(std::string("VH")) != std::string::npos) 						process_id = 9;
+	else if (proc.find(std::string("ttH")) != std::string::npos) 						process_id = 10;
+	else if (proc.find(std::string("ggH")) != std::string::npos) 						process_id = 11;
+	else if (proc.find(std::string("VBFH")) != std::string::npos) 					process_id = 12;
+	else if (proc.find(std::string("WW")) != std::string::npos) 						process_id = 14;
+	else if (proc.find(std::string("WZ")) != std::string::npos) 						process_id = 15;
+	else if (proc.find(std::string("ZZ")) != std::string::npos) 						process_id = 16;
 	//non-SM couplings
 	else if (proc.find(std::string("ggf_c0_HHggtautau")) != std::string::npos) 		{		process_id = -10;		ggf_samples = true;		}
 	else if (proc.find(std::string("ggf_c1_HHggtautau")) != std::string::npos) 		{		process_id = -11;		ggf_samples = true;		}
@@ -260,6 +254,19 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 	else if (proc.find(std::string("vbf_cv_1_c2v_1_c3_1_HHggtautau")) != std::string::npos) 				process_id = -18;
 	else if (proc.find(std::string("vbf_cv_1_c2v_1_c3_2_HHggtautau")) != std::string::npos) 				process_id = -19;
 	else if (proc.find(std::string("vbf_cv_1_c2v_2_c3_1_HHggtautau")) != std::string::npos) 				process_id = -20;
+	//second batch of non-SM couplings
+	else if (proc.find(std::string("HH_ggTauTau")) != std::string::npos) 				{							process_id = -1;		ggf_samples = true;		}
+	else if (proc.find(std::string("HHggtautau_kl0")) != std::string::npos) 		{							process_id = -10;		ggf_samples = true;		}
+	else if (proc.find(std::string("HHggtautau_kl2p45")) != std::string::npos) 		{						process_id = -11;		ggf_samples = true;		}
+	else if (proc.find(std::string("HHggtautau_kl5")) != std::string::npos) 		{							process_id = -12;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_dileptonic")) != std::string::npos) 				{			process_id = -3;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_dileptonic_kl0")) != std::string::npos) 		{			process_id = -30;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_dileptonic_kl2p45")) != std::string::npos) 		{		process_id = -31;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_dileptonic_kl5")) != std::string::npos) 		{			process_id = -32;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_semileptonic")) != std::string::npos)				{			process_id = -4;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_semileptonic_kl0")) != std::string::npos) 	{			process_id = -40;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_semileptonic_kl2p45")) != std::string::npos)	{		process_id = -41;		ggf_samples = true;		}
+	else if (proc.find(std::string("HH_ggWW_semileptonic_kl5")) != std::string::npos) 	{			process_id = -42;		ggf_samples = true;		}
 
     int nEventsTotal = 0;
     int nEventsChain = ch->GetEntries();
@@ -288,7 +295,8 @@ int ScanChain( TChain *ch, string proc, string str_year, float scale_factor = 1,
 
 				clear_branches();
 
-				if ( proc != "Data" && ggf_samples & ( fabs(genWeight()) >= 1 ) )  continue;
+		 		if ( proc != "Data" ) weight = genWeight() * scale_factor;
+				if ( ggf_samples && ( fabs(genWeight()) >= 1 ) )  continue;
 
 				//////////////////////////////////////////////////////////////////////////////////////////////
 				//////////////////////////////////////////////////////////////////////////////////////////////

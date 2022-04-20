@@ -386,7 +386,7 @@ class Plotter:
                 and self.plot_options[branch]["cms_label"]
             ):
                 plt.sca(ax1)
-                hep.cms.label(loc=0, data=True, lumi=137.2, fontsize=18)
+                hep.cms.label(loc=0, data=True, lumi=138, fontsize=18)
 
             # Plotting Data
 
@@ -456,10 +456,10 @@ class Plotter:
 # unit test
 if __name__ == "__main__":
     p = Plotter(
-        df="../pickles/run2_20UL_30Mar2022_fixIsoTrk.pkl",
-        #df="/home/users/fsetti/HHggTauTau/HggAnalysisDev/MVAs/out_zipped/run2_01Feb2022_final.pkl",
-        #plot_options="couplings_check.json",
-        plot_options="options.json",
+        #df="../pickles/run2_20UL_30Mar2022_fixIsoTrk.pkl",
+        df="/home/users/fsetti/HHggTauTau/HggAnalysisDev/MVAs/out_zipped/run2_20UL_30Mar2022_fixIsoTrk.pkl",
+        plot_options="plot_1var.json",
+        #plot_options="options.json",
         branches="all",
         debug=True,
         save_filenames=["abc", "bcd", "cda"],

@@ -61,6 +61,10 @@ for file_ in files:
 	yield_systematics	= [ key for key in df.keys() if ( "weight_" in key ) and ( "_up" in key or "_down" in key )]
 	rename_sys	= {}
 	for sys in yield_systematics:
+		#a bit of gymnastics to get the inputs right for Mr. flashggFinalFit
+		sys_central = sys.replace("_up","_central")
+		sys_central = sys.replace("_down","_central")
+		df[sys] 		= df[sys] / df[sys_central]
 		if "_up" in sys:
 			rename_sys[sys] = sys.replace("_up","Up01sigma")
 		if "_down" in sys:

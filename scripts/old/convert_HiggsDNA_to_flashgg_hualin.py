@@ -15,21 +15,21 @@ parser.add_argument(
     "--input",
     help = "path to input parquet directory",
     type = str,
-    default = "/home/users/hmei/public_html/forFranny/outputs_from_higgsdna_split2016_20220330/"
+    default = "/ceph/cms/store/user/fsetti/HiggsDNA_output/09Apr2022_sr_resonant_systs/"
 )
 
 parser.add_argument(
     "--tag",
     help = "unique tag to identify batch of processed samples",
     type = str,
-    default = "06Apr2022_fullData"
+    default = "10Apr2022"
 )
 parser.add_argument(
     "--mvas",
 	nargs='*',
     help = "mva limits to SRs",
     type = float,
-    default = [0.971078, 0.9928]		#gave 19.3000 x SM w/ flashgg , 18.6 - correct
+    default = [0.971078, 0.9928]	
 )
 parser.add_argument(
     "--nSRs",
@@ -58,6 +58,9 @@ procs = glob.glob(str(args.input)+'/*')
 
 for proc in procs[:]:
 
+	#if "data" not in proc:
+	#	continue
+	
 	#get all files including systematic variations
 	files = glob.glob(proc+'/*.parquet')
 	
@@ -85,10 +88,15 @@ for proc in procs[:]:
 		yield_systematics	= [ key for key in df.keys() if ( "weight_" in key ) and ( "_up" in key or "_down" in key )]
 		rename_sys	= {}
 		for sys in yield_systematics:
+			#a bit of gymnastics to get the inputs right for Mr. flashggFinalFit
+			sys_central = sys.replace("_up","_central")
+			sys_central = sys.replace("_down","_central")
+			df[sys] 		= df[sys] / df[sys_central]
 			if "_up" in sys:
 				rename_sys[sys] = sys.replace("_up","Up01sigma")
 			if "_down" in sys:
 				rename_sys[sys] = sys.replace("_down","Down01sigma")
+		#print(rename_sys)
 		df = df.rename(columns=rename_sys)
 
 		proc_tag = procs_dict[proc.split("/")[-1].split("_local_")[-1]]
@@ -99,7 +107,7 @@ for proc in procs[:]:
 		#Process Data
 		if "Data" in proc_tag:
 			for sr in range(args.nSRs):
-				dfs = df.loc[ (df.process_id == 0 ) & ( df.bdt_score < args.mvas[sr] ) & ( df.bdt_score >= args.mvas[sr+1] )  ]
+				dfs = df.loc[ (df.process_id == 0 ) & ( df.bdt_score < args.mvas[sr] ) & ( df.bdt_score >= args.mvas[sr+1] ) & ( ( df.Diphoton_mass < 120 ) | ( df.Diphoton_mass > 130 ) ) ]
 				dfs.to_root(out_dir+'/Data/'+'/allData.root',key='Data_13TeV_SR'+str(sr+1), mode='a')
 
 		else:		
