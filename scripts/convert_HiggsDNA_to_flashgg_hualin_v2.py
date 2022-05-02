@@ -132,11 +132,12 @@ for proc in procs[:]:
             for sys in yield_systematics:
                 #a bit of gymnastics to get the inputs right for Mr. flashggFinalFit
                 sys_central = sys.replace("_up","_central")
-                sys_central = sys.replace("_down","_central")
+                sys_central = sys_central.replace("_down","_central")
                 if 'btag_deepjet' in sys_central:
+                    #sys_central = 'weight_btag_deepjet_sf_SelectedJet_central'
                     sys_central = sys_central.replace('_up','_central').split('_central')[0]+'_central'
                     sys_central = sys_central.replace('_down','_central').split('_central')[0]+'_central'
-                print(proc, sys, df[sys].mean(), df[sys_central].mean(), (df[sys]/df[sys_central]).mean())
+                print(proc, sys, sys_central, df[sys].mean(), df[sys_central].mean(), (df[sys]/df[sys_central]).mean())
                 df[sys]                 = df[sys] / df[sys_central]
                 if "_up" in sys:
                     rename_sys[sys] = sys.replace("_up","Up01sigma")
