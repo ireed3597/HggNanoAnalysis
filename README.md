@@ -34,11 +34,17 @@ conda create --name pyrootenv uproot pandas root matplotlib jupyter
 
 # and then any install residual packages with pip
 conda run --name pyrootenv pip install yahist mplhep
-```  
+```
+There may still be a few missing, install them as needed
   
 Then, run 
 ```
 conda activate pyrootenv
+```
+This should be enough to get everything running. Run ```scripts/convert_HiggsDNA_to_flashgg_hualin_v2.py``` with the relavent inputs and outputs to convert the files.
+
+These remaining parts shouldn't be needed for the ttHH-ggXX analysis, but I'm leaving them at the bottom for future reference
+```
 cd /cvmfs/cms.cern.ch/slc6_amd64_gcc700/cms/cmssw/CMSSW_10_2_9/ ; cmsenv ; cd -
 ```  
 
