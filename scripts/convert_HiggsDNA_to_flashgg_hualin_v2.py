@@ -26,6 +26,18 @@ procs_dict = {"Data":"Data",
               "ttHH_ggbb":"ttHHggbb",
               "ttH_M125":"ttH"
             }
+skip_list = ["DiPhoton",
+             "GJets_HT-40To100",
+             "GJets_HT-100To200",
+             "GJets_HT-200To400",
+             "GJets_HT-400To600",
+             "GJets_HT-600ToInf",
+             "TTGG",
+             "TTGamma",
+             "TTJets",
+             "WGamma",
+             "ZGamma",
+            ]
 
 #procs_dict = { "ggH_M125": "ggH", 'HHggTauTau':'HHggTauTau', 'HHggWW_dileptonic':'HHggWWdileptonic', 'HHggWW_semileptonic':'HHggWWsemileptonic', 'ttH_M125':'ttH', 'VBFH_M125':'VBFH', 'VH_M125':'VH', "data":"Data" }
 
@@ -35,7 +47,8 @@ parser.add_argument(
     "--input",
     help = "path to input parquet directory",
     type = str,
-    default = "/home/users/smay/HiggsDNA/tthh_sr_20Apr2022"
+    #default = "/home/users/smay/HiggsDNA/tthh_sr_20Apr2022"
+    default = '/home/users/iareed/HggAnalysisDev/MVAs/tagger_test/sr_parquet'
     #default = "/ceph/cms/store/user/fsetti/HiggsDNA_output/09Apr2022_sr_resonant_systs/"
 )
 
@@ -43,7 +56,7 @@ parser.add_argument(
     "--tag",
     help = "unique tag to identify batch of processed samples",
     type = str,
-    default = "debug"
+    default = "tagger_test_19Sep22"
     #default = "10Apr2022"
 )
 parser.add_argument(
@@ -52,7 +65,7 @@ parser.add_argument(
     help = "mva limits to SRs",
     type = float,
     # low cut, high cut
-    default = [0.969307, 0.9883]
+    default = [0.875688,0.9889]
 )
 parser.add_argument(
     "--nSRs",
@@ -66,6 +79,8 @@ args = parser.parse_args()
 args.mvas+=[99]
 args.mvas.sort(reverse=True)
 
+print(args.mvas)
+quit()
 #out_dir = '/home/users/fsetti/ic_flashgg/CMSSW_10_2_13/src/flashggFinalFit/files_systs/' + str(args.tag) + '/'
 out_dir = '/home/users/iareed/ttHHggbb/coupling_scan/CMSSW_10_2_13/src/flashggFinalFit/files_systs/' + str(args.tag) + '/'
 
@@ -78,10 +93,20 @@ os.system("mkdir -p %s/2016"%(out_dir))
 os.system("mkdir -p %s/2017"%(out_dir))
 os.system("mkdir -p %s/2018"%(out_dir))
 
+print('Output directories made')
+
 procs = glob.glob(str(args.input)+'/*')
 doneData=False
 
+print(procs)
+
 for proc in procs[:]:
+    print(proc)
+    p = proc.split('/')[-1]
+    p = p.split('_')[0]
+    if p in skip_list:
+        print(proc, ' not needed for analysis, skipping to save time')
+        continue
 
     if ("Data" in proc) and not doneData:
         files = glob.glob(str(args.input)+'/Data*/*.parquet')
