@@ -8,101 +8,35 @@ import numpy as np
 import uproot
 from collections import Counter
 
-# def to_root(df,path,key='my_tree',mode='w',store_index=True):
-
-#   column_name_counts = Counter(df.columns)
-#   if max(column_name_counts.values()) > 1:
-#       raise ValueError('DataFrame contains duplicated column names: ' +
-#                         ' '.join({k for k, v in column_name_counts.items() if v > 1}))
-
-#   # We don't want to modify the user's DataFrame here, so we make a shallow copy
-#   df_ = df.copy(deep=False)
-
-#   if store_index:
-#     name = df_.index.name
-#     if name is None:
-#         # Handle the case where the index has no name
-#         name = ''
-#     df_['__index__' + name] = df_.index
-
-#   # Convert categorical columns into something root_numpy can serialise
-#   for col in df_.select_dtypes(['category']).columns:
-#     name_components = ['__rpCaT', col, str(df_[col].cat.ordered)]
-#     name_components.extend(df_[col].cat.categories)
-#     if ['*' not in c for c in name_components]:
-#         sep = '*'
-#     else:
-#         raise ValueError('Unable to find suitable separator for columns')
-#     df_[col] = df_[col].cat.codes
-#     df_.rename(index=str, columns={col: sep.join(name_components)}, inplace=True)
-
-#   arr = df_.to_records (index=False)
-
-#   if mode == 'a':
-#     root_file = uproot.update(path)
-#   elif mode == 'w':
-#     root_file = uproot.recreate(path)
-#   else:
-#       raise ValueError('Unknown mode: {}. Must be "a" or "w".'.format(mode))
-
-#   if not root_file:
-#     raise IOError("cannot open file {0}".format(path))
-#   if not root_file.IsWritable():
-#     raise IOError("file {0} is not writable".format(path))
-
-#   # Navigate to the requested directory
-#   open_dirs = [root_file]
-#   for dir_name in key.split('/')[:-1]:
-#       current_dir = open_dirs[-1].Get(dir_name)
-#       if not current_dir:
-#           current_dir = open_dirs[-1].mkdir(dir_name)
-#       current_dir.cd()
-#       open_dirs.append(current_dir)
-
-#   # The key is now just the top component
-#   key = key.split('/')[-1]
-
-#   # If a tree with that name exists, we want to update it \\ You are dealing with uproot now...
-#   tree = open_dirs[-1].Get(key)
-#   if not tree:
-#       tree = None
-#   tree = array2tree(arr, name=key, tree=tree)
-#   tree.Write(key, ROOT.TFile.kOverwrite)
-#   root_file.Close()
-
-
-
-
-# years = [ '2016UL_preVFP', '2017', '2018' ]
 years = [ b'2016UL_pre', b'2017', b'2018' ]
-procs_dict = {'Data':'Data',
-              'ttH_M125':'ttH',
-              'ttHH_ggbb':'ttHHggbb'}
-#procs_dict = {"Data":"Data",
-#              "DiPhoton":"DiPhoton",
-#              "DataDrivenGJets":"DataDrivenGJets",
-#              "GJets_HT-40To100":"GJetsHT40To100",
-#              "GJets_HT-100To200":"GJetsHT100To200",
-#              "GJets_HT-200To400":"GJetsHT200To400",
-#              "GJets_HT-400To600":"GJetsHT400To600",
-#              "GJets_HT-600ToInf":"GJetsHT600ToInf",
-#              "TTGG":"TTGG",
-#              "TTGamma":"TTGamma",
-#              "TTJets":"TTJets",
-#              "VBFH_M125":"VBFH",
-#              "VH_M125":"VH",
-#              "WGamma":"WGamma",
-#              "ZGamma":"ZGamma",
-#              "ggH_M125":"ggH",
-#              "ttHH_ggTauTau":"ttHHggTauTau",
-#              "ttHH_ggWW":"ttHHggWW",
-#              "ttHH_ggbb":"ttHHggbb",
-#              "ttH_M125":"ttH",
-#              "HHggTauTau":"HHGGTauTau",
-#              "HHggWW_dileptonic":"HHGGWWdileptonic",
-#              "HHggWW_semileptonic":"HHGGWWsemileptonic",
-#              "HHggbb":"HHGGbb"
-#            }
+#procs_dict = {'Data':'Data',
+#              'ttH_M125':'ttH',
+#              'ttHH_ggbb':'ttHHggbb'}
+procs_dict = {"Data":"Data",
+              "DiPhoton":"DiPhoton",
+              "DataDrivenGJets":"DataDrivenGJets",
+              "GJets_HT-40To100":"GJetsHT40To100",
+              "GJets_HT-100To200":"GJetsHT100To200",
+              "GJets_HT-200To400":"GJetsHT200To400",
+              "GJets_HT-400To600":"GJetsHT400To600",
+              "GJets_HT-600ToInf":"GJetsHT600ToInf",
+              "TTGG":"TTGG",
+              "TTGamma":"TTGamma",
+              "TTJets":"TTJets",
+              "VBFH_M125":"VBFH",
+              "VH_M125":"VH",
+              "WGamma":"WGamma",
+              "ZGamma":"ZGamma",
+              "ggH_M125":"ggH",
+              "ttHH_ggTauTau":"ttHHggTauTau",
+              "ttHH_ggWW":"ttHHggWW",
+              "ttHH_ggbb":"ttHHggbb",
+              "ttH_M125":"ttH",
+              "HHggTauTau":"HHGGTauTau",
+              "HHggWW_dileptonic":"HHGGWWdileptonic",
+              "HHggWW_semileptonic":"HHGGWWsemileptonic",
+              "HHggbb":"HHGGbb"
+            }
 skip_list = ["DiPhoton",
              "DataDrivenGJets",
              "GJets_HT-40To100",
@@ -124,7 +58,7 @@ parser.add_argument(
     help = "path to input parquet directory",
     type = str,
     #default = "/home/users/azecchin/Analysis/HiggsDNA/output/heft_presel_FF_syst_condor/"
-    default = '/home/users/iareed/HiggsDNA/SM_22Sep22/scored_dataframes/' 
+    default = '/ceph/cms/store/user/iareed/HiggsDNA_offload/SM_22Sep22/scored_dataframes/' 
 )
 
 parser.add_argument(
@@ -132,7 +66,7 @@ parser.add_argument(
     help = "unique tag to identify batch of processed samples",
     type = str,
     #default = "test"
-    default = "SM_23Sep22_07Dec22"
+    default = "SM_23Sep22_fixed_lf_and_hf"
 )
 parser.add_argument(
     "--mvas",
@@ -156,7 +90,7 @@ args = parser.parse_args()
 args.mvas+=[99]
 args.mvas.sort(reverse=True)
 print(args.mvas)
-out_dir = '/home/users/iareed/ttHHggbb/coupling_scan/CMSSW_10_2_13/src/flashggFinalFit/files_systs/' + str(args.tag) + '/'
+out_dir = '/home/users/iareed/CMSSW_10_2_13/src/flashggFinalFit/files_systs/' + str(args.tag) + '/'
 
 os.system("rm -rf %s"%(out_dir))
 os.system("mkdir -p %s"%(out_dir))
@@ -242,22 +176,27 @@ for file_ in files:
                 #a bit of gymnastics to get the inputs right for Mr. flashggFinalFit
                 sys_central = sys.replace("_up","_central")
                 sys_central = sys.replace("_down","_central")
+                rename_sys[sys] = sys
                 if 'btag' in sys_central:
                     sys_central = 'weight_btag_deepjet_sf_SelectedJet_central'
                 df[sys] = df[sys] / df[sys_central]
+                if sys.endswith("_lf"):
+                    rename_sys[sys] = rename_sys[sys].replace("_lf","_LF")
+                elif sys.endswith("_hf"):
+                    rename_sys[sys] = rename_sys[sys].replace("_hf","_HF")
                 if "_up" in sys:
                     if 'btag' in sys:
-                        rename_sys[sys] = sys.replace("_up","")
+                        rename_sys[sys] = rename_sys[sys].replace("_up","")
                         rename_sys[sys] += "Up01sigma"
                         continue
                     rename_sys[sys] = sys.replace("_up","Up01sigma")
                 if "_down" in sys:
                     if 'btag' in sys:
-                        rename_sys[sys] = sys.replace("_down","")
+                        rename_sys[sys] = rename_sys[sys].replace("_down","")
                         rename_sys[sys] += "Down01sigma"
                         continue
                     rename_sys[sys] = sys.replace("_down","Down01sigma")
-            #print(rename_sys)
+            print(rename_sys)
             df = df.rename(columns=rename_sys)
 
             #Process Signal
