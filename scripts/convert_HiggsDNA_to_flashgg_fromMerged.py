@@ -8,7 +8,11 @@ import numpy as np
 import uproot
 from collections import Counter
 
+import awkward as ak
+
 years = [ b'2016UL_pre', b'2017', b'2018' ]
+#years = [ b'2017' ]
+#procs_dict = {'VH_M125':'VH'}
 #procs_dict = {'Data':'Data',
 #              'ttH_M125':'ttH',
 #              'ttHH_ggbb':'ttHHggbb'}
@@ -66,7 +70,7 @@ parser.add_argument(
     help = "unique tag to identify batch of processed samples",
     type = str,
     #default = "test"
-    default = "SM_23Sep22_fixed_lf_and_hf"
+    default = "SM_23Sep22_fixed_L1"
 )
 parser.add_argument(
     "--mvas",
@@ -118,7 +122,8 @@ for sr in range(args.nSRs):
 
 #Process MCs
 # I think we need to first open the files, then loop over the process and years
-#get all files including systematic variations
+# get all files including systematic variations
+#files = glob.glob(str(args.input)+'/merged_nominal.parquet')
 files = glob.glob(str(args.input)+'/*.parquet')
 print(files)
 for file_ in files:
@@ -138,7 +143,6 @@ for file_ in files:
         proc_df = glob_df[glob_df["process_id"]==procs[proc]]
         print("for all years we have {} events for {}".format(len(proc_df),proc))
         for year in years:
-            print(year)
             df = proc_df[proc_df["year"]==year]
             print("for year {} we have {} events for {}".format(year,len(df),proc))
             if year == b'2016UL_pre':
@@ -164,7 +168,7 @@ for file_ in files:
                 tag = '_MCScale' + tag
             if 'smear' in file_.split("/")[-1]:
                 tag = '_MCSmear' + tag
-
+            #breakpoint()
             #Define hgg_mass & dZ variable
             df['CMS_hgg_mass'] = df['Diphoton_mass']
             df['dZ'] = np.ones(len(df['Diphoton_mass']))
@@ -174,8 +178,10 @@ for file_ in files:
             rename_sys = {}
             for sys in yield_systematics:
                 #a bit of gymnastics to get the inputs right for Mr. flashggFinalFit
-                sys_central = sys.replace("_up","_central")
-                sys_central = sys.replace("_down","_central")
+                if "_up" in sys:
+                    sys_central = sys.replace("_up","_central")
+                elif "_down" in sys:
+                    sys_central = sys.replace("_down","_central")
                 rename_sys[sys] = sys
                 if 'btag' in sys_central:
                     sys_central = 'weight_btag_deepjet_sf_SelectedJet_central'
@@ -196,9 +202,7 @@ for file_ in files:
                         rename_sys[sys] += "Down01sigma"
                         continue
                     rename_sys[sys] = sys.replace("_down","Down01sigma")
-            print(rename_sys)
             df = df.rename(columns=rename_sys)
-
             #Process Signal
             year_str = ''
             if year == b'2016UL_pre':
