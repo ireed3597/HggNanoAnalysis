@@ -99,9 +99,9 @@ procs_dict = {"Data":"Data",
               "HHggWW_dileptonic":"HHGGWWdileptonic",
               "HHggWW_semileptonic":"HHGGWWsemileptonic",
               "HHggbb":"HHGGbb",
-              "2HDM_bb_M350":"2HDMbbM350",
-              "2HDM_WW_M350":"2HDMWWM350",
-              "2HDM_TAUTAU_M350":"2HDMTAUTAUM350"
+              "2HDM_bb_M250":"2HDMbbM250",
+              "2HDM_WW_M250":"2HDMWWM250",
+              "2HDM_TAUTAU_M250":"2HDMTAUTAUM250"
             }
 skip_list = ["DiPhoton",
              "DataDrivenGJets",
@@ -123,24 +123,21 @@ parser.add_argument(
     "--input",
     help = "path to input parquet directory",
     type = str,
-    #default = "/home/users/azecchin/Analysis/HiggsDNA/output/heft_presel_FF_syst_condor/"
-    default = '/home/users/iareed/HiggsDNA/BSM_13Oct22/scored_M350/' 
+    default = '/home/users/iareed/HiggsDNA/BSM_13Oct22/scored_M250/' 
 )
 
 parser.add_argument(
     "--tag",
     help = "unique tag to identify batch of processed samples",
     type = str,
-    #default = "test"
-    default = "BSM_13Oct22_M350_fixed_weights"
+    default = "BSM_13Oct22_M250_div3"
 )
 parser.add_argument(
     "--mvas",
   nargs="*",
     help = "mva limits to SRs",
     type = float,
-    #default = [0.9903,  0.966974]
-    default = [0.986165,0.9945]
+    default = [0.957208,0.9897]
 )
 parser.add_argument(
     "--nSRs",
@@ -157,9 +154,7 @@ args = parser.parse_args()
 args.mvas+=[99]
 args.mvas.sort(reverse=True)
 
-#out_dir = "/home/users/azecchin/Analysis/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/files_systs/" + str(args.tag) + "/"
 out_dir = '/home/users/iareed/ttHHggbb/coupling_scan/CMSSW_10_2_13/src/flashggFinalFit/files_systs/' + str(args.tag) + '/'
-#out_dir = '/home/users/fsetti/HHggTauTau/coupling_scan/CMSSW_10_2_13/src/flashggFinalFit/files_systs/' + str(args.tag) + '/'
 
 os.system("rm -rf %s"%(out_dir))
 os.system("mkdir -p %s"%(out_dir))
@@ -177,18 +172,20 @@ print ("procs {}".format(procs))
 #Process Data
 file = pandas.read_parquet(str(args.input)+'merged_nominal.parquet', engine='pyarrow') # no systematics on Data
 print(file)
-df=file[ (file.process_id == 0) ]
+df=file[ (file.process_id == procs['Data']) ]
 df['CMS_hgg_mass'] = df.Diphoton_mass
 for sr in range(args.nSRs):
+    print(args.mvas[sr], args.mvas[sr+1])
     dfs = df.loc[ ( df.mva_score < args.mvas[sr] ) & ( df.mva_score >= args.mvas[sr+1] ) & ( ( df.Diphoton_mass < 120 ) | ( df.Diphoton_mass > 130 ) ) ]
     print("Adding {} events to allData".format(len(dfs)))
     dfs.to_root(out_dir+'/Data/'+'/allData.root',key='Data_13TeV_SR'+str(sr+1), mode='a')
 
 #Process MCs
-
 # I think we need to first open the files, then loop over the process and years
-#get all files including systematic variations
+# get all files including systematic variations
+#files = glob.glob(str(args.input)+'/merged_nominal.parquet')
 files = glob.glob(str(args.input)+'/*.parquet')
+print(files)
 for file_ in files:
     glob_df = pandas.read_parquet(file_, engine='pyarrow')
 
@@ -211,6 +208,7 @@ for file_ in files:
             if year == b'2016UL_pre':
                 try:
                     df_ext1 = proc_df[proc_df["year"]==b'2016UL_pos']
+                    print('for year 2016UL_postVFP we have {} events for {}'.format(len(df_ext1),proc))
                     df = pandas.concat([ df, df_ext1 ], ignore_index=True)
                 except:
                     print ("Not finding 2016UL_postVFP for this sample: ", proc )
@@ -230,7 +228,7 @@ for file_ in files:
                 tag = '_MCScale' + tag
             if 'smear' in file_.split("/")[-1]:
                 tag = '_MCSmear' + tag
-
+            #breakpoint()
             #Define hgg_mass & dZ variable
             df['CMS_hgg_mass'] = df['Diphoton_mass']
             df['dZ'] = np.ones(len(df['Diphoton_mass']))
@@ -240,26 +238,31 @@ for file_ in files:
             rename_sys = {}
             for sys in yield_systematics:
                 #a bit of gymnastics to get the inputs right for Mr. flashggFinalFit
-                sys_central = sys.replace("_up","_central")
-                sys_central = sys.replace("_down","_central")
+                if "_up" in sys:
+                    sys_central = sys.replace("_up","_central")
+                elif "_down" in sys:
+                    sys_central = sys.replace("_down","_central")
+                rename_sys[sys] = sys
                 if 'btag' in sys_central:
                     sys_central = 'weight_btag_deepjet_sf_SelectedJet_central'
                 df[sys] = df[sys] / df[sys_central]
+                if sys.endswith("_lf"):
+                    rename_sys[sys] = rename_sys[sys].replace("_lf","_LF")
+                elif sys.endswith("_hf"):
+                    rename_sys[sys] = rename_sys[sys].replace("_hf","_HF")
                 if "_up" in sys:
                     if 'btag' in sys:
-                        rename_sys[sys] = sys.replace("_up","")
+                        rename_sys[sys] = rename_sys[sys].replace("_up","")
                         rename_sys[sys] += "Up01sigma"
                         continue
                     rename_sys[sys] = sys.replace("_up","Up01sigma")
                 if "_down" in sys:
                     if 'btag' in sys:
-                        rename_sys[sys] = sys.replace("_down","")
+                        rename_sys[sys] = rename_sys[sys].replace("_down","")
                         rename_sys[sys] += "Down01sigma"
                         continue
                     rename_sys[sys] = sys.replace("_down","Down01sigma")
-            #print(rename_sys)
             df = df.rename(columns=rename_sys)
-
             #Process Signal
             year_str = ''
             if year == b'2016UL_pre':
@@ -282,3 +285,4 @@ for file_ in files:
                 dfs = df.loc[ ( df.mva_score < args.mvas[sr] ) & ( df.mva_score >= args.mvas[sr+1] ) & (df.event % 2 == 1) ]
                 print("Adding {} events to {}".format(len(dfs),year_str+"_"+proc_tag))
                 dfs.to_root(out_dir+year_str+'/'+proc_tag+'_125_13TeV.root',''+proc_tag+'_125_13TeV_SR'+str(sr+1)+tag, mode='a')
+
