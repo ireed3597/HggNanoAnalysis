@@ -35,9 +35,8 @@ procs_dict = {"Data":"Data",
               "HHggWW_dileptonic":"ggHH_ggWWdileptonic",
               "HHggWW_semileptonic":"ggHH_ggWWsemileptonic",
               "HHggbb":"ggHH_ggbb",
-              "2HDM_bb_M250":"2HDM_ggbb_M250",
-              "2HDM_WW_M250":"2HDM_ggWW_M250",
-              "2HDM_TAUTAU_M250":"2HDM_ggTautau_M250"
+              "THQ_M125":"THQ",
+              "THW_M125":"THW"
             }
 skip_list = ["DiPhoton",
              "DataDrivenGJets",
@@ -60,7 +59,7 @@ parser.add_argument(
     help = "path to input parquet directory",
     type = str,
     #default = "/home/users/azecchin/Analysis/HiggsDNA/output/heft_presel_FF_syst_condor/"
-    default = '/home/users/iareed/HiggsDNA/Full_Samples_21Jun23/fixed_dijet_dummies/scored/' 
+    default = '/home/users/iareed/HiggsDNA/Full_Samples_21Jun23/fixed_dijet_dummies/scored_SM/'
     #default = '/ceph/cms/store/user/iareed/HiggsDNA_offload/SM_22Sep22/scored_dataframes/' 
 )
 
@@ -69,20 +68,21 @@ parser.add_argument(
     help = "unique tag to identify batch of processed samples",
     type = str,
     #default = "test"
-    default = "2HDM_M250_22Sep23_fixed_dijet_dummies"
+    default = "SM_22Sep23_fixed_dijet_dummies"
 )
 parser.add_argument(
     "--mvas",
     nargs="*",
     help = "mva limits to SRs",
     type = float,
-    default = [0.946891,0.9850]
+    default = [0.954425,0.9910]
 )
 parser.add_argument(
     "--mva_name",
     help = "title of mva score to use",
     type = str,
-    default = "2HDM_M250_scores"
+    #default = "mva_score"
+    default = "mva_score"
 )
 parser.add_argument(
     "--nSRs",

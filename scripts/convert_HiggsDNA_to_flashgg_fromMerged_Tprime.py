@@ -35,9 +35,9 @@ procs_dict = {"Data":"Data",
               "HHggWW_dileptonic":"ggHH_ggWWdileptonic",
               "HHggWW_semileptonic":"ggHH_ggWWsemileptonic",
               "HHggbb":"ggHH_ggbb",
-              "2HDM_bb_M250":"2HDM_ggbb_M250",
-              "2HDM_WW_M250":"2HDM_ggWW_M250",
-              "2HDM_TAUTAU_M250":"2HDM_ggTautau_M250"
+              "Tprime_BB_M500":"Tprime_ggbb_M500",
+              "Tprime_WW_M500":"Tprime_ggWW_M500",
+              "Tprime_TAUTAU_M500":"Tprime_ggTautau_M500"
             }
 skip_list = ["DiPhoton",
              "DataDrivenGJets",
@@ -69,20 +69,20 @@ parser.add_argument(
     help = "unique tag to identify batch of processed samples",
     type = str,
     #default = "test"
-    default = "2HDM_M250_22Sep23_fixed_dijet_dummies"
+    default = "Tprime_M500_22Sep23_no_double_BB"
 )
 parser.add_argument(
     "--mvas",
     nargs="*",
     help = "mva limits to SRs",
     type = float,
-    default = [0.946891,0.9850]
+    default = [0.956767,0.9882]
 )
 parser.add_argument(
     "--mva_name",
     help = "title of mva score to use",
     type = str,
-    default = "2HDM_M250_scores"
+    default = "Tprime_M500_score"
 )
 parser.add_argument(
     "--nSRs",
@@ -128,7 +128,6 @@ for sr in range(args.nSRs):
 #Process MCs
 # I think we need to first open the files, then loop over the process and years
 # get all files including systematic variations
-#files = glob.glob(str(args.input)+'/merged_nominal.parquet')
 files = glob.glob(str(args.input)+'/*.parquet')
 print(files)
 for file_ in files:
