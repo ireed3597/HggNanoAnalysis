@@ -35,8 +35,8 @@ procs_dict = {"Data":"Data",
               "HHggWW_dileptonic":"ggHH_ggWWdileptonic",
               "HHggWW_semileptonic":"ggHH_ggWWsemileptonic",
               "HHggbb":"ggHH_ggbb",
-              "THQ_M125":"THQ",
-              "THW_M125":"THW"
+              "THQ_M125":"tHq",
+              "THW_M125":"tHW"
             }
 skip_list = ["DiPhoton",
              "DataDrivenGJets",
@@ -59,7 +59,7 @@ parser.add_argument(
     help = "path to input parquet directory",
     type = str,
     #default = "/home/users/azecchin/Analysis/HiggsDNA/output/heft_presel_FF_syst_condor/"
-    default = '/home/users/iareed/HiggsDNA/Full_Samples_21Jun23/fixed_dijet_dummies/scored_SM/'
+    default = '/home/users/iareed/HiggsDNA/Full_Samples_21Jun23/fixed_dijet_dummies/'
     #default = '/ceph/cms/store/user/iareed/HiggsDNA_offload/SM_22Sep22/scored_dataframes/' 
 )
 
@@ -68,7 +68,7 @@ parser.add_argument(
     help = "unique tag to identify batch of processed samples",
     type = str,
     #default = "test"
-    default = "SM_22Sep23_fixed_dijet_dummies"
+    default = "SM_22Sep23_datacard_name_update"
 )
 parser.add_argument(
     "--mvas",
@@ -229,4 +229,4 @@ for file_ in files:
             for sr in range(args.nSRs):
                 dfs = df.loc[ ( df[args.mva_name] < args.mvas[sr] ) & ( df[args.mva_name] >= args.mvas[sr+1] ) & (df.event % 2 == 1) ]
                 print("Adding {} events to {}".format(len(dfs),year_str+"_"+proc_tag))
-                dfs.to_root(out_dir+year_str+'/'+proc_tag+'_125_13TeV.root',''+proc_tag+'_125_13TeV_SR'+str(sr+1)+tag, mode='a')
+                dfs.to_root(out_dir+year_str+'/'+proc_tag+'_125_13TeV.root',''+proc_tag+'_125.38_13TeV_SR'+str(sr+1)+tag, mode='a')
